@@ -1,0 +1,27 @@
+{
+  "name": "hub-node-test",
+  "version": "0.0.1",
+  "description": " Testing Framework in Node",
+  "main": "app.js",
+  "scripts": {
+    "ui": "./node_modules/mocha/bin/_mocha test/ui --reporter mochawesome",
+    "start": "node --harmony app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.ellucian.com:7999/ps/hub-node-test.git"
+  },
+  "keywords": [
+    "api",
+    "ui",
+    "testing",
+    "framework"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^2.5.3",
+    "mochawesome": "^1.3.5",
+    "shelljs": "^0.7.0"
+  }
+}
