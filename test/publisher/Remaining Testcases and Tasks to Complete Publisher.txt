@@ -1,0 +1,24 @@
+Remaining Testcases and Tasks to Complete Publisher
+
+* Testcase to turn off dataAcess switch
+* Testcase to validate UI
+* Testcase to validate /consumeAll
+* Testcase to add new Resource
+* Testcase to send change-notification to new Resource
+* Testcase to turn on dataAcess switch
+
+
+
+Remaining tests flows
+> set dataAcess switch off (dataAccess: false)
+> perform existing testcases
+> validate at UI
+> validate at /consumeAll (note: should be empty arrray [] )
+> set dataAccess to on (dataAccess: true)
+> send three change-notifications [3]
+> validate at UI
+> validate at /consumeAll
+> set dataAccess to off (dataAccess: false)
+> send one change-notification [1]
+> validate at UI
+> validate at /consumeAll
