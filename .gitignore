@@ -4,3 +4,4 @@
 node_modules
 exampleReport
 npm-debug.log
+lib/publisher.bat
