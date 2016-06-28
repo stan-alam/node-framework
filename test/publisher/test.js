@@ -3,7 +3,8 @@
 
 var fs = require('fs');
 var bannerAccessToken;
-var token ;
+var token;
+
 const
 	request = require('supertest'),
 	hp = require('./changeNotifications/happyPath.js'),
@@ -21,11 +22,8 @@ const
 	url = 'https://test-integrationhub-integrate.10004.elluciancloud.com';
 
 
-
-
-
 describe('POST / Publisher Tests', function() {
-	
+		
 	before(function(done){
 	 fs.readFile('../bannerAccessToken.txt', 'utf8', function (err, bannerAccessToken) {
 		  if (err) {
@@ -34,8 +32,8 @@ describe('POST / Publisher Tests', function() {
 		  console.log("\nBanner Access Token from file: " + bannerAccessToken);
 		  token = "Bearer " + bannerAccessToken;
 		  done();
-	  	});
-		 
+ 	  });
+	
 	});
    
 

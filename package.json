@@ -20,8 +20,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs": "0.0.2",
+    "jsonwebtoken": "^7.0.1",
     "mocha": "^2.5.3",
     "mochawesome": "^1.3.5",
-    "shelljs": "^0.7.0"
+    "nightmare": "^2.5.2",
+    "request": "^2.72.0",
+    "shelljs": "^0.7.0",
+    "vo": "^4.0.2"
   }
 }
