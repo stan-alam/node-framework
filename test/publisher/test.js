@@ -25,7 +25,7 @@ const
 describe('POST / Publisher Tests', function() {
 		
 	before(function(done){
-	 fs.readFile('../bannerAccessToken.txt', 'utf8', function (err, bannerAccessToken) {
+	 fs.readFile('../../lib/bannerAccessToken.txt', 'utf8', function (err, bannerAccessToken) {
 		  if (err) {
 		      return console.log(err);
 		  }
