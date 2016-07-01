@@ -1,16 +1,15 @@
 "use strict";
  const
        supertest = require('supertest'),
-       assert    = require('assert'),
-       gt = require('../lib/getTokenFromFile.js');
+       assert    = require('assert');
+      
 var token; 
 
 describe('GET / ConsumeAll Tests', function() {
 		
 	before(function(done){
-	      token =gt.getSubscriberToken();
-		  console.log("\nSubscriber Token from file: " + token);
-		  token = "Bearer " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFbGx1Y2lhbiBDbG91ZCBQbGF0Zm9ybSIsInN1YiI6ImFhbWF5ZXJAZWxsdWNpYW4ubWUuc2FuZGJveCIsInRlbmFudCI6eyJpZCI6Ijc2Yzk0ODA5LTg4ZmQtNGJhZC05NTRjLWZkYmYzZTE2MTcxMyIsImFsaWFzIjoibmljIiwibmFtZSI6Ik5vcnRoIElkYWhvIENvbGxlZ2UgZXRob3MifSwiaWF0IjoxNDY3MjIyMTg3fQ.47_x-ujMjz7elo19DOuQpZhBGXWt-P8Hz-rHE10BeEE' ;
+	    console.log("\nSubscriber Token from file: " + token);
+		  token = "Bearer " + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MzNjNGRiMy1kZWFiLTRiMjItYjA4MC0wZWQ0YTNmNDYxZmIiLCJ0ZW5hbnQiOnsiaWQiOiJhZDdhODg5My1kMWQyLTRjNDQtODQyOS0zY2Q3OWU0Nzc4OTQiLCJhbGlhcyI6Im5pYyIsIm5hbWUiOiJOb3J0aCBJZGFobyBDb2xsZWdlIGV0aG9zIiwicGVybWlzc2lvbnMiOnsiZGF0YUFjY2VzcyI6ZmFsc2V9fSwiZXhwIjoxNDY3NDAxNTQ3MDAwMCwiaWF0IjoxNDY3NDAxMjQ3fQ.jdubLrQ4gYtzxRKF8XMBxxNEgYLt-he8_NoGLQWZ4Bs' ;
 		  done();
  	});
  
@@ -26,7 +25,8 @@ describe('GET / ConsumeAll Tests', function() {
            }
           else {
             assert(res.statusCode === 200);
-            assert(res.body === []);
+            console.log("res.body="+JSON.stringify(res.body));
+            assert(res.body.length === 0);
           }
           done();
       });
