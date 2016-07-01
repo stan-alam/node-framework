@@ -30,6 +30,24 @@ describe('GET / ConsumeAll Tests', function() {
           }
           done();
       });
-    });
+   });
 
+it("should not return an empty array on GET ", function(done) {
+
+      supertest('https://test-integrationhub-integrate.10004.elluciancloud.com')
+        .get('/consumeAll?lastProcessedID=-1')
+        .set('Authorization',token)
+        .expect(200)
+        .end(function(err,res) {
+          if (err) {
+            assert.ifError(err);
+           }
+          else {
+            assert(res.statusCode === 200);
+            console.log("res.body="+JSON.stringify(res.body));
+            assert(res.body.length === 7);
+          }
+          done();
+      });
+   });
 });
