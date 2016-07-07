@@ -21,6 +21,8 @@
   "license": "ISC",
   "dependencies": {
     "assert": "^1.4.1",
+    "async": "^1.5.2",
+    "async-series": "0.0.1",
     "fs": "0.0.2",
     "jsonwebtoken": "^7.0.1",
     "mocha": "^2.5.3",

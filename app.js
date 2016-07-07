@@ -2,6 +2,8 @@ const fs = require('fs'),
     shell = require('shelljs'),
     path = require('path');
 
+
+
 var testToRun = process.argv[2] || 'EndToEnd';
 
 //Get Available Tests
@@ -22,3 +24,4 @@ if(testList.indexOf(testToRun) == -1){
     console.error("Running Tests Just for: "+ testToRun);
     shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+" --reporter mochawesome")
 }
+
