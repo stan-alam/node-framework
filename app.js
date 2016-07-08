@@ -26,10 +26,14 @@ function runTests(loopCount){
         var testList = getDirectories();
         if(testList.indexOf(testToRun) == -1){
             console.error("Running Tests End To End Tests ");
-            shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join(" test/") + " --reporter mochawesome");
+            shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join(" test/") + " --reporter mochawesome", function(){
+                process.exit();
+            });
         }else{
             console.error("Running Tests Just for: "+ testToRun);
-            shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+" --reporter mochawesome");
+            shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+" --reporter mochawesome", function(){
+                process.exit();
+            });
         }
     }else if(loopCount > 60){
         console.error('Selenium Server Never started');
