@@ -1,3 +1,5 @@
+'use strict'
+
 const fs = require('fs'),
     sleep = require('sleep'),
     spawn = require('child_process').exec,
@@ -27,12 +29,14 @@ function runTests(loopCount){
         if(testList.indexOf(testToRun) == -1){
             console.error("Running Tests End To End Tests ");
             shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join(" test/") + " --reporter mochawesome", function(){
-                process.exit();
+                let resultReport = require('./mochawesome-reports/mochawesome.json');
+                process.exit(resultReport.stats.failures);
             });
         }else{
             console.error("Running Tests Just for: "+ testToRun);
             shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+" --reporter mochawesome", function(){
-                process.exit();
+                let resultReport = require('./mochawesome-reports/mochawesome.json');
+                process.exit(resultReport.stats.failures);
             });
         }
     }else if(loopCount > 60){
