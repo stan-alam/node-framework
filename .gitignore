@@ -1,4 +1,3 @@
-
 .gitignore
 .idea/
 node_modules
@@ -7,3 +6,5 @@ npm-debug.log
 lib/publisher.bat
 *.txt
 lib/*.txt
+mochawesome-reports/*
+logs/*
