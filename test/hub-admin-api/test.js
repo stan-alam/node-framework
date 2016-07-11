@@ -11,21 +11,21 @@ const authFunctions = require('../../lib/authFunctions.js'),
 
 global.assert = require('assert');
 
-function consumeAllClearing(accessToken, callback){
+function consumeAllClearing(accessToken, lastId, callback){
     authFunctions.convertConsumeAll(accessToken, function(error, consumeToken){
         if(error){
             console.error(error);
             process.exit();
         }else{
-            mqsFunctions.callConsumeAll(consumeToken, function(error, response){
+            mqsFunctions.callConsumeAll(consumeToken, lastId, function(error, response){
                 if(error){
                     console.error(error);
                     process.exit();
                 }else{
                     if(response.length > 0){
-                        consumeAllClearing(callback);
+                        consumeAllClearing(accessToken, parseInt(response[response.length-1].id), callback);
                     }else{
-                        callback(response);
+                        callback(response, lastId);
                     }
                 }
             });
@@ -35,8 +35,9 @@ function consumeAllClearing(accessToken, callback){
 
 
 describe("Running hub-admin-api Integration Tests", function() {
-  let driver, uiToken, accessToken = '';
+  let driver, uiToken, accessToken, subAccessToken = '';
   let resourceName = 'subjects';
+  let lastConsumeAllId = 0;
   let pubApplication, subApplication = [];
 
   before(function(done){
@@ -62,12 +63,20 @@ describe("Running hub-admin-api Integration Tests", function() {
                                 process.exit();
                             }else{
                                 subApplication = application;
-                                 authFunctions.getAccessToken(pubApplication.apiKey, function(error, returnAccessToken){
+                                authFunctions.getAccessToken(pubApplication.apiKey, function(error, returnAccessToken){
                                      if(error){
                                          console.error('Error: '+error);
                                          process.exit();
                                      }else{
                                          accessToken = returnAccessToken;
+                                     }
+                                });
+                                authFunctions.getAccessToken(subApplication.apiKey, function(error, returnAccessToken){
+                                     if(error){
+                                         console.error('Error: '+error);
+                                         process.exit();
+                                     }else{
+                                         subAccessToken = returnAccessToken;
                                      }
                                  });
                             }
@@ -90,7 +99,8 @@ describe("Running hub-admin-api Integration Tests", function() {
   });
 
   it("All are consumed from /consumeAll", function(done){
-    consumeAllClearing(accessToken, function(response){
+    consumeAllClearing(accessToken, 0, function(response, lastId){
+        lastConsumeAllId = lastId;
         assert.equal(response.length, 0);
         done();
     });
@@ -109,10 +119,26 @@ describe("Running hub-admin-api Integration Tests", function() {
   });
 
  it("Send 3 Change Notifications with dataAccess Enable",function(done){
-    pubFunctions.createChangeNotification(resourceName, function(genChangeNotification){
-        assert(genChangeNotification);
-
-        done();
+    this.timeout(1500000);
+    authFunctions.getAccessToken(pubApplication.apiKey, function(error, enabledToken){
+      if(error){
+          console.error('Error: '+error);
+          process.exit();
+      }else{
+        pubFunctions.createChangeNotification(resourceName, function(genChangeNotification){
+            assert(genChangeNotification);
+            genChangeNotification.content.title = "Data Access Enabled";
+            pubFunctions.sendChangeNotifications(enabledToken, genChangeNotification, 3, [], function(error, results){
+                if(error){
+                    console.error(error);
+                    process.exit();
+                }else{
+                    assert.equal(results.length, 3);
+                    done();
+                }
+            });
+        });
+      }
     });
  });
 
@@ -127,4 +153,55 @@ describe("Running hub-admin-api Integration Tests", function() {
         }
     });
   });
+
+
+ it("Send 3 Change Notifications with dataAccess Disable", function(done){
+    pubFunctions.createChangeNotification(resourceName, function(genChangeNotification){
+        assert(genChangeNotification);
+        genChangeNotification.content.title = "Data Access Disabled";
+        pubFunctions.sendChangeNotifications(accessToken, genChangeNotification, 3, [], function(error, results){
+            if(error){
+                console.error(error);
+                process.exit();
+            }else{
+                console.error(results)
+                assert.equal(results.length, 3);
+                done();
+            }
+        });
+    });
+ });
+
+ it("Verify all Messages are in Consume", function(done){
+    mqsFunctions.callConsume(subAccessToken, 0, function(error, response){
+       if(error){
+           console.error(error);
+           process.exit();
+       }else{
+            assert.equal(response.length, 6);
+            done();
+       }
+   });
+ });
+
+
+ it("Verify all Messages are in ConsumeAll", function(done){
+    this.timeout(1500000);
+   authFunctions.convertConsumeAll(subAccessToken, function(error, consumeToken){
+       if(error){
+           console.error(error);
+           process.exit();
+       }else{
+           mqsFunctions.callConsumeAll(consumeToken, lastConsumeAllId, function(error, response){
+               if(error){
+                   console.error(error);
+                   process.exit();
+               }else{
+                    assert.equal(response.length, 3);
+                    done();
+               }
+           });
+       }
+   });
+ })
 });
