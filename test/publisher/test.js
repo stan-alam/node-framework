@@ -28,7 +28,7 @@ const
     genAccessToken = require('../../lib/genBannerAccessToken.js'),
     async = require('async');
 
-describe('POST / happy path', function() {
+describe('Running Publish Integration Tests', function() {
     before(function(done) {
         this.timeout(70000);
         async.series([
@@ -87,260 +87,222 @@ describe('POST / happy path', function() {
             });
 
     });
+
+
+
+  it('POST / operation: enum created - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(oc.oc())
+  			.timeout(5000)
+  			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / operation: enum replaced - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(or.or())
+  			.timeout(5000)
+  			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / operation: enum patched - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(op.op())
+  			.timeout(5000)
+ 			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / operation: enum deleted - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(od.od())
+  			.timeout(5000)
+  			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / operation: enum limited - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(ol.ol())
+  			.timeout(5000)
+  			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / operation: enum invalid - response with status 400', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(oi.oi())
+  			.timeout(5000)
+  			.expect(400)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / required operation: not present - response with status 400', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(onp.onp())
+  			.timeout(5000)
+  			.expect(400)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / required resource: enum invalid - response with status 403', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(ri.ri())
+  			.timeout(5000)
+  			.expect(403)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / required resource: not present - response with status 400', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(rnp.rnp())
+  			.timeout(5000)
+  			.expect(400)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / contentType: invalid - response with status 400', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(rnp.rnp())
+  			.timeout(5000)
+  			.expect(400)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / contentType: Not Present - response with status 200', function(done) {
+  		request(url)
+  			.post('/publish')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+ 				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+ 			.send(ctn.ctn())
+  			.timeout(5000)
+  			.expect(200)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  	});
+
+  it('POST / invalid endpoint - response with status 404', function(done) {
+  		request(url)
+  			.post('/publisher')
+  			.set({
+  				'Charset':'utf-8',
+  				'Authorization': token,
+  				'Accept': 'application/json',
+  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  			})
+  			.send(hp.hp())
+  			.timeout(5000)
+  			.expect(404)
+  			.end(function(err, res){
+  				if (err) return done(err);
+  				done();
+  			});
+  });
 });
-
-
-
-//  describe('POST / operation: enum created', function() {
-// 	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(oc.oc())
-//  			.timeout(5000)
-//  			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//  });
-
-//  describe('POST / operation: enum replaced', function() {
-//  	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(or.or())
-//  			.timeout(5000)
-//  			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//  });
-
-//  describe('POST / operation: enum patched', function() {
-//  	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(op.op())
-//  			.timeout(5000)
-// 			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//  });
-
-//  describe('POST / operation: enum deleted', function() {
-//  	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(od.od())
-//  			.timeout(5000)
-//  			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / operation: enum limited', function() {
-//  	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(ol.ol())
-//  			.timeout(5000)
-//  			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / operation: enum invalid', function() {
-//  	it('response with status 400', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(oi.oi())
-//  			.timeout(5000)
-//  			.expect(400)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / required operation: not present', function() {
-//  	it('response with status 400', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(onp.onp())
-//  			.timeout(5000)
-//  			.expect(400)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / required resource: enum invalid', function() {
-//  	it('response with status 403', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(ri.ri())
-//  			.timeout(5000)
-//  			.expect(403)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / required resource: not present', function() {
-//  	it('response with status 400', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token,  
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(rnp.rnp())
-//  			.timeout(5000)
-//  			.expect(400)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / contentType: invalid', function() {
-//  	it('response with status 400', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token,  
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(rnp.rnp())
-//  			.timeout(5000)
-//  			.expect(400)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / contentType: Not Present', function() {
-//  	it('response with status 200', function(done) {
-//  		request(url)
-//  			.post('/publish')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-// 				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-// 			.send(ctn.ctn())
-//  			.timeout(5000)
-//  			.expect(200)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-//  describe('POST / invalid endpoint', function() {
-//  	it('response with status 404', function(done) {
-//  		request(url)
-//  			.post('/publisher')
-//  			.set({
-//  				'Charset':'utf-8', 
-//  				'Authorization': token, 
-//  				'Accept': 'application/json', 
-//  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-//  			})
-//  			.send(hp.hp())
-//  			.timeout(5000)
-//  			.expect(404)
-//  			.end(function(err, res){
-//  				if (err) return done(err);
-//  				done();
-//  			});
-//  	});
-
-//   });
-
-// });
