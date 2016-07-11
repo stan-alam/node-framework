@@ -1,0 +1,17 @@
+{
+  "operation": "replaced",
+  "resource": {
+    "id" : "393cda90-543b-4d98-adb7-00732cad96bd",
+    "name": "addresses",
+    "version": "application/vnd.hedtech.application.v2+json"
+  },
+  "content": {
+    "description": "test",
+    "title": "Biology",
+    "id": "c31a50d6-662c-4a85-afa4-6bdf122fe179",
+    "bookAuthor": "update",
+    "tenant_id": "53b2f1d0641a0a0f000c2f10",
+    "last_modified": "2015-06-04T14:38:49.934Z",
+    "metadata_version": "1.0.0"
+  }
+}
