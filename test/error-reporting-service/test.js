@@ -25,23 +25,23 @@ describe("Running Error Integration Tests", function() {
         driver = uiDriver;
         authFunctions.getUiToken(driver, function(Token){
             uiToken = Token;
-            configFunctions.createApplications(2, uiToken, function(error, applications){
+            configFunctions.createApplications(2, uiToken, [], function(error, applications){
                 if(error){
                     console.error("Error: "+error);
                     process.exit();
                 }else{
                     applicationList = applications;
-                    authFunctions.getAccessToken(applicationList.apiKey, function(error, returnAccessToken){
+                    authFunctions.getAccessToken(applicationList[0].apiKey, function(error, returnAccessToken){
                         if(error){
                             console.error('Error: '+error);
                             process.exit();
                         }else{
                             accessToken = returnAccessToken;
+                            done();
                         }
                     });
                 }
             });
-            done();
         });
     });
   });
