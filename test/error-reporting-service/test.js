@@ -53,6 +53,7 @@ describe("Running Error Integration Tests", function() {
   });
 
   it("Invoke errors api with valid errors payload", function(done) {
+    this.timeout(1500000)
     errorSchema.applicationId = applicationList.id;
     errorSchema.description = validateDescription;
     let url = envVars.test.url+envVars.global.error;
@@ -68,6 +69,7 @@ describe("Running Error Integration Tests", function() {
   });
 
   it("Invoke errors api with invalid errors payload", function(done) {
+    this.timeout(1500000)
     delete errorSchema.responseCode;
     errorSchema.description = 'Random String';
     let url = envVars.test.url+envVars.global.error;
