@@ -12,7 +12,11 @@ var testToRun = process.argv[2] || 'EndToEnd';
 //Setup Selenium
 var logdir = new Date().getTime();
 
-fs.mkdirSync("logs");
+try{
+    fs.mkdirSync("logs");
+} catch(e){
+    console.info("logs already createed");
+}
 fs.mkdirSync("logs/"+logdir);
 spawn("./node_modules/.bin/selenium-standalone install && ./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
 spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --verbose > logs/"+logdir+"/chromedriver.log");
