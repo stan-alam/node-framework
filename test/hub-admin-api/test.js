@@ -22,6 +22,7 @@ function consumeAllClearing(accessToken, lastId, callback){
                     console.error(error);
                     process.exit();
                 }else{
+                    console.error('Number of Messages to clean from ConsumeAll are: '+response.length);
                     if(response.length > 0){
                         consumeAllClearing(accessToken, parseInt(response[response.length-1].id), callback);
                     }else{
