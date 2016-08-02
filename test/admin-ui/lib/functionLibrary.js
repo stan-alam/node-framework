@@ -61,7 +61,7 @@ exports.addApplications = function(driver, params, cb) {
 
         before(function(done) {
             try {
-                //this.timeout(10000);
+                //this.timeout(50000);
 
                 driver.wait(until.elementLocated(By.id('addApplication_link')), 50000)
                     .then(function(ele) { ele.click(); clickedAddLink = true; })
@@ -101,14 +101,13 @@ exports.addApplications = function(driver, params, cb) {
                     .finally(function(){ done();});
         });
 
-        /*
         it("Click home link", function(done) {
             driver.wait(until.elementLocated(By.xpath("//a[@data-ng-click='goHome()']")), 50000)
                     .then(function(ele) { ele.click();  expect(true).to.equal(true); })
                     .catch(function(e) {  console.log('error home link', e); } )
                     .finally(function(){ done();});
         });
-        */
+        
 
         it("driver exists", function(done) {
             expect(driver).to.exist;
