@@ -1,10 +1,92 @@
 'use strict';
 
 const
+    wd = require("webdriver-sync"),
+    By = wd.By,
     expect  = require("chai").expect,
-    By = require('selenium-webdriver').By,
+    xpaths  = require ('./xpaths.js'),
+    sleep = require('sleep'),
+    sleepSeconds =5;
+
+exports.oktaLogin = function(driver, params, cb) {
+    describe('oktaLogin2', function() {
+
+        it("driver exists", function(done){
+            expect(driver).to.exist;
+            done();
+        });
+
+        this.timeout(7000000)
+        let xpath = xpaths.Okta_Single_SignOn.signInUserName;
+        let keys = params[0].username;
+        driver.findElement(By.xpath(xpath)).sendKeys(keys);
+
+        xpath = xpaths.Okta_Single_SignOn.signInPassword;
+        keys = params[0].password;
+        driver.findElement(By.xpath(xpath)).sendKeys(keys);
+
+        xpath = xpaths.Okta_Single_SignOn.signInButton;
+        driver.findElement(By.xpath(xpath)).click();
+
+        sleep.sleep(5);
+
+        // it() validation for login?
+        it("login complete", function(done){
+            expect(true).to.equal(true);
+            done(cb(driver));
+        });
+
+    });
+}
+
+exports.addApplications = function(driver, params, cb) {
+    // only doing the first applciation, need to modify to save multiple applications
+    var applicationName = params[0].name;
+
+    describe('addApplications2 - ' + applicationName, function() {
+        it("driver exists", function(done){
+            expect(driver).to.exist;
+            done();
+        });
+
+        this.timeout(7000000)
+        let xpath = xpaths.CommonModal.inputRequiredLinkId;
+        driver.findElement(By.xpath(xpath)).click();
+        sleep.sleep(sleepSeconds);
+
+        xpath = xpaths.CommonModal.inputForApp;
+        driver.findElement(By.xpath(xpath)).sendKeys(applicationName);
+        sleep.sleep(sleepSeconds);
+        
+        xpath = xpaths.CommonModal.saveButtonForApplicationAdd;
+        driver.findElement(By.xpath(xpath)).click();
+        sleep.sleep(sleepSeconds);
+        
+        // it() validation for add app?
+        it("add application complete", function(done){
+            expect(true).to.equal(true);
+            done(cb(driver));
+        });
+
+    });
+
+}
+
+/* first try using selenium-webdriver
+ these can be deleted
+
+
+const
+    expect  = require("chai").expect,
     until = require('selenium-webdriver').until,
-    uiFunctions = require('../../../lib/uiFunctions.js');
+    uiFunctions = require('../../../lib/uiFunctions.js'),
+    driverLib = require('./driver.js'),
+    xpaths  = require ('./xpaths.js'),
+    sleep = require('sleep'),
+    sleepSeconds =5;
+
+
+
 
 exports.oktaLogin = function(driver, params, cb) {
     describe('oktaLogin', function() {
@@ -43,13 +125,13 @@ exports.killBrowser = function(driver, params, cb) {
         });
     });
 
-    /*
+
         {"name" : "kill browser step",
          "description":"Some description here about executing the step.",
          "function":"killBrowser",
          "params" : [  ]
         }
-*/
+
 }
 
 exports.addApplications = function(driver, params, cb) {
@@ -115,4 +197,10 @@ exports.addApplications = function(driver, params, cb) {
         });
 
   });
+
+
+
 }
+
+
+*/

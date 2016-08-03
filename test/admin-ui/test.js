@@ -1,55 +1,49 @@
 "use strict";
 
 const
-    supertest = require('supertest'),
+    hub_test_lib = require("hub-test-lib"),
+    function_library = require('./lib/functionLibrary'),
+    driverLib = require('./lib/driver.js');
+
+/**
+ *  supertest = require('supertest'),
     assert    = require('assert'),
     expect  = require("chai").expect,
     hub_test_lib = require("hub-test-lib"),
     uiFunctions = require('../../lib/uiFunctions.js'),
-    function_library = require('./lib/functionLibrary');
+    function_library = require('./lib/functionLibrary'),
+    driverLib = require('./lib/driver.js');
 
+ * 
+ * 
+ */
 
 describe('Start admin-ui tests', function() {
+    for (var test of hub_test_lib.testCases) {
+        for (var browser of test.browsers) { 
+            describe(test.name + ' - ' + browser.name,function() {
+                
+                // get driver for specific browser
+                let driver = driverLib.startDriver(browser.name);
+                
+                for (var step of test.testSteps) {
+                    if (step.hasOwnProperty('script')) {
+                        // execute custom function
+                        step.library[step.function](driver, step.params, function(callbackDriver) {
+                            driver = callbackDriver;
+                        });
+                    } else {
+                        //execute function from library
+                        function_library[step.function](driver, step.params, function(callbackDriver) {
+                            driver = callbackDriver;
+                        });
+                    }                   
+                }
 
-    let driver;
-
-    var testCaseFunction = function(testCount) {
-
-        if (hub_test_lib.testCases[testCount]) {
-            var test = hub_test_lib.testCases[testCount];
-            describe(test.name,function() {
-                var stepFunction = function(count) {
-                    if (test.testSteps[count]) {
-                                var step = test.testSteps[count];
-
-                                if (step.hasOwnProperty('script')) {
-                                    // execute custom function
-                                        step.library[step.function](driver, step.params, function(callbackDriver) {
-                                            driver = callbackDriver;
-                                            stepFunction(count+1);
-                                        });
-                                        
-                                    } else {
-                                    
-                                        //execute function from library
-                                        function_library[step.function](driver, step.params, function(callbackDriver) {
-                                            driver = callbackDriver;
-                                            stepFunction(count+1);
-                                        });
-
-                                    }
-                                }
-                    else {
-                        // call next test case
-                        testCaseFunction(testCount+1);
-                    }
-                };
-                stepFunction(0);
-           });
+                // uncomment to kill driver/browser
+                //driver = driverLib.endDriver(driver);
+            });
         }
-    }    
-
-    testCaseFunction(0);
-   
+    } 
        
 });
