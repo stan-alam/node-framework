@@ -107,8 +107,8 @@ describe("Running hub-admin-api Integration Tests", function() {
     });
   });
 
-  it("Enable allTenant", function(done){
-    adminFunctions.allTenantFlag(accessToken, 'enable', function(error, response){
+  it("Enable allTenants", function(done){
+    adminFunctions.allTenantsFlag(accessToken, 'enable', function(error, response){
         if(error){
             console.error(error.getBody('utf8'));
             done();
@@ -119,7 +119,7 @@ describe("Running hub-admin-api Integration Tests", function() {
     });
   });
 
- it("Send 3 Change Notifications with allTenant Enable",function(done){
+ it("Send 3 Change Notifications with allTenants Enable",function(done){
     this.timeout(1500000);
     authFunctions.getAccessToken(pubApplication.apiKey, function(error, enabledToken){
       if(error){
@@ -143,8 +143,8 @@ describe("Running hub-admin-api Integration Tests", function() {
     });
  });
 
- it("disable allTenant", function(done){
-    adminFunctions.allTenantFlag(accessToken, 'disable', function(error, response){
+ it("disable allTenants", function(done){
+    adminFunctions.allTenantsFlag(accessToken, 'disable', function(error, response){
         if(error){
             console.error(error.getBody('utf8'));
             done();
@@ -156,7 +156,7 @@ describe("Running hub-admin-api Integration Tests", function() {
   });
 
 
- it("Send 3 Change Notifications with allTenant Disable", function(done){
+ it("Send 3 Change Notifications with allTenants Disable", function(done){
     pubFunctions.createChangeNotification(resourceName, function(genChangeNotification){
         assert(genChangeNotification);
         genChangeNotification.content.title = "Data Access Disabled";

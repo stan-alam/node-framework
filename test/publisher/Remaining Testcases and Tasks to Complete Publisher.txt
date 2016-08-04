@@ -10,15 +10,15 @@ Remaining Testcases and Tasks to Complete Publisher
 
 
 Remaining tests flows
-> set dataAcess switch off (allTenant: false)
+> set dataAcess switch off (allTenants: false)
 > perform existing testcases
 > validate at UI
 > validate at /consumeAll (note: should be empty arrray [] )
-> set allTenant to on (allTenant: true)
+> set allTenants to on (allTenants: true)
 > send three change-notifications [3]
 > validate at UI
 > validate at /consumeAll
-> set allTenant to off (allTenant: false)
+> set allTenants to off (allTenants: false)
 > send one change-notification [1]
 > validate at UI
 > validate at /consumeAll
