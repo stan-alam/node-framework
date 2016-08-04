@@ -8,3 +8,4 @@ lib/publisher.bat
 lib/*.txt
 mochawesome-reports/*
 logs/*
+.env

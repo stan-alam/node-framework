@@ -3,7 +3,7 @@
     "tokenService": "/auth",
     "publisher": "/publish",
     "mqs": "/consume",
-    "mqsDataAccess": "/consumeAll",
+    "mqsallTenant": "/consumeAll",
     "error": "/errors"
   },
   "headers": {
