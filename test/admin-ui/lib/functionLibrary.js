@@ -6,7 +6,7 @@ const
     expect  = require("chai").expect,
     xpaths  = require ('./xpaths.js'),
     sleep = require('sleep'),
-    sleepSeconds =5;
+    sleepSeconds =8;
 
 exports.oktaLogin = function(driver, params, cb) {
     describe('oktaLogin2', function() {
@@ -50,6 +50,7 @@ exports.addApplications = function(driver, params, cb) {
         });
 
         this.timeout(7000000)
+        sleep.sleep(sleepSeconds);
         let xpath = xpaths.CommonModal.inputRequiredLinkId;
         driver.findElement(By.xpath(xpath)).click();
         sleep.sleep(sleepSeconds);
@@ -57,11 +58,11 @@ exports.addApplications = function(driver, params, cb) {
         xpath = xpaths.CommonModal.inputForApp;
         driver.findElement(By.xpath(xpath)).sendKeys(applicationName);
         sleep.sleep(sleepSeconds);
-        
+
         xpath = xpaths.CommonModal.saveButtonForApplicationAdd;
         driver.findElement(By.xpath(xpath)).click();
         sleep.sleep(sleepSeconds);
-        
+
         // it() validation for add app?
         it("add application complete", function(done){
             expect(true).to.equal(true);
@@ -71,6 +72,43 @@ exports.addApplications = function(driver, params, cb) {
     });
 
 }
+
+exports.deleteApplications = function(driver, params, cb) {
+    //delete only one application, not multiple applications
+    var applicationName = params[0].name;
+
+    describe('deleteApplications - ' + applicationName, function(){
+        it("driver exists", function(done) {
+            expect(driver).to.exist;
+            done();
+        });
+
+    this.timeout(7000000)
+    sleep.sleep(sleepSeconds);
+
+    let xpath =  xpaths.CommonModal.linksViewApplication;
+    console.log(xpaths.CommonModal.linksViewApplication);
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+
+    xpath =  xpaths.CommonModal.linksSelectApplication;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath =  xpaths.CommonModal.buttonDeleteApplication;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath = xpaths.CommonModal.buttonConfirmDeleteApplication;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+
+    });
+}
+
+
 
 /* first try using selenium-webdriver
  these can be deleted
@@ -96,7 +134,7 @@ exports.oktaLogin = function(driver, params, cb) {
         browserConfig.username = params[0].username;
         browserConfig.password = params[0].password;
 
-         it("browser title is Ellucian Ethos Integration", function(done) { 
+         it("browser title is Ellucian Ethos Integration", function(done) {
             if (!driver) {
                 this.timeout(1500000); //Web browser is slow so Increase the Timeout for mocha
                 uiFunctions.loadUi(browserConfig,function(uiDriver){
@@ -107,7 +145,7 @@ exports.oktaLogin = function(driver, params, cb) {
                     })
                 });
             }
-            else { 
+            else {
                 localDriver = driver;
                 done();
             }
@@ -153,7 +191,7 @@ exports.addApplications = function(driver, params, cb) {
                 console.log(e);
             }
         });
-    
+
         it("Clicked add link", function(done) {
             expect(clickedAddLink).to.equal(true);
             done();
@@ -189,7 +227,7 @@ exports.addApplications = function(driver, params, cb) {
                     .catch(function(e) {  console.log('error home link', e); } )
                     .finally(function(){ done();});
         });
-        
+
 
         it("driver exists", function(done) {
             expect(driver).to.exist;

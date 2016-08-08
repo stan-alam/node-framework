@@ -13,7 +13,11 @@ var CommonModal = {
     buttonEditDesc: "//button[@id='edit_description']",
     inputFieldDesc: ".//textarea[@id='input_description']",
     buttonSaveDesc: "//button[@id='save_description']",
-    inputRequiredLinkHome: "//a[contains(@href, '/#/dashboard')]"
+    inputRequiredLinkHome: "//a[contains(@href, '/#/dashboard')]",
+    linksSelectApplication: ".//input[@type='checkbox']",
+    linksViewApplication: ".//*[@id='applicationsCount_link']",
+    buttonDeleteApplication: ".//button[contains(@data-hint,'Delete')]",
+    buttonConfirmDeleteApplication: ".//button[@id='delete_confirm_button']"
 }
 
 var common = {
