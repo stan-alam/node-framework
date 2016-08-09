@@ -27,7 +27,7 @@
     "file-exists": "^1.0.0",
     "fs": "0.0.2",
     "hedtech-logging": "^0.7.0",
-    "hub-test-lib": "^1.0.5",
+    "hub-test-lib": "^1.0.6",
     "jsonwebtoken": "^7.0.1",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",

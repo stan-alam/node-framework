@@ -110,6 +110,42 @@ exports.deleteApplications = function(driver, params, cb) {
 
 
 
+exports.changeEnvironments = function(driver, params, cb) {
+    //delete only one application, not multiple applications
+    var applicationName = params[0].name;
+
+    describe('changeEnvironments - ' + applicationName, function(){
+        it("driver exists", function(done) {
+            expect(driver).to.exist;
+            done();
+        });
+
+    this.timeout(7000000)
+    sleep.sleep(sleepSeconds);
+
+    let xpath =  xpaths.CommonModal.linksViewApplication;
+    console.log(xpaths.CommonModal.linksViewApplication);
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath = xpaths.CommonModal.linksRequiredLinkHome;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath = xpaths.CommonModal.linkSelectEnv;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+
+
+
+    });
+}
+
+
+
+
+
 /* first try using selenium-webdriver
  these can be deleted
 
