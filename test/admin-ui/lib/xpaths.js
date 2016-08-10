@@ -19,9 +19,11 @@ var CommonModal = {
     buttonDeleteApplication: ".//button[contains(@data-hint,'Delete')]",
     buttonConfirmDeleteApplication: ".//button[@id='delete_confirm_button']",
     linksHome: "//a[contains(@href, '/#/dashboard')]",
-    linkSelectEnv: ".//link=kingfox@ellucian.me.sandbox",
-    linkSelectProd: "//label[@id='ProductionLabel']/cp-translate",
-    linkSelectTest: "//label[@id='TestLabel']/cp-translate"
+   // linkSelectEnv: ".//link[@id='kingfox@ellucian.me.sandbox']",
+    linkSelectEnv: "//span[2]",
+    linkSelectProd: "//label[@id='ProductionLabel']",
+    linkSelectTest: "//label[@id='TestLabel']"
+    //label[@id='ProductionLabel']
 }
 
 var common = {

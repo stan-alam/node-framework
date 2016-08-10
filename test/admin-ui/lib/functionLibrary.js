@@ -133,8 +133,18 @@ exports.changeEnvironments = function(driver, params, cb) {
     sleep.sleep(sleepSeconds);
 
     xpath = xpaths.CommonModal.linkSelectEnv;
+    console.log(xpaths.CommonModal.linkSelectEnv);
     driver.findElement(By.xpath(xpath)).click();
     sleep.sleep(sleepSeconds);
+
+   xpath = xpaths.CommonModal.linkSelectProd;
+   console.log(xpaths.CommonModal.linkSelectProd);
+   driver.findElement(By.xpath(xpath)).click();
+   sleep.sleep(sleepSeconds);
+
+
+
+
 
 
 
