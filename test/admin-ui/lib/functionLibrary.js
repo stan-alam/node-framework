@@ -106,15 +106,17 @@ exports.deleteApplications = function(driver, params, cb) {
 
 
     });
+
+
 }
 
 
 
-exports.changeEnvironments = function(driver, params, cb) {
+exports.changeEnvironmentsProd = function(driver, params, cb) {
     //delete only one application, not multiple applications
     var applicationName = params[0].name;
 
-    describe('changeEnvironments - ' + applicationName, function(){
+    describe('changeEnvironmentsProd - ' + applicationName, function(){
         it("driver exists", function(done) {
             expect(driver).to.exist;
             done();
@@ -138,18 +140,59 @@ exports.changeEnvironments = function(driver, params, cb) {
     sleep.sleep(sleepSeconds);
 
    xpath = xpaths.CommonModal.linkSelectProd;
-   console.log(xpaths.CommonModal.linkSelectProd);
+  // console.log(xpaths.CommonModal.linkSelectProd);
    driver.findElement(By.xpath(xpath)).click();
    sleep.sleep(sleepSeconds);
 
 
-
-
-
-
-
+   xpath = xpaths.CommonModal.grabStringForEnvironment;
+   var stringGrab = driver.findElement(By.xpath(xpath)).getText();
+   sleep.sleep(sleepSeconds);
+   console.log("should grab string value" + stringGrab);
 
     });
+
+ }
+
+exports.changeEnvironmentsTest = function(driver, params, cb) {
+
+    var applicationName = params[0].name;
+
+    describe('changeEnvironmentsTest - ' + applicationName, function(){
+        it("driver exists", function(done) {
+            expect(driver).to.exist;
+            done();
+        });
+
+    this.timeout(7000000)
+    sleep.sleep(sleepSeconds);
+
+    let xpath =  xpaths.CommonModal.linksViewApplication;
+    console.log(xpaths.CommonModal.linksViewApplication);
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath = xpaths.CommonModal.linksRequiredLinkHome;
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+    xpath = xpaths.CommonModal.linkSelectEnv;
+    console.log(xpaths.CommonModal.linkSelectEnv);
+    driver.findElement(By.xpath(xpath)).click();
+    sleep.sleep(sleepSeconds);
+
+   xpath = xpaths.CommonModal.linkSelectTest;
+   driver.findElement(By.xpath(xpath)).click();
+   sleep.sleep(sleepSeconds);
+
+
+   xpath = xpaths.CommonModal.grabStringForEnvironment;
+   var stringGrab = driver.findElement(By.xpath(xpath)).getText();
+   sleep.sleep(sleepSeconds);
+   console.log("should grab string value" + stringGrab);
+
+    });
+
 }
 
 

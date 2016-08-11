@@ -22,8 +22,9 @@ var CommonModal = {
    // linkSelectEnv: ".//link[@id='kingfox@ellucian.me.sandbox']",
     linkSelectEnv: "//span[2]",
     linkSelectProd: "//label[@id='ProductionLabel']",
-    linkSelectTest: "//label[@id='TestLabel']"
+    linkSelectTest: "//label[@id='TestLabel']",
     //label[@id='ProductionLabel']
+    grabStringForEnvironment: "//section/div/h3/cp-translate"
 }
 
 var common = {
