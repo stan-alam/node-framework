@@ -117,8 +117,8 @@ exports.changeEnvironmentsProd = function(driver, params, cb) {
     var applicationName = params[0].name;
 
     describe('changeEnvironmentsProd - ' + applicationName, function(){
-        it("driver exists", function(done) {
-            expect(driver).to.exist;
+        it("expect that environment displays Production", function(done) {
+            expect(stringGrab).to.equal('Production');
             done();
         });
 
@@ -159,8 +159,8 @@ exports.changeEnvironmentsTest = function(driver, params, cb) {
     var applicationName = params[0].name;
 
     describe('changeEnvironmentsTest - ' + applicationName, function(){
-        it("driver exists", function(done) {
-            expect(driver).to.exist;
+        it("expect the Environment to display Test", function(done) {
+            expect(stringGrab2).to.equal('Test');
             done();
         });
 
@@ -187,9 +187,9 @@ exports.changeEnvironmentsTest = function(driver, params, cb) {
 
 
    xpath = xpaths.CommonModal.grabStringForEnvironment;
-   var stringGrab = driver.findElement(By.xpath(xpath)).getText();
+   var stringGrab2 = driver.findElement(By.xpath(xpath)).getText();
    sleep.sleep(sleepSeconds);
-   console.log("should grab string value" + stringGrab);
+   console.log("should grab string value" + stringGrab2);
 
     });
 
