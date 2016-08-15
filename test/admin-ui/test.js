@@ -18,9 +18,10 @@ const
  *
  */
 
-try {
+
     describe('Start admin-ui tests', function() {
         for (var test of hub_test_lib.testCases) {
+            try {
             for (var browser of test.browsers) {
                 describe(test.name + ' - ' + browser.name,function() {
 
@@ -45,10 +46,11 @@ try {
                       driver = driverLib.endDriver(driver);
                 });
             }
+
+           } catch(e) {
+            console.log(e);
+           }
         }
 
     });
 
-} catch(e) {
-    console.log(e);
-}
