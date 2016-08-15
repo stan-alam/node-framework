@@ -18,32 +18,37 @@ const
  *
  */
 
-describe('Start admin-ui tests', function() {
-    for (var test of hub_test_lib.testCases) {
-        for (var browser of test.browsers) {
-            describe(test.name + ' - ' + browser.name,function() {
+try {
+    describe('Start admin-ui tests', function() {
+        for (var test of hub_test_lib.testCases) {
+            for (var browser of test.browsers) {
+                describe(test.name + ' - ' + browser.name,function() {
 
-                // get driver for specific browser
-                let driver = driverLib.startDriver(browser.name);
+                    // get driver for specific browser
+                    let driver = driverLib.startDriver(browser.name);
 
-                for (var step of test.testSteps) {
-                    if (step.hasOwnProperty('script')) {
-                        // execute custom function
-                        step.library[step.function](driver, step.params, function(callbackDriver) {
-                            driver = callbackDriver;
-                        });
-                    } else {
-                        //execute function from library
-                        function_library[step.function](driver, step.params, function(callbackDriver) {
-                            driver = callbackDriver;
-                        });
+                    for (var step of test.testSteps) {
+                        if (step.hasOwnProperty('script')) {
+                            // execute custom function
+                            step.library[step.function](driver, step.params, function(callbackDriver) {
+                                driver = callbackDriver;
+                            });
+                        } else {
+                            //execute function from library
+                            function_library[step.function](driver, step.params, function(callbackDriver) {
+                                driver = callbackDriver;
+                            });
+                        }
                     }
-                }
 
-                //  uncomment to kill driver/browser
-                  driver = driverLib.endDriver(driver);
-            });
+                    //  uncomment to kill driver/browser
+                      driver = driverLib.endDriver(driver);
+                });
+            }
         }
-    }
 
-});
+    });
+
+} catch(e) {
+    console.log(e);
+}
