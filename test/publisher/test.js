@@ -45,8 +45,8 @@ describe('Running Publish Integration Tests', function() {
                 createSub.addSubscription(callback);
             },
             function(callback) {
-                console.log('turning Off DataAccess Flag');
-                permissions.setDataAccessPermissions(false, callback);
+                console.log('turning Off allTenants Flag');
+                permissions.setallTenantsPermissions(false, callback);
             },
             function(callback) {
                 console.log('Generate access token');

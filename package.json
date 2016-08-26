@@ -1,6 +1,14 @@
 {
   "name": "hub-node-test",
+<<<<<<< HEAD
   "version": "0.1.2",
+=======
+<<<<<<< HEAD
+  "version": "0.0.4",
+=======
+  "version": "0.1.1",
+>>>>>>> adminUI
+>>>>>>> master
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {

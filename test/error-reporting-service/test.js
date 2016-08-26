@@ -73,6 +73,7 @@ describe("Running Error Integration Tests", function() {
     delete errorSchema.responseCode;
     errorSchema.description = 'Random String';
     let url = envVars.test.url+envVars.global.error;
+    sleep.sleep(1);
     let res = request('POST', url, {
         'headers': {
             "content-type": envVars.headers.error,
