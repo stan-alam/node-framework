@@ -1,0 +1,120 @@
+"use strict"
+//This script tests proxy api {test/publisher.js}
+
+var fs = require('fs');
+var bannerAccessToken;
+var token;
+
+
+const
+    request = require('supertest'),
+
+    url = 'https://test-integrationhub-integrate.10004.elluciancloud.com',
+    createApp = require('../../lib/createApplications.js'),
+    addResource = require('../../lib/createResourcesOwnerBanner.js'),
+    createSub = require('../../lib/createSubscriptionsElevate.js'),
+  //  permissions = require('../../lib/permissions.js'),
+    genAccessToken = require('../../lib/genBannerAccessToken.js'),
+    deleteApps = require('../../lib/deleteApplications.js'),
+    async = require('async');
+
+describe('Running  --Admin query auth  Ellucian privileged applications, Integration Tests--', function() {
+    before(function(done) {
+        this.timeout(70000);
+        async.series([
+            function(callback) {
+                console.log('creating applications');
+                createApp.createApplications(callback);
+            },
+            function(callback) {
+                console.log('adding resource');
+                addResource.addResource(callback);
+            },
+            function(callback) {
+                console.log('adding subscription');
+                createSub.addSubscription(callback);
+            },
+            // function(callback) {
+            //     console.log('turning Off DataAccess Flag');
+            //     permissions.setDataAccessPermissions(true, callback);
+            // },
+            function(callback) {
+                console.log('Generate access token');
+                genAccessToken.getBannerAccessToken(callback);
+            },
+
+            function(callback) {
+                console.log('deleting applications');
+                deleteApps.deleteApplications(callback);
+            }
+
+
+
+        ], function(err, results) {
+            if (!err) {
+                console.log("setup complete");
+                console.log("results="+results);
+                token=results[4];
+                done();
+            } else
+                console.log("setup complete with error" + err);
+
+        });
+
+    });
+
+    it('test case 1-admin-api-should respond with status 401', function(done) {
+     var token = 'blah';
+      console.log("token="+token);
+     //   request = require('supertest');
+          console.log("This should print the URL " + url);
+           request(url)
+            .get('/admin/ed15386b-9838-4d9b-8dee-3200ef9a37a6/api/authoritative-application-resources/')
+            .set({
+                'Charset': 'utf-8',
+                'Authorization': 'Bearer '+ token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+            })
+            .send()
+            .timeout(5000)
+            .expect(401)
+
+            .end(function(err, res) {
+               console.log(url);
+                if (err) {
+                  console.log('error' + err);
+                    return done(err);
+                }
+                 console.log(url);
+                done();
+            });
+
+    });
+
+    after(function(done) {
+        this.timeout(70000);
+        async.series([
+            function(callback) {
+                console.log('deleting applications');
+                deleteApps.deleteApplications(callback);
+                 console.log("Here is the URL" + url);
+            }
+        ], function(err, results) {
+            if (!err) {
+                console.log("after setup complete");
+                console.log("results="+results);
+                token=results[4];
+                done();
+            } else
+                console.log("after setup complete with error" + err);
+
+        });
+    });
+
+
+
+
+
+
+});
