@@ -1,0 +1,165 @@
+"use strict";
+//This script tests admin api
+
+var bannerAccessToken;
+var token;
+var tenantID;
+
+const
+    vo = require('vo'),
+    fs = require('fs'),
+    sleepy = require('sleep'),
+    request = require('supertest'),
+    url = 'https://test-integrationhub-integrate.10004.elluciancloud.com',
+    createApp = require('../../lib/createApplications.js'),
+    addResource = require('../../lib/createResourcesOwnerBanner.js'),
+    createSub = require('../../lib/createSubscriptionsElevate.js'),
+    permissions = require('../../lib/permissions.js'),
+    genAccessToken = require('../../lib/genBannerAccessToken.js'),
+    deleteApps = require('../../lib/deleteApplications.js'),
+    encodeDecodeJWT = require('../../lib/encodeDecodeJWT'),
+    async = require('async'),
+    createSpecialToken = require('../../lib/encodeDecodeJWT.js'),
+    createUserToken = require('../../lib/createSessionToken.js');
+
+describe('Running  --Admin query auth  Ellucian privileged applications, Integration Tests--', function() {
+    before(function(done) {
+        this.timeout(70000);
+        async.series([
+
+            // function(callback) {
+            //     console.log('create user token');
+            //     createUserToken.createSessionToken(callback);
+
+            // },
+
+
+
+            function(callback) {
+                console.log('creating applications');
+                createApp.createApplications(callback);
+            },
+            function(callback) {
+                console.log('adding resource');
+                addResource.addResource(callback);
+            },
+            function(callback) {
+                console.log('adding subscription');
+                createSub.addSubscription(callback);
+            },
+            // function(callback) {
+            //     console.log('turning Off DataAccess Flag');
+            //     permissions.setDataAccessPermissions(true, callback);
+            // },
+
+            function(callback) {
+                console.log('Generate access token');
+                genAccessToken.getBannerAccessToken(callback);
+            },
+
+
+               function(callback) {
+                  console.log('Generate special token');
+                  createSpecialToken.encodeDecodeJWT(callback);
+            },
+
+
+
+            function(callback) {
+                console.log('deleting applications');
+                deleteApps.deleteApplications(callback);
+            }
+
+        ], function(err, results) {
+            if (!err) {
+                console.log("setup complete");
+                console.log("results=" + results);
+                token = results[4];
+                done();
+            } else
+                console.log("setup complete with error" + err);
+
+        });
+
+    });
+
+
+
+
+    it('test case 4 -admin-api-should respond with status 200', function(done) {
+
+
+        fs.readFile('./sessionSpecialStorage.txt', 'utf8', function(err, data) {
+            token = data;
+            if (err) {
+                console.log('ERROR=' + err);
+                return console.log(err);
+            }
+            console.log('Token Used from sessionSpecialStorage ' + token);
+
+
+            fs.readFile('./tenantID.txt', 'utf8', function(err, data2) {
+                tenantID = data2;
+                if (err) {
+                    console.log('ERROR=' + err);
+                    return console.log(err);
+                }
+                console.log('the Tenant ID Used from sessionSpecialStorage ' + tenantID);
+
+                console.log("token=" + token);
+
+                console.log("This should print the URL " + url);
+                request(url)
+                    .get('/admin/' + tenantID + '/api/authoritative-application-resources/')
+                    .set({
+                        'Charset': 'utf-8',
+                        'Authorization': 'Bearer ' + token,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+                    })
+                    .send()
+                    .timeout(5000)
+                    .expect(200)
+                 //   .expect({id: tenantID})
+
+
+
+                .end(function(err, res) {
+                    console.log(url);
+                    if (err) {
+                        console.log('error' + err);
+                        return done(err);
+                    }
+                    console.log(url);
+                    done();
+
+                });
+
+
+
+
+                // after(function(done) {
+                //     this.timeout(70000);
+                //     async.series([
+                //         function(callback) {
+                //             console.log('deleting applications');
+                //             deleteApps.deleteApplications(callback);
+                //             console.log("Here is the URL" + url);
+                //         }
+                //     ], function(err, results) {
+                //         if (!err) {
+                //             console.log("after setup complete");
+                //             console.log("results=" + results);
+                //             token = results[4];
+                //             done();
+                //         } else
+                //             console.log("after setup complete with error" + err);
+
+                //     });
+                // });
+
+
+            });
+        });
+    });
+});

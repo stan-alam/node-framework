@@ -1,6 +1,6 @@
 {
   "name": "hub-node-test",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "hedtech-logging": "^0.7.0",
     "hub-test-lib": "^1.0.7",
     "jsonwebtoken": "^7.0.1",
+    "jwt-simple": "^0.5.0",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
     "mocha-parallel-tests": "^0.5.2",
