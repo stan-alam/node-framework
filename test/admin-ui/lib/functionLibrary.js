@@ -134,8 +134,8 @@ exports.changeEnvironmentsProd = function(driver, params, cb) {
     driver.findElement(By.xpath(xpath)).click();
     sleep.sleep(sleepSeconds);
 
-    xpath = xpaths.CommonModal.linkSelectEnv;
-    console.log(xpaths.CommonModal.linkSelectEnv);
+    xpath = xpaths.CommonModal.linkSelectSettings;
+    console.log(xpaths.CommonModal.linkSelectSettings);
     driver.findElement(By.xpath(xpath)).click();
     sleep.sleep(sleepSeconds);
 
@@ -176,8 +176,8 @@ exports.changeEnvironmentsTest = function(driver, params, cb) {
     driver.findElement(By.xpath(xpath)).click();
     sleep.sleep(sleepSeconds);
 
-    xpath = xpaths.CommonModal.linkSelectEnv;
-    console.log(xpaths.CommonModal.linkSelectEnv);
+    xpath = xpaths.CommonModal.linkSelectSettings;
+    console.log(xpaths.CommonModal.linkSelectSettings);
     driver.findElement(By.xpath(xpath)).click();
     sleep.sleep(sleepSeconds);
 
