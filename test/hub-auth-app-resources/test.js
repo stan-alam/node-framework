@@ -21,8 +21,7 @@ const
     createSub = require('../../lib/createSubscriptionsElevate.js'),
     permissions = require('../../lib/permissions.js'),
     genAccessToken = require('../../lib/genBannerAccessToken.js'),
-    deleteApps = require('../../lib/deleteApplications.js'),
-    encodeDecodeJWT = require('../../lib/encodeDecodeJWT'),
+  //  deleteApps = require('../../lib/deleteApplications.js'),
     async = require('async'),
     createSpecialToken = require('../../lib/encodeDecodeJWT.js'),
     createUserToken = require('../../lib/createSessionToken.js');
@@ -70,10 +69,10 @@ describe('Running  --Admin query auth  Ellucian privileged applications, Integra
 
 
 
-            function(callback) {
-                console.log('deleting applications');
-                deleteApps.deleteApplications(callback);
-            }
+            // function(callback) {
+            //     console.log('deleting applications');
+            //     deleteApps.deleteApplications(callback);
+            // }
 
         ], function(err, results) {
             if (!err) {

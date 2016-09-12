@@ -15,6 +15,9 @@ const
     createSub = require('../../lib/createSubscriptionsElevate.js'),
     permissions = require('../../lib/permissions.js'),
     genAccessToken = require('../../lib/genBannerAccessToken.js'),
+    createSpecialToken = require('../../lib/encodeDecodeJWT.js'),
+    createUserToken = require('../../lib/createSessionToken.js'),
+    deleteApps = require('../../lib/deleteApplications.js'),
     async = require('async');
 
 describe('Running  --Provide Proxy access for Ellucian privileged applications, Integration Tests--', function() {
@@ -33,14 +36,29 @@ describe('Running  --Provide Proxy access for Ellucian privileged applications, 
                 console.log('adding subscription');
                 createSub.addSubscription(callback);
             },
-            function(callback) {
-                console.log('turning Off DataAccess Flag');
-                permissions.setDataAccessPermissions(false, callback);
-            },
+            // function(callback) {
+            //     console.log('turning Off DataAccess Flag');
+            //     permissions.setDataAccessPermissions(false, callback);
+            // },
+
             function(callback) {
                 console.log('Generate access token');
                 genAccessToken.getBannerAccessToken(callback);
+            },
+
+
+            function(callback) {
+                console.log('Generate special token');
+                createSpecialToken.encodeDecodeJWT(callback);
+            },
+
+
+
+            function(callback) {
+                console.log('deleting applications');
+                deleteApps.deleteApplications(callback);
             }
+
 
         ], function(err, results) {
             if (!err) {
