@@ -88,13 +88,13 @@ describe("Running Error Integration Tests", function() {
   it("Verify UI has Error Message Sent", function(done) {
     this.timeout(1500000);
     driver.wait(until.elementLocated(By.xpath("//*[@id='errorsCount_link']")), 100).click().then(function(){
-        driver.wait(until.elementLocated(By.xpath('/html/body/div[2]/div[2]/section/section/div/div[1]/div/section/button[2]')), 1300).click().then(function(){
+        driver.wait(until.elementLocated(By.xpath("//*[contains(@class, 'filter')]")), 13000).click().then(function(){
             driver.wait(until.elementLocated(By.xpath("//*[@id='input_description']")), 2500).then(function(ele){
                 sleep.sleep(5)
                 ele.sendKeys(validateDescription);
-                driver.wait(until.elementLocated(By.xpath('//*[@id="filter"]/div/div[3]/button[1]')), 100).click().then(function(){
+                driver.wait(until.elementLocated(By.xpath('//*[@name="filter"]')), 100).click().then(function(){
                     sleep.sleep(1) // Need to slp for a second to wait for filter
-                    driver.wait(until.elementLocated(By.xpath('/html/body/div[2]/div[2]/section/section/div/div[2]/table/tbody/tr[2]/td[5]/span[2]')), 100).getInnerHtml().then(function(field){
+                    driver.wait(until.elementLocated(By.xpath('/html/body/div[2]/div[2]/section/section/div/div/ng-include/div[2]/table/tbody/tr[2]/td[5]/span[2]')), 100).getInnerHtml().then(function(field){
                         assert.equal(field, validateDescription);
                         done();
                     });
