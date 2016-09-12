@@ -2,10 +2,11 @@
 .idea/
 node_modules
 exampleReport
-npm-debug.log
+npm-debug.log*
 lib/publisher.bat
 *.txt
 lib/*.txt
 mochawesome-reports/*
 logs/*
 .env
+build
