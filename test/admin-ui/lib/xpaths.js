@@ -15,14 +15,20 @@ var CommonModal = {
     buttonSaveDesc: "//button[@id='save_description']",
     linksRequiredLinkHome: ".//*[contains(@href, '/#/dashboard')]",
     linksSelectApplication: ".//input[@type='checkbox']",
-    linksViewApplication: ".//*[@id='applicationsCount_link']",
+    linksViewApplication: ".//a[@id='applicationsCount_link']",
     buttonDeleteApplication: ".//button[contains(@data-hint,'Delete')]",
     buttonConfirmDeleteApplication: ".//button[@id='delete_confirm_button']",
     linksHome: "//a[contains(@href, '/#/dashboard')]",
    // linkSelectEnv: ".//link[@id='kingfox@ellucian.me.sandbox']",
+<<<<<<< HEAD
     linkSelectEnv: "//a[@id='settings_link']",
     linkSelectProd: "//label[@id='production_label']/cp-translate",
     linkSelectTest: "//label[@id='test_label']/cp-translate",
+=======
+    linkSelectSettings: "//a[@id='settings_link']",
+    linkSelectProd: "//label[@id='production_label']",
+    linkSelectTest: "//label[@id='test_label']",
+>>>>>>> 82cb59eb071a389a3a3b961c9d8207fb0119ff81
     //label[@id='ProductionLabel']
     grabStringForEnvironment: "//section/div/h3/cp-translate"
 }
