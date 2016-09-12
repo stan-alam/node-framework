@@ -26,6 +26,7 @@ const
     createSub = require('../../lib/createSubscriptionsElevate.js'),
     permissions = require('../../lib/permissions.js'),
     genAccessToken = require('../../lib/genBannerAccessToken.js'),
+    deleteApps = require('../../lib/deleteApplications.js'),
     async = require('async');
 
 describe('Running Publish Integration Tests', function() {
@@ -44,15 +45,15 @@ describe('Running Publish Integration Tests', function() {
                 console.log('adding subscription');
                 createSub.addSubscription(callback);
             },
-            function(callback) {
-                console.log('turning Off allTenants Flag');
-                permissions.setallTenantsPermissions(false, callback);
-            },
+            // function(callback) {
+            //     console.log('turning Off allTenants Flag');
+            //     permissions.setallTenantsPermissions(false, callback);
+            // },
             function(callback) {
                 console.log('Generate access token');
                 genAccessToken.getBannerAccessToken(callback);
             }
-            
+
         ], function(err, results) {
             if (!err) {
                 console.log("setup complete");
@@ -67,7 +68,21 @@ describe('Running Publish Integration Tests', function() {
     });
 
     it('test case 1-publisher should respond with status 200', function(done) {
-    	console.log("token="+token);
+
+      fs.readFile('./bannerAPIKey.txt', 'utf8', function(err, data) {
+            token = data;
+            if (err) {
+                console.log('ERROR=' + err);
+                return console.log(err);
+            }
+            console.log('Token Used from bannerAPIKey ' + token);
+
+
+
+
+
+
+      console.log("token="+token);
         request(url)
             .post('/publish')
             .set({
@@ -305,4 +320,6 @@ describe('Running Publish Integration Tests', function() {
   				done();
   			});
   });
+});
+
 });
