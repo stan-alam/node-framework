@@ -10,9 +10,14 @@
     "config": "application/vnd.hedtech.applications.v2+json",
     "error": "application/vnd.hedtech.errors.v2+json",
     "mqs": "application/vnd.hedtech.applications.v2+json",
-    "publisher": "application/vnd.hedtech.applications.v2+json"
+    "publisher": "application/vnd.hedtech.change-notification.v2+json"
   },
   "test": {
     "url": "https://test-integrationhub-integrate.10004.elluciancloud.com"
+  },
+  "uiTesting": {
+    "username": "aakoepke@ellucian.me.sandbox",
+    "password": "Demo99!?",
+    "browsers": ["chrome"]
   }
 }

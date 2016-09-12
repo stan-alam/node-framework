@@ -7,6 +7,7 @@ const authFunctions = require('../../lib/authFunctions.js'),
     adminFunctions = require('../../lib/adminFunctions.js'),
     pubFunctions = require('../../lib/pubFunctions.js'),
     randomstring = require("randomstring"),
+    expect    = require("chai").assert,
     envVars = require('../../framework/environments');
 
 global.assert = require('assert');
@@ -44,7 +45,7 @@ describe("Running hub-admin-api Integration Tests", function() {
   before(function(done){
     this.timeout(1500000);
     uiFunctions.loadUi(function(uiDriver){
-        driver = uiDriver;
+        driver = uiDriver
         authFunctions.getUiToken(driver, function(Token){
             uiToken = Token;
             configFunctions.createApplications(2, uiToken, [], function(error, applications){
@@ -108,14 +109,16 @@ describe("Running hub-admin-api Integration Tests", function() {
   });
 
   it("Enable allTenants", function(done){
-    adminFunctions.allTenantsFlag(accessToken, 'enable', function(error, response){
-        if(error){
-            console.error(error.getBody('utf8'));
-            done();
-        }else{
-            assert.equal(response.msg, 'permissions updated');
-            done();
-        }
+    authFunctions.convertConsumeAll(accessToken, function(error, allToken){
+        adminFunctions.allTenantsFlag(allToken, 'enable', function(error, response){
+            if(error){
+                console.error(error.getBody('utf8'));
+                done();
+            }else{
+                expect.include(JSON.parse(response).message, 'permissions have been updated');
+                done();
+            }
+        });
     });
   });
 
@@ -144,14 +147,16 @@ describe("Running hub-admin-api Integration Tests", function() {
  });
 
  it("disable allTenants", function(done){
-    adminFunctions.allTenantsFlag(accessToken, 'disable', function(error, response){
-        if(error){
-            console.error(error.getBody('utf8'));
-            done();
-        }else{
-            assert.equal(response.msg, 'permissions updated');
-            done();
-        }
+    authFunctions.convertConsumeAll(accessToken, function(error, allToken){
+        adminFunctions.allTenantsFlag(allToken, 'disable', function(error, response){
+            if(error){
+                console.error(error.getBody('utf8'));
+                done();
+            }else{
+                expect.include(JSON.parse(response).message, 'permissions have been updated');
+                done();
+            }
+        });
     });
   });
 

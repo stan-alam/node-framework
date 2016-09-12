@@ -1,0 +1,21 @@
+module.exports.xpaths = {
+    inputRequiredLinkId:  ".//*[@id='addApplication_link']",
+    inputForApp: "//input[@id='input_name']",
+    saveButtonForApplicationAdd: "//button[@name='save']",
+    buttonEditDesc: "//button[@id='edit_description']",
+    inputFieldDesc: ".//textarea[@id='input_description']",
+    buttonSaveDesc: "//button[@id='save_description']",
+    linksRequiredLinkHome: ".//*[contains(@href, '/#/dashboard')]",
+    linksSelectApplication: ".//input[@type='checkbox']",
+    linksViewApplication: ".//*[@id='applicationsCount_link']",
+    buttonDeleteApplication: ".//button[contains(@data-hint,'Delete')]",
+    buttonConfirmDeleteApplication: ".//button[@id='delete_confirm_button']",
+    linksHome: "//a[contains(@href, '/#/dashboard')]",
+    linkSelectEnv: "//span[2]",
+    linkSelectProd: "//label[@id='ProductionLabel']",
+    linkSelectTest: "//label[@id='TestLabel']",
+    grabStringForEnvironment: "//section/div/h3/cp-translate",
+    publishedMessages: "//*[@id='dashboard-aggregates']/div[1]/header",
+    tabQueueHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[1]",
+    tabArchiveHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[2]"
+}

@@ -868,7 +868,4 @@ describe('Running  --Admin query auth  Ellucian privileged applications, Integra
         });
     })
 
-
-
-
 });

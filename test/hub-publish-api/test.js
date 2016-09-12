@@ -5,9 +5,9 @@ var fs = require('fs');
 var bannerAccessToken;
 var token;
 
-
 const
     request = require('supertest'),
+    envVars = require('../../framework/environments'),
     hp = require('./changeNotifications/happyPath.js'),
     oc = require('./changeNotifications/operationCreated.js'),
     or = require('./changeNotifications/operationReplaced.js'),
@@ -89,7 +89,7 @@ describe('Running Publish Integration Tests', function() {
                 'Charset': 'utf-8',
                 'Authorization': 'Bearer '+token,
                 'Accept': 'application/json',
-                'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+                'Content-Type': envVars.headers.publisher
             })
             .send(hp.hp())
             .timeout(5000)
@@ -103,16 +103,14 @@ describe('Running Publish Integration Tests', function() {
 
     });
 
-
-
   it('POST / operation: enum created - response with status 200', function(done) {
   		request(url)
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(oc.oc())
   			.timeout(5000)
@@ -128,9 +126,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(or.or())
   			.timeout(5000)
@@ -146,9 +144,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(op.op())
   			.timeout(5000)
@@ -164,9 +162,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(od.od())
   			.timeout(5000)
@@ -182,9 +180,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(ol.ol())
   			.timeout(5000)
@@ -200,9 +198,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(oi.oi())
   			.timeout(5000)
@@ -218,9 +216,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(onp.onp())
   			.timeout(5000)
@@ -236,9 +234,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(ri.ri())
   			.timeout(5000)
@@ -254,9 +252,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(rnp.rnp())
   			.timeout(5000)
@@ -272,9 +270,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(rnp.rnp())
   			.timeout(5000)
@@ -290,9 +288,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publish')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
- 				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+ 				'Content-Type': envVars.headers.publisher
   			})
  			.send(ctn.ctn())
   			.timeout(5000)
@@ -308,9 +306,9 @@ describe('Running Publish Integration Tests', function() {
   			.post('/publisher')
   			.set({
   				'Charset':'utf-8',
-  				'Authorization': token,
+  				'Authorization': 'Bearer ' + token,
   				'Accept': 'application/json',
-  				'Content-Type': 'application/vnd.hedtech.applications.v2+json'
+  				'Content-Type': envVars.headers.publisher
   			})
   			.send(hp.hp())
   			.timeout(5000)
