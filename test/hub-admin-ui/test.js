@@ -3,6 +3,7 @@
 const
     _ = require('lodash'),
     fs = require('fs'),
+    async = require('async'),
     assert = require("chai").assert,
     envVars = require('../../framework/environments'),
     uiFunctions = require('../../lib/uiFunctions.js');
@@ -26,14 +27,15 @@ describe('Starting Hub-Admin-Ui End to End', function() {
     });
 
     //Loop throught all the TestCases for Hub-admin-ui
-    let testCasesFun = function(caseIndex){
-        let testCase = fs.readdirSync('./testStories/hub-admin-ui/')[caseIndex];
-        caseIndex++;
+    //let testCasesFun = function(caseIndex){
+    let testCasefiles = fs.readdirSync('./testStories/hub-admin-ui/');
+    //    caseIndex++;
+    async.each(testCasefiles, function(testCase){
         let test = require('../../testStories/hub-admin-ui/' + testCase);
         var i = 0;
 
         for (var testCaseLoop of test.testCases) {
-            it('Running Test Case: ' + testCaseLoop.name, function(done) {
+            it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
                 let runTest = test.testCases[i++]; //Will need to loop through
 
@@ -69,10 +71,12 @@ describe('Starting Hub-Admin-Ui End to End', function() {
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if(!('steps' in runTest.steps)){
-                        testCasesFun(caseIndex);
+                    if(runTest.steps.length == 0){
+                        //testCasesFun(caseIndex);
+                        return true;
                     }
                     let step = runTest.steps[stepindex];
+
                     let path = '../' + step.type + '/library.js';
                     let stepLibrary = require(path);
                     stepLibrary.controller(driver, step.params, function(driver) {
@@ -92,6 +96,6 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                 runSteps(0);
             });
         }
-    }
-    testCasesFun(0)
+    })
+    //testCasesFun(0)
 });
