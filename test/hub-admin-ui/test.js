@@ -26,9 +26,12 @@ describe('Starting Hub-Admin-Ui End to End', function() {
     });
 
     //Loop throught all the TestCases for Hub-admin-ui
-    for (var testCase of fs.readdirSync('./testStories/hub-admin-ui/')) {
+    let testCasesFun = function(caseIndex){
+        let testCase = fs.readdirSync('./testStories/hub-admin-ui/')[caseIndex];
+        caseIndex++;
         let test = require('../../testStories/hub-admin-ui/' + testCase);
         var i = 0;
+
         for (var testCaseLoop of test.testCases) {
             it('Running Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
@@ -66,6 +69,9 @@ describe('Starting Hub-Admin-Ui End to End', function() {
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
+                    if(!('steps' in runTest.steps)){
+                        testCasesFun(caseIndex);
+                    }
                     let step = runTest.steps[stepindex];
                     let path = '../' + step.type + '/library.js';
                     let stepLibrary = require(path);
@@ -87,4 +93,5 @@ describe('Starting Hub-Admin-Ui End to End', function() {
             });
         }
     }
+    testCasesFun(0)
 });
