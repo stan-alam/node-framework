@@ -116,6 +116,89 @@
           }
         ],
         "validation": []
+      },
+      {
+        "testCaseId": 5,
+        "name": "Validate Messages are displaying in Queue Tab",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "publishedMessages"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "historyRowOneStatus",
+            "test": {
+              "action": "equal",
+              "operator": "or",
+              "value": ["waiting","retrieved"]
+            }
+          }
+        ]
+      },
+      {
+        "testCaseId": 6,
+        "name": "Validate Messages are displaying in Archive Tab",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "publishedMessages"
+            }
+          },
+          {
+            "id": 3,
+            "method": "viewArchiveTable",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "tabArchiveHtml"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "archiveHistoryRowOneStatus",
+            "test": {
+              "action": "equal",
+              "operator": "or",
+              "value": ["confirmed","unconfirmed"]
+            }
+          }
+        ]
       }
     ]
 }

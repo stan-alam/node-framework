@@ -1,13 +1,18 @@
 'use strict';
 
 const uiFunctions = require('../../lib/uiFunctions'),
+    sleep = require('sleep').sleep,
     xpaths = require('./lib/xpaths').xpaths;
 
 
 //Controller for hub-admin-ui
 //this is primary just xpath information
 let controller = function(driver, options, callback){
-    if(!xpaths[options.element]){
+    if(options.action == 'urllocation'){
+        uiFunctions.loadUrl(driver, options, function(driver){
+            callback(driver);
+        });
+    }else if(!xpaths[options.element]){
         console.log('UI xpath Element not defined in xpaths: '+ options.element);
         callback(driver);
     }else{

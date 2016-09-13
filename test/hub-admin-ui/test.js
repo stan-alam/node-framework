@@ -44,6 +44,11 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                             if (validat.test.action == 'contains') {
                                 assert.include(result.text, validat.test.value);
                                 rerunTest();
+                            }else if(validat.test.action == 'equal'){
+                                if((validat.test.operator) && (validat.test.operator == 'or')){
+                                    assert.oneOf(result.text.toLowerCase(), validat.test.value);
+                                    rerunTest();
+                                }
                             }
                         });
                     } else {

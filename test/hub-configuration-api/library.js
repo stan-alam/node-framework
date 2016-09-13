@@ -34,6 +34,8 @@ let controller = function(driver, options, callback){
             }else if(options.action == 'deleteApplications'){
                  configFunctions.getConfiguration(Token, function(error, configuration){
                     var doneWithFirst = false;
+                    if(configuration.length == 0)
+                        callback(done)
                     _.each(configuration, function(app){
                         configFunctions.deleteApplications(app.id, Token, function(done){
                             if(!doneWithFirst){
