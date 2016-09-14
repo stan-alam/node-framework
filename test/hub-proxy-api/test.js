@@ -1,156 +1,97 @@
-"use strict"
-//This script tests publisher api {test/publisher.js}
-
-var token;
-var tenantId;
+"use strict";
 
 const
-    request = require('supertest'),
-    credentials=require('../../lib/credentials.js'),
-    url = 'https://test-integrationhub-integrate.10004.elluciancloud.com',
-    createApp = require('../../lib/createApplications.js'),
-    addResource = require('../../lib/createResourcesOwnerBanner.js'),
-    createSub = require('../../lib/createSubscriptionsElevate.js'),
-    genAccessToken = require('../../lib/genBannerAccessToken.js'),
-    jwt=require('jsonwebtoken'),
+    _ = require('lodash'),
     fs = require('fs'),
-    async = require('async');
+    async = require('async'),
+    assert = require("chai").assert,
+    envVars = require('../../framework/environments'),
+    uiFunctions = require('../../lib/uiFunctions.js');
 
-describe('Running  --Provide Proxy access for Ellucian privileged applications, Integration Tests--', function() {
+describe('Starting Hub-proxy-api End to End', function() {
+    var driver;
+    var uiToken;
+
     before(function(done) {
-        this.timeout(70000);
-        async.series([
-            function(callback) {
-                console.log('creating applications');
-                createApp.createApplications(callback,'ppatria');
-            },
-            function(callback) {
-                console.log('adding resource');
-                addResource.addResource(callback);
-            },
-           function(callback){
-              console.log('adding credentials');
-              credentials.addCredentials(callback);
-           },
-           function(callback){
-             console.log('getting tenantID');
-             fs.readFile('./sessionStorage.txt', 'utf8', function (err, userToken) {
-                if (err) {
-                     console.log(err);
-                     callback(err);
-                }
-                console.log("\nUser Token from file: " + userToken);
-                var decodedjwt=jwt.verify(userToken,'test scales right up');
-                if (decodedjwt)
-                  tenantId=decodedjwt.tenant.id;
-                callback();
-             });
-           },
-          function(callback){
-            console.log('create applications for EPA');
-            createApp.createApplications(callback,'ebachle');
-           },
-           function(callback) {
-                console.log('Generate access token');
-                genAccessToken.getBannerAccessToken(callback);
-            }
+        this.timeout(500000000)
+        let uiConfig = {
+            'username': envVars.uiTesting.username,
+            'password': envVars.uiTesting.password,
+            'browser': 'chrome'
+        };
 
-        ], function(err, results) {
-            if (!err) {
-                token=results[5];
-                var decodedjwt=jwt.verify(token,'test scales right up');
-                if (decodedjwt){
-                  decodedjwt.tenant.name=decodedjwt.tenant.name + ' ethos';
-                  token = jwt.sign(decodedjwt, 'test scales right up');
-                  console.log("setup complete");
-                  console.log("token="+token);
-                }
-                else
-                {
-                  console.log("token verification failed while trying to decode the token to change the tenant name to include the word ethos" + token);
-                }
-                done();
-            } else
-                console.log("setup complete with error" + err);
-
+        uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
+            driver = uiDriver;
+            done();
         });
-
     });
 
+    //Loop throught all the TestCases for Hub-proxy-api
+    let testCasefiles = fs.readdirSync('./testStories/hub-proxy-api/');
+    async.each(testCasefiles, function(testCase){
+        let test = require('../../testStories/hub-proxy-api/' + testCase);
+        var i = 0;
 
- it('EIH-1858 -Make Proxy privileged call with stored credentials on UI', function(done) {
-    console.log("token="+token);
-        request(url)
-            .get('/proxy/'+tenantId+'/api/subjects')
-            .set({
-                'Charset': 'utf-8',
-                'Authorization': 'Bearer '+token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-            })
-            .send()
-            .timeout(5000)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) {
-                    return done(err);
-                }
-                done();
-            });
+        for (var testCaseLoop of test.testCases) {
+            it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
+                this.timeout(80000000);
+                let runTest = test.testCases[i++]; //Will need to loop through
 
-  });
-  it('EIH-1858 -Make Proxy privileged Call with username only in Credentials', function(done) {
-    console.log("token="+token);
-    credentials.putCredentialswithoutPassword(function(err){
-        if (!err)
-        {
-            request(url)
-                .get('/proxy/'+tenantId+'/api/subjects')
-                .set({
-                    'Charset': 'utf-8',
-                    'Authorization': 'Bearer '+token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-                })
-                .send()
-                .timeout(5000)
-                .expect(417)
-                .end(function(err, res) {
-                    if (err) {
-                        return done(err);
+                //Run any Validation steps that are in testcase
+                let runValidation = function(validationIndex) {
+                    if (runTest.validation[validationIndex]) {
+                        let validat = runTest.validation[validationIndex];
+                        let path = '../' + validat.type + '/library.js';
+                        let stepLibrary = require(path);
+                        stepLibrary.controller(driver, validat, function(driver, result) {
+                            if (validat.test.action == 'contains') {
+                                assert.include(result.text, validat.test.value);
+                                rerunTest();
+                            }else if(validat.test.action == 'equal'){
+                                if((validat.test.operator) && (validat.test.operator == 'or')){
+                                    assert.oneOf(result.text.toLowerCase(), validat.test.value);
+                                    rerunTest();
+                                }
+                            }
+                        });
+                    } else {
+                        done();
                     }
-                    done();
+
+                    let rerunTest = function() {
+                        if (runTest.validation[(validationIndex + 1)]) {
+                            runValidation((validationIndex + 1))
+                        } else {
+                            done();
+                        }
+                    }
+                }
+
+                //code to Run through the steps in testCase File
+                let runSteps = function(stepindex) {
+                    if(runTest.steps.length == 0){
+                        return true;
+                    }
+                    let step = runTest.steps[stepindex];
+
+                    let path = '../' + step.type + '/library.js';
+                    let stepLibrary = require(path);
+                    stepLibrary.controller(driver, step.params, function(driver) {
+                        if (runTest.steps[stepindex + 1]) {
+                            runSteps((stepindex + 1));
+                        } else {
+                            if (runTest.validation) {
+                                runValidation(0);
+                            } else {
+                                i = i + 1;
+                                done();
+                            }
+                        }
+                    });
+                }
+
+                runSteps(0);
             });
         }
-        else
-        {
-            console.log("couldnt run the test - EIH-1858 -Make proxy privileged call with username only in credentials because of the error: "+ err);
-        }
-   });
-
-  });
- //commenting this out because it is not a valid test for 1799.This is using a fake token to get the 401 response. The 401 response should come from authoritative source (due to credentials not being sent) and not from proxy.This needs to be reworked. -Priya 9/8/2016
-    //it('test case 1-proxy-should respond with status 401', function(done) {
-    //  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNDgxMGM2ZC01YWY4LTQzNDctOTRjNi04YTEzNGMwYTEzMzUiLCJ0ZW5hbnQiOnsiaWQiOiJlZmM3NjM4MC03YzhhLTRkNjEtOTdmNy0wNDZhMTIyY2Q1YzIiLCJhbGlhcyI6Im5pYyIsIm5hbWUiOiJFdGhvcyBOb3J0aCBJZGFobyBDb2xsZWdlIiwiZW52aXJvbm1lbnRzIjpbeyJsYWJlbCI6IlByb2R1Y3Rpb24iLCJpZCI6IjEyNzY4Y2I5LTdiMDQtNGJjZi05YzE5LWJmOTgyZjNlNzEzMyJ9LHsibGFiZWwiOiJUZXN0IiwiaWQiOiJlZmM3NjM4MC03YzhhLTRkNjEtOTdmNy0wNDZhMTIyY2Q1YzIifV0sInBlcm1pc3Npb25zIjp7ImFsbFRlbmFudHMiOmZhbHNlfX0sImV4cCI6MTQ3MTY0MjEyNiwiaWF0IjoxNDcxNjQxODI2fQ.WxbpOKwUAnxvLfOSlsQ0qVjXjFMyjgk2mQkHJXL0hBU"
-    //   console.log("token="+token);
-    //     var req = request(url);
-    //       console.log(url)
-    //        req.get(url)
-    //         .set({
-    //             'Charset': 'utf-8',
-    //             'Authorization': 'Bearer '+token,
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/vnd.hedtech.applications.v2+json'
-    //         })
-    //         .send()
-    //         .timeout(5000)
-    //         .expect(401)
-    //         .end(function(err, res) {
-    //             if (err) {
-    //                 return done(err);
-    //             }
-    //             done();
-    //         });
-
-    // });
+    })
 });

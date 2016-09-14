@@ -1,7 +1,6 @@
 'use strict';
 
 const uiFunctions = require('../../lib/uiFunctions'),
-    sleep = require('sleep').sleep,
     xpaths = require('./lib/xpaths').xpaths;
 
 

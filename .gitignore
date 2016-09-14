@@ -10,3 +10,4 @@ mochawesome-reports/*
 logs/*
 .env
 build
+out.png

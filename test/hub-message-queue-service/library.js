@@ -2,7 +2,6 @@
 
 const _ = require('lodash'),
     authFunctions = require('../../lib/authFunctions.js'),
-    sleep = require('sleep'),
     configFunctions = require('../../lib/configFunctions.js'),
     mqsFunctions = require('../../lib/mqsFunctions.js'),
     uiFunctions = require('../../lib/uiFunctions.js');

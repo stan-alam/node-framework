@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs'),
-    sleep = require('sleep'),
+    sleep = require('system-sleep'),
     spawn = require('child_process').exec,
     shell = require('shelljs'),
     path = require('path'),
@@ -18,7 +18,8 @@ try{
     console.info("logs already createed");
 }
 fs.mkdirSync("logs/"+logdir);
-spawn("./node_modules/.bin/selenium-standalone install && ./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
+spawn("./node_modules/.bin/selenium-standalone install");
+spawn("./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
 spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --verbose > logs/"+logdir+"/chromedriver.log");
 
 function runTests(loopCount){
@@ -48,7 +49,7 @@ function runTests(loopCount){
         console.error('Selenium Server Never started');
         process.exit('0');
     }else{
-        sleep.sleep(1);
+        sleep(1000);
         console.error('Checking if Selenium has started ('+logdir+') - Check: #' + loopCount);
         runTests(loopCount+1);
     }
