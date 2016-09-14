@@ -38,12 +38,21 @@ let controller = function(driver, options, callback){
                         callback(driver)
                     }
                     _.each(configuration, function(app){
-                        configFunctions.deleteApplications(app.id, Token, function(done){
-                            if(!doneWithFirst){
-                                doneWithFirst = true;
-                                callback(driver)
-                            }
-                        });
+                        if((options.applications) && (options.applications.indexOf(app.name) !== -1)){
+                            configFunctions.deleteApplications(app.id, Token, function(done){
+                                if(!doneWithFirst){
+                                    doneWithFirst = true;
+                                    callback(driver)
+                                }
+                            });
+                        }else if(!options.applications){
+                            configFunctions.deleteApplications(app.id, Token, function(done){
+                                if(!doneWithFirst){
+                                    doneWithFirst = true;
+                                    callback(driver)
+                                }
+                            });
+                        }
                     })
                 });
             }
