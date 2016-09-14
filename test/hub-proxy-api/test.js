@@ -32,6 +32,7 @@ describe('Starting Hub-proxy-api End to End', function() {
         let test = require('../../testStories/hub-proxy-api/' + testCase);
         var i = 0;
 
+        var sharedData = [];
         for (var testCaseLoop of test.testCases) {
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
@@ -76,7 +77,11 @@ describe('Starting Hub-proxy-api End to End', function() {
 
                     let path = '../' + step.type + '/library.js';
                     let stepLibrary = require(path);
-                    stepLibrary.controller(driver, step.params, function(driver) {
+                    step.params.shared = sharedData;
+                    stepLibrary.controller(driver, step.params, function(driver, sharedResult) {
+                        if(sharedResult)
+                            sharedData.push(sharedResult);
+
                         if (runTest.steps[stepindex + 1]) {
                             runSteps((stepindex + 1));
                         } else {

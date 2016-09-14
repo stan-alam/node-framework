@@ -26,14 +26,13 @@ describe('Starting Hub-Admin-Ui End to End', function() {
         });
     });
 
-    //Loop throught all the TestCases for Hub-admin-ui
-    //let testCasesFun = function(caseIndex){
+    //Loop thought all the TestCases for Hub-admin-ui
     let testCasefiles = fs.readdirSync('./testStories/hub-admin-ui/');
-    //    caseIndex++;
     async.each(testCasefiles, function(testCase){
         let test = require('../../testStories/hub-admin-ui/' + testCase);
         var i = 0;
 
+        var sharedData = [];
         for (var testCaseLoop of test.testCases) {
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
@@ -72,14 +71,17 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
                     if(runTest.steps.length == 0){
-                        //testCasesFun(caseIndex);
                         return true;
                     }
                     let step = runTest.steps[stepindex];
 
                     let path = '../' + step.type + '/library.js';
                     let stepLibrary = require(path);
-                    stepLibrary.controller(driver, step.params, function(driver) {
+                    step.params.shared = sharedData;
+                    stepLibrary.controller(driver, step.params, function(driver, sharedResult) {
+                        if(sharedResult)
+                            sharedData.push(sharedResult);
+
                         if (runTest.steps[stepindex + 1]) {
                             runSteps((stepindex + 1));
                         } else {
