@@ -24,6 +24,20 @@ let controller = function(driver, options, callback){
                         }
                     });
                 });
+        }else if(options.action == 'consumeAll'){
+                configFunctions.getConfiguration(Token, function(error, config){
+                    _.each(config, function(conf){
+                        if(conf.name == options.application){
+                            authFunctions.getAccessToken(conf.apiKey, function(error, accessToken){
+                                mqsFunctions.callConsume(accessToken, 0, function(error, results){
+                                    mqsFunctions.callConsume(accessToken, 10, function(error, results){
+                                            callback(results);
+                                    });
+                                 });
+                            });
+                        }
+                    });
+                });
         }else{
             console.error("MQS Controller has No Action: "+ options.action)
         }

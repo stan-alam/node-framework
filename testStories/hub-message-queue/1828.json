@@ -1,0 +1,18 @@
+{
+  "id": "1828",
+  "name": "Change payload for All Tenants toggle from dataAccess: true/false to allTenants: true/false",
+  "testCases": [
+
+    {
+      "id": 1,
+      "method": "post to consumeAll, set flag to false",
+      "type": "hub-message-queue-service",
+      "params": {
+        "action": "consumeAll",
+        "application": "Banner",
+        "subscriptions": "subjects"
+      }
+    }
+  ],
+  "validation": []
+}
