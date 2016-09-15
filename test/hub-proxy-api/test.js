@@ -49,16 +49,16 @@ describe('Starting Hub-proxy-api End to End', function() {
                 //Run any Validation steps that are in testcase
                 let runValidation = function(validationIndex) {
                     if (runTest.validation[validationIndex]) {
-                        let validat = runTest.validation[validationIndex];
-                        let path = '../' + validat.type + '/controller.js';
+                        let validate = runTest.validation[validationIndex];
+                        let path = '../' + validate.type + '/controller.js';
                         let stepController = require(path);
-                        stepController.controller(driver, validat, function(driver, result) {
-                            if (validat.test.action == 'contains') {
-                                assert.include(result.text, validat.test.value);
+                        stepController.controller(driver, validate, function(driver, result) {
+                            if (validate.test.action == 'contains') {
+                                assert.include(result.text, validate.test.value);
                                 rerunTest();
-                            }else if(validat.test.action == 'equal'){
-                                if((validat.test.operator) && (validat.test.operator == 'or')){
-                                    assert.oneOf(result.text.toLowerCase(), validat.test.value);
+                            }else if(validate.test.action == 'equal'){
+                                if((validate.test.operator) && (validate.test.operator == 'or')){
+                                    assert.oneOf(result.text.toLowerCase(), validate.test.value);
                                     rerunTest();
                                 }
                             }
