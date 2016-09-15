@@ -28,11 +28,18 @@ describe('Starting Hub-Admin-Ui End to End', function() {
 
     //Loop thought all the TestCases for Hub-admin-ui
     let testCasefiles = fs.readdirSync('./testStories/hub-admin-ui/');
-    async.each(testCasefiles, function(testCase){
+    let develop = false;
+    if(testCasefiles.indexOf('develop.json') !== -1){
+        develop = true;
+    }
+    async.each(testCasefiles, function(testCase, next){
+        if(develop){
+            testCase = 'develop.json';
+        }
         let test = require('../../testStories/hub-admin-ui/' + testCase);
         var i = 0;
 
-        var sharedData = [];
+        var sharedData = {};
         for (var testCaseLoop of test.testCases) {
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
@@ -42,9 +49,9 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                 let runValidation = function(validationIndex) {
                     if (runTest.validation[validationIndex]) {
                         let validat = runTest.validation[validationIndex];
-                        let path = '../' + validat.type + '/library.js';
-                        let stepLibrary = require(path);
-                        stepLibrary.controller(driver, validat, function(driver, result) {
+                        let path = '../' + validat.type + '/controller.js';
+                        let stepController = require(path);
+                        stepController.controller(driver, validat, function(driver, result) {
                             if (validat.test.action == 'contains') {
                                 assert.include(result.text, validat.test.value);
                                 rerunTest();
@@ -56,6 +63,9 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                             }
                         });
                     } else {
+                        if(testCase == 'develop.json')
+                            process.exit();
+
                         done();
                     }
 
@@ -63,6 +73,9 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                         if (runTest.validation[(validationIndex + 1)]) {
                             runValidation((validationIndex + 1))
                         } else {
+                            if(testCase == 'develop.json')
+                                process.exit();
+
                             done();
                         }
                     }
@@ -75,12 +88,12 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                     }
                     let step = runTest.steps[stepindex];
 
-                    let path = '../' + step.type + '/library.js';
-                    let stepLibrary = require(path);
+                    let path = '../' + step.type + '/controller.js';
+                    let stepController = require(path);
                     step.params.shared = sharedData;
-                    stepLibrary.controller(driver, step.params, function(driver, sharedResult) {
+                    stepController.controller(driver, step.params, function(driver, sharedResult) {
                         if(sharedResult)
-                            sharedData.push(sharedResult);
+                            sharedData['step'+stepindex] = sharedResult;
 
                         if (runTest.steps[stepindex + 1]) {
                             runSteps((stepindex + 1));
@@ -88,6 +101,9 @@ describe('Starting Hub-Admin-Ui End to End', function() {
                             if (runTest.validation) {
                                 runValidation(0);
                             } else {
+                                if(testCase == 'develop.json')
+                                    process.exit();
+
                                 i = i + 1;
                                 done();
                             }

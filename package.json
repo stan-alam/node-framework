@@ -1,6 +1,6 @@
 {
   "name": "hub-node-test",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "chromedriver": "^2.24.1",
     "file-exists": "^2.0.0",
     "hedtech-logging": "^0.7.0",
+    "jsdoc": "^3.4.1",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
     "mocha": "^3.0.2",

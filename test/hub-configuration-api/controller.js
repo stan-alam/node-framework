@@ -16,7 +16,7 @@ let controller = function(driver, options, callback){
                     _.each(configuration, function(app){
                         if(app.name == options.application){
                             configFunctions.addPublishingResource(Token, app, options.resources, function(error, applications){
-                                callback(applications)
+                                callback(applications.body)
                             });
                         }
                     })
@@ -26,33 +26,34 @@ let controller = function(driver, options, callback){
                     _.each(configuration, function(app){
                         if(app.name == options.application){
                             configFunctions.addSubscribingResource(Token, app, options.subscriptions, function(error, applications){
-                                callback(applications)
+                                callback(applications.body)
                             });
                         }
                     })
                 });
             }else if(options.action == 'deleteApplications'){
                  configFunctions.getConfiguration(Token, function(error, configuration){
-                    var doneWithFirst = false;
                     if(configuration.length == 0){
                         callback(driver)
                     }
+                    let appsSearched = 0;
                     _.each(configuration, function(app){
+                        appsSearched = appsSearched+1;
                         if((options.applications) && (options.applications.indexOf(app.name) !== -1)){
-                            configFunctions.deleteApplications(app.id, Token, function(done){
-                                if(!doneWithFirst){
-                                    doneWithFirst = true;
-                                    callback(driver)
+                            configFunctions.deleteApplications(app.id, Token, function(status){
+                                if(appsSearched == configuration.length){
+                                    callback(status);
                                 }
                             });
                         }else if(!options.applications){
-                            configFunctions.deleteApplications(app.id, Token, function(done){
-                                if(!doneWithFirst){
-                                    doneWithFirst = true;
-                                    callback(driver)
+                            configFunctions.deleteApplications(app.id, Token, function(status){
+                                if(appsSearched == configuration.length){
+                                    callback(status);
                                 }
                             });
-                        }
+                        }else if(appsSearched == configuration.length){
+                             callback();
+                         }
                     })
                 });
             }
