@@ -16,6 +16,9 @@ let controller = function(driver, options, callback){
         callback(driver);
     }else{
         options['xpath'] = xpaths[options.element];
+        if (options.hoverElement) {
+            options['hoverXpath'] = xpaths[options.hoverElement];
+        }
         uiFunctions.uiAction(driver, options, function(driver, result){
             callback(driver, result);
         });

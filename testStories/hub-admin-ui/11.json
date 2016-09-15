@@ -33,7 +33,7 @@
             "params": {
               "action": "sendkeys",
               "element": "inputForApp",
-              "applicationName": "Application1"
+              "elementValue": "Application1"
             }
           },
           {
