@@ -8,7 +8,7 @@ const
     envVars = require('../../framework/environments'),
     uiFunctions = require('../../lib/uiFunctions.js');
 
-describe('Starting Hub-Admin-Ui End to End', function() {
+describe('Starting Hub-Message-queue-service', function() {
     var driver;
     var uiToken;
 
