@@ -24,7 +24,7 @@ let controller = function(driver, options, callback){
                         }
                     });
                 });
-        }else if(options.action == 'consumeAll'){
+        }else if(options.action == 'postFlagFalse'){
                 configFunctions.getConfiguration(Token, function(error, config){
                     _.each(config, function(conf){
                         if(conf.name == options.application){

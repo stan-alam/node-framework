@@ -36,5 +36,8 @@
     "system-sleep": "^1.0.0-f",
     "uuid": "^2.0.2",
     "yuidocjs": "^0.10.2"
+  },
+  "devDependencies": {
+    "mochawesome": "^1.5.2"
   }
 }
