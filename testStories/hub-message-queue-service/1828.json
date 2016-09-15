@@ -49,7 +49,7 @@
           {
             "id": 4,
             "method": "postFlagFalse",
-            "type": "message-queue-service",
+            "type": "hub-message-queue-service",
             "params": {
               "action": "postFlagFalse"
 
