@@ -11,6 +11,15 @@
             "method": "viewMessageHistory",
             "type": "hub-admin-ui",
             "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
                 "action": "click",
                 "element": "publishedMessages"
             }

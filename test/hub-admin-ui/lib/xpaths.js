@@ -19,5 +19,7 @@ module.exports.xpaths = {
     tabQueueHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[1]",
     tabArchiveHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[2]",
     historyRowOneStatus: "//*[@id='tab-content-2']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
-    archiveHistoryRowOneStatus: "//*[@id='tab-content-5']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]"
+    archiveHistoryRowOneStatus: "//*[@id='tab-content-5']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
+    manWizardAppCreate: "//*[@id='addApplication_link']/div/span",
+    breadCrumbsOne: "//*[@id='bread-crumbs-title']/cp-view-title"
 }
