@@ -1,12 +1,14 @@
 'use strict';
 
 const uiFunctions = require('../../lib/uiFunctions'),
+    adminFunctions = require('../../lib/adminFunctions'),
     xpaths = require('./lib/xpaths').xpaths;
 
 
 //Controller for hub-admin-ui
 //this is primary just xpath information
 let controller = function(driver, options, callback){
+    adminFunctions.sharedDataCheck(options, function(options){
     if(options.action == 'urllocation'){
         uiFunctions.loadUrl(driver, options, function(driver){
             callback(driver);
@@ -16,10 +18,12 @@ let controller = function(driver, options, callback){
         callback(driver);
     }else{
         options['xpath'] = xpaths[options.element];
+        console.error(options)
         uiFunctions.uiAction(driver, options, function(driver, result){
             callback(driver, result);
         });
     }
+    });
 }
 
 module.exports = exports = {

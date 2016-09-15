@@ -21,5 +21,13 @@ module.exports.xpaths = {
     historyRowOneStatus: "//*[@id='tab-content-2']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
     archiveHistoryRowOneStatus: "//*[@id='tab-content-5']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
     manWizardAppCreate: "//*[@id='addApplication_link']/div/span",
-    breadCrumbsOne: "//*[@id='bread-crumbs-title']/cp-view-title"
+    breadCrumbsOne: "//*[@id='bread-crumbs-title']/cp-view-title",
+    firstRowWaiting: "//a[text()='Waiting']",
+    resultRowWaiting: "//td[text()='Waiting']",
+    firstRowRetrieved: "//a[text()='Retrieved']",
+    resultRowRetrieved: "//td[text()='Retrieved']",
+    firstRowConfirmed: "//a[text()='Confirmed']",
+    resultRowConfirmed: "//td[text()='Confirmed']",
+    firstRowUnconfirmed: "//a[text()='Unconfirmed']",
+    resultRowUnconfirmed: "//td[text()='Unconfirmed']"
 }

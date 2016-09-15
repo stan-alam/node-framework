@@ -194,6 +194,22 @@
               "action": "click",
               "element": "tabArchiveHtml"
             }
+          },
+          {
+            "id": 4,
+            "method": "viewArchiveTable",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "tabArchiveHtml",
+              "sharedData": {
+                "key": "application",
+                "sharelocation": {
+                  "step": 1,
+                  "value": "[0].body.id"
+                }
+              }
+            }
           }
         ],
         "validation": [
