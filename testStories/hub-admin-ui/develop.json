@@ -239,7 +239,8 @@
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
-              "element": "firstRowWaiting"
+              "element": "firstRow",
+              "elementTemplate": "Waiting"
             }
           }
         ],
@@ -248,11 +249,11 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "historyRowOneStatus",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "WAITING",
             "test": {
               "action": "equal",
-              "operator": "or",
-              "value": ["waiting","retrieved"]
+              "value": "waiting"
             }
           }
         ]
@@ -276,7 +277,8 @@
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
-              "element": "firstRowRetrieved"
+              "element": "firstRow",
+              "elementTemplate": "Retrieved"
             }
           }
         ],
@@ -285,12 +287,11 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "historyRowOneStatus",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "RETRIEVED",
             "test": {
               "action": "equal",
-              "operator": "or",
-              "resultArrayLocation": 1,
-              "value": ["retrieved"]
+              "value": "retrieved"
             }
           }
         ]
@@ -314,7 +315,8 @@
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
-              "element": "firstRowConfirmed"
+              "element": "firstRow",
+              "elementTemplate": "Confirmed"
             }
           },
           {
@@ -332,12 +334,11 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "archiveHistoryRowOneStatus",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "CONFIRMED",
             "test": {
               "action": "equal",
-              "operator": "or",
-              "resultArrayLocation": 2,
-              "value": ["confirmed"]
+              "value": "confirmed"
             }
           }
         ]
@@ -361,7 +362,8 @@
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
-              "element": "firstRowUnconfirmed"
+              "element": "firstRow",
+              "elementTemplate": "Unconfirmed"
             }
           },
           {
@@ -379,12 +381,11 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "archiveHistoryRowOneStatus",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "UNCONFIRMED",
             "test": {
               "action": "equal",
-              "operator": "or",
-              "resultArrayLocation": 2,
-              "value": ["unconfirmed"]
+              "value": "unconfirmed"
             }
           }
         ]

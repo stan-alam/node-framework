@@ -20,14 +20,9 @@ module.exports.xpaths = {
     tabArchiveHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[2]",
     historyRowOneStatus: "//*[@id='tab-content-2']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
     archiveHistoryRowOneStatus: "//*[@id='tab-content-5']/div/ng-include/div[2]/table/tbody/tr[2]/td[6]/span[2]",
+    filterHistoryRowOneStatus: "//span[text()='TEMPLATE']",
     manWizardAppCreate: "//*[@id='addApplication_link']/div/span",
     breadCrumbsOne: "//*[@id='bread-crumbs-title']/cp-view-title",
-    firstRowWaiting: "//a[text()='Waiting']",
-    resultRowWaiting: "//td[text()='Waiting']",
-    firstRowRetrieved: "//a[text()='Retrieved']",
-    resultRowRetrieved: "//td[text()='Retrieved']",
-    firstRowConfirmed: "//a[text()='Confirmed']",
-    resultRowConfirmed: "//td[text()='Confirmed']",
-    firstRowUnconfirmed: "//a[text()='Unconfirmed']",
-    resultRowUnconfirmed: "//td[text()='Unconfirmed']"
+    firstRow: "//a[text()='TEMPLATE']",
+    resultRow: "//td[text()='TEMPLATE']"
 }
