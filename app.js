@@ -34,13 +34,13 @@ function runTests(loopCount){
         var testList = getDirectories();
         if(testList.indexOf(testToRun) == -1){
             console.error("Running Tests End To End Tests ");
-            shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join(" test/") + " --reporter mochawesome", function(){
+            shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join("/test.js test/") + " --reporter mochawesome", function(){
                 let resultReport = require('./mochawesome-reports/mochawesome.json');
                 process.exit(resultReport.stats.failures);
             });
         }else{
             console.error("Running Tests Just for: "+ testToRun);
-            shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+" --reporter mochawesome", function(){
+            shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+"/test.js --reporter mochawesome", function(){
                 let resultReport = require('./mochawesome-reports/mochawesome.json');
                 process.exit(resultReport.stats.failures);
             });

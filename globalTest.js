@@ -29,21 +29,17 @@ let runTestFramework = function(microservice){
 
     //Loop thought all the TestCases for Hub-admin-ui
     let testCasefiles = fs.readdirSync('./testStories/'+microservice+'/');
-    let develop = false;
     if(testCasefiles.indexOf('develop.json') !== -1){
-        develop = true;
+        testCasefiles = ['develop.json'];
     }
+
     let testCase = '';
-    //async.each(testCasefiles, function(testCase){
-        if(develop){
-            testCase = 'develop.json';
-        }
+    async.each(testCasefiles, function(testCase){
         let test = require('./testStories/'+microservice+'/' + testCase);
         var i = 0;
-console.error('============')
+
         var sharedData = {};
         for (var testCaseLoop of test.testCases) {
-            console.error('======================')
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
                 let runTest = test.testCases[i++]; //Will need to loop through
@@ -108,6 +104,6 @@ console.error('============')
                 runSteps(0);
             });
         }
-    //})
+    });
 }
 module.exports = exports = { runTestFramework: runTestFramework }
