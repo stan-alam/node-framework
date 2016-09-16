@@ -8,7 +8,6 @@ const uiFunctions = require('../../lib/uiFunctions'),
 //Controller for hub-admin-ui
 //this is primary just xpath information
 let controller = function(driver, options, callback){
-    adminFunctions.sharedDataCheck(options, function(options){
     if(options.action == 'urllocation'){
         uiFunctions.loadUrl(driver, options, function(driver){
             callback(driver);
@@ -25,7 +24,6 @@ let controller = function(driver, options, callback){
             callback(driver, result);
         });
     }
-    });
 }
 
 module.exports = exports = {

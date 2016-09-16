@@ -9,7 +9,7 @@ let controller = function(driver, options, callback){
         authFunctions.getUiToken(driver, function(Token){
             if(options.action == 'createApplications'){
                 configFunctions.createApplications(options.applications.length, Token, options.applications, [], function(error, applications){
-                   callback(applications);
+                   callback(driver, applications);
                 });
             }else if(options.action == 'addResource'){
                 configFunctions.getConfiguration(Token, function(error, configuration){
@@ -33,9 +33,13 @@ let controller = function(driver, options, callback){
                 });
             }else if(options.action == 'deleteApplications'){
                  configFunctions.getConfiguration(Token, function(error, configuration){
+                    if(error){
+                        console.log("Error Calling Configuration Service");
+                        process.exit()
+                    }
                     if(configuration.length == 0){
                         callback(driver)
-                    }
+                    }else{
                     let appsSearched = 0;
                     _.each(configuration, function(app){
                         appsSearched = appsSearched+1;
@@ -55,6 +59,7 @@ let controller = function(driver, options, callback){
                              callback();
                          }
                     })
+                    }
                 });
             }
         });
