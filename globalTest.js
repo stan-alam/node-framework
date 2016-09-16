@@ -61,8 +61,13 @@ let runTestFramework = function(microservice){
                                     assert.includeMembers(result.text,validate.test.value,'Should be subset failure');
                                     rerunTest();
                                 } else {
-                                    assert.equal(result.text,validate.test.value);
-                                    rerunTest();
+                                    if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
+                                        assert.equal(result.text.toLowerCase(), validate.test.value.toLowerCase())
+                                        rerunTest();
+                                    }else{
+                                        assert.equal(result.text,validate.test.value);
+                                        rerunTest();
+                                    }
                                 }
                             }
                         });

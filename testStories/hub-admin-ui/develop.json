@@ -253,6 +253,7 @@
             "elementTemplate": "WAITING",
             "test": {
               "action": "equal",
+              "caseSensitive": false,
               "value": "waiting"
             }
           }
@@ -291,6 +292,7 @@
             "elementTemplate": "RETRIEVED",
             "test": {
               "action": "equal",
+              "caseSensitive": false,
               "value": "retrieved"
             }
           }
@@ -338,6 +340,7 @@
             "elementTemplate": "CONFIRMED",
             "test": {
               "action": "equal",
+              "caseSensitive": false,
               "value": "confirmed"
             }
           }
@@ -385,6 +388,7 @@
             "elementTemplate": "UNCONFIRMED",
             "test": {
               "action": "equal",
+              "caseSensitive": false,
               "value": "unconfirmed"
             }
           }
