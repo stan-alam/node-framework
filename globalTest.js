@@ -57,6 +57,9 @@ let runTestFramework = function(microservice){
                                 if((validate.test.operator) && (validate.test.operator == 'or')){
                                     assert.oneOf(result.text.toLowerCase(), validate.test.value);
                                     rerunTest();
+                                } else if((validate.test.operator) && (validate.test.operator == 'subset')){
+                                    assert.includeMembers(result.text,validate.test.value,'Should be subset failure');
+                                    rerunTest();
                                 }
                             }
                         });
