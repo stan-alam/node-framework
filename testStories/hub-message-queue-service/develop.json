@@ -87,12 +87,12 @@
         "name": "Consume Messages from Hub",
         "steps": [
        {
-            "id": 7,
+            "id": 1,
             "method": "postFlagFalse",
             "type": "hub-admin-api",
             "params": {
               "action": "setPermissions",
-              "setPermisssions" : "disabled"
+              "setPermissions" : "disabled"
 
 
             }

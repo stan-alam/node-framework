@@ -21,7 +21,6 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             }else{
                 endpoint = 'callConsume';
             }
-            console.error('============================')
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults){
                 results.push(mqsResults);
                 let newlastId = mqsResults.body[mqsResults.body.length-1].id;
@@ -50,8 +49,6 @@ let controller = function(driver, options, callback){
                     });
                 });
         }else if(options.action == 'postFlagFalse'){
-                                console.error('==============')
-                                callback()
                 configFunctions.getConfiguration(Token, function(error, config){
                     _.each(config, function(conf){
                         if(conf.name == options.application){
