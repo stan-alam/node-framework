@@ -64,9 +64,6 @@ let runTestFramework = function(microservice){
                                     assert[validate.test.action](result.text, validate.test.value, validate.test.name || '');
                                     rerunTest();
                             }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
-                                    console.error(validate.test.action);
-                                    console.error(validate.test.value);
-                                    console.error(result.text)
                                      assert[validate.test.action]( validate.test.value, result.text, validate.test.name || '');
                                      rerunTest();
                              }else{
