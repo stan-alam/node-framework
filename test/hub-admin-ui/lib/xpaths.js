@@ -10,6 +10,7 @@ module.exports.xpaths = {
     linksViewApplication: ".//*[@id='applicationsCount_link']",
     buttonDeleteApplication: ".//button[contains(@data-hint,'Delete')]",
     buttonConfirmDeleteApplication: ".//button[@id='delete_confirm_button']",
+    buttonConfirmDelete: "//button[@id='delete_confirm_button']",
     linksHome: "//a[contains(@href, '/#/dashboard')]",
     linkSelectEnv: "//span[2]",
     linkSelectProd: "//label[@id='ProductionLabel']",
@@ -24,5 +25,19 @@ module.exports.xpaths = {
     manWizardAppCreate: "//*[@id='addApplication_link']/div/span",
     breadCrumbsOne: "//*[@id='bread-crumbs-title']/cp-view-title",
     firstRow: "//a[text()='TEMPLATE']",
-    resultRow: "//td[text()='TEMPLATE']"
+    resultRow: "//td[text()='TEMPLATE']",
+    authoritativeApplicationsCredentialsList: "//*[@id='panel']/div/div/section[*]/div/h4/a[2]",
+    buttonEditAuthoritativeApplicationTemplate: "//*[text()='TEMPLATE']/../..//button[@id='card_edit_button']",
+    buttonDeleteAuthoritativeApplicationTemplate: "//*[text()='TEMPLATE']/../..//button[@id='card_delete_button']",
+    cardAuthoritativeApplicationTemplate: "//*[text()='TEMPLATE']/../../..",
+    buttonEditUsername: "//*[@id='edit_username']",
+    inputUsername: "//*[@id='input_username']",
+    buttonSaveUsername: "//*[@id='save_username']",
+    buttonEditPassword: "//*[@id='edit_password']",
+    inputPassword: "//*[@id='input_password']",
+    buttonSavePassword: "//*[@id='save_password']",
+    linkBackToCredentials: "//*[@id='back-button']",
+    credentialsUsernameTemplate: "//*[text()='TEMPLATE']/../../ul/li[1]/*/span",
+    credentialsPasswordTemplate: "//*[text()='TEMPLATE']/../../ul/li[2]/*/span",
+    findAnchorByTemplate: "//a[text() = 'TEMPLATE']"
 }
