@@ -32,7 +32,7 @@
             "type": "hub-admin-ui",
             "element": "tabQueueHtml",
             "test": {
-              "action": "contains",
+              "action": "include",
               "value": "Queued"
             }
           },{
@@ -41,7 +41,7 @@
             "type": "hub-admin-ui",
             "element": "tabArchiveHtml",
             "test": {
-              "action": "contains",
+              "action": "include",
               "value": "Archive"
             }
           }
@@ -157,8 +157,8 @@
             "type": "hub-admin-ui",
             "element": "historyRowOneStatus",
             "test": {
-              "action": "equal",
-              "operator": "or",
+              "action": "oneOf",
+              "caseSensitive": false,
               "value": ["waiting","retrieved"]
             }
           }
@@ -213,8 +213,8 @@
             "type": "hub-admin-ui",
             "element": "archiveHistoryRowOneStatus",
             "test": {
-              "action": "equal",
-              "operator": "or",
+              "action": "oneOf",
+              "caseSensitive": false,
               "value": ["confirmed","unconfirmed"]
             }
           }

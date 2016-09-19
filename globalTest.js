@@ -58,20 +58,20 @@ let runTestFramework = function(microservice){
                                     result.text = result.text.toLowerCase();
                             }
                             if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
-                                    assert[validation.test.action](result.text, validate.test.name || '');
+                                    assert[validate.test.action](result.text, validate.test.name || '');
                                     rerunTest();
                             }else if( availableAsserts.chaiThree.indexOf(validate.test.action) !== -1){
-                                    assert[validation.test.action](result.text, validate.test.value, validate.test.name || '');
+                                    assert[validate.test.action](result.text, validate.test.value, validate.test.name || '');
                                     rerunTest();
                             }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
-                                     assert[validation.test.action]( validate.test.value, result.text, validate.test.name || '');
+                                    console.error(validate.test.action);
+                                    console.error(validate.test.value);
+                                    console.error(result.text)
+                                     assert[validate.test.action]( validate.test.value, result.text, validate.test.name || '');
                                      rerunTest();
                              }else{
                                 //List of Extra lookups other then chai
-                                if(validate.test.action == 'contains'){
-                                    assert.include(result.text, validate.test.value, validate.test.name || '');
-                                    rerunTest();
-                                }else if(validate.test.action == 'operator'){
+                                if(validate.test.action == 'operator'){
                                     if(!validate.test.operator){
                                         console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
                                         assert.equal(true, false, 'With using operator Action you need to set validate.test.operator (<,>,=,!=)');
@@ -82,7 +82,7 @@ let runTestFramework = function(microservice){
                                     }
                                 }else{
                                     console.error('The Validation defined in JSON is invalid referrer to "usage/validations" File')
-                                    assert.equal(true, false, 'No Validation Action Defined');
+                                    assert.equal(true, false, 'No Validation Action Defined ('+validate.test.action+')');
                                     done();
                                 }
                             }
@@ -106,7 +106,6 @@ let runTestFramework = function(microservice){
                         return true;
                     }
                     let step = runTest.steps[stepindex];
-
                     let path = './test/' + step.type + '/controller.js';
                     let stepController = require(path);
                     step.params.shared = sharedData;
@@ -114,7 +113,7 @@ let runTestFramework = function(microservice){
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);
-                                console.error("Error Message: "+ JSON.strinfiy(Error));
+                                console.error("Error Message: "+ JSON.strinfiy(error));
                                 console.trace("Stack Trace");
                                 assert.equal(true, false, 'Error on Step: '+ stepindex);
                                 done();

@@ -22,6 +22,8 @@
     "isNotBoolean"
   ],
   "chaiThree": [
+    "include",
+    "notInclude",
     "equal",
     "notEqual",
     "strictEqual",
@@ -41,8 +43,6 @@
     "oneOf"
   ],
   "chaiThreeReverse":[
-    "include",
-    "notInclude",
     "match",
     "notMatch",
     "property",
