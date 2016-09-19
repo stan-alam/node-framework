@@ -39,5 +39,7 @@ module.exports.xpaths = {
     linkBackToCredentials: "//*[@id='back-button']",
     credentialsUsernameTemplate: "//*[text()='TEMPLATE']/../../ul/li[1]/*/span",
     credentialsPasswordTemplate: "//*[text()='TEMPLATE']/../../ul/li[2]/*/span",
-    findAnchorByTemplate: "//a[text() = 'TEMPLATE']"
+    findAnchorByTemplate: "//a[text() = 'TEMPLATE']",
+    linkPrivilegedApp: "//*[@id='dashboard-aggregates']/div[3]/section/div/h4/a",
+    linkCredentialsTab: "//*[@id='credentials_tab']"
 }

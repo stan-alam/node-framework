@@ -36,6 +36,7 @@
     "isAtMost",
     "typeOf",
     "notTypeOf",
+    "includeMembers",
     "instanceOf",
     "notInstanceOf",
     "sameMembers",

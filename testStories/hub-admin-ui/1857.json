@@ -105,8 +105,7 @@
             "type": "hub-admin-ui",
             "element": "authoritativeApplicationsCredentialsList",
             "test": {
-              "action": "equal",
-              "operator": "includeMembers",
+              "action": "includeMembers",
               "value": ["Banner","Colleague","applicationPub"]
             }
           }

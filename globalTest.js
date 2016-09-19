@@ -113,7 +113,7 @@ let runTestFramework = function(microservice){
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);
-                                console.error("Error Message: "+ JSON.strinfiy(error));
+                                console.error("Error Message: "+ JSON.stringify(error));
                                 console.trace("Stack Trace");
                                 assert.equal(true, false, 'Error on Step: '+ stepindex);
                                 done();

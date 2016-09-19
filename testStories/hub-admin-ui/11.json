@@ -53,7 +53,7 @@
             "type": "hub-admin-ui",
             "element": "breadCrumbsOne",
             "test": {
-              "action": "contains",
+              "action": "include",
               "value": "Application1"
             }
           }

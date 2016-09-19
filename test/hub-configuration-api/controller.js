@@ -8,7 +8,7 @@ const _ = require('lodash'),
 let controller = function(driver, options, callback){
         authFunctions.getUiToken(driver, function(Token){
             if(options.action == 'createApplications'){
-                configFunctions.createApplications(options.applications.length, Token, options.applications, [], function(error, applications, error){
+                configFunctions.createApplications(options.applications.length, Token, options.applications, [], function(error, applications){
                    callback(driver, applications, error);
                 });
             }else if(options.action == 'addResource'){
