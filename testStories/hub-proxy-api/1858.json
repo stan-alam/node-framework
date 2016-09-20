@@ -1,0 +1,50 @@
+{
+    "id" : "1858",
+    "name" : "Use stored credentials for EPAs",
+    "testCases" : [
+      {
+        "testCaseId": 1,
+        "name": "Make Proxy privileged call with stored credentials on UI",
+        "steps": [
+         {
+            "id": 1,
+            "method": "createApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "createApplications",
+              "applications": ["1858PubApp"]
+            }
+          },
+          {
+            "id": 2,
+            "method": "addResource",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "addResource",
+              "application": "1858PubApp",
+              "resources": "subjects"
+            }
+          },
+          {
+            "id": 3,
+            "method": "addCredentials",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "addCredentials",
+              "username":"epausername",
+              "password" :"epapassword",
+              "sharedData": {
+                "key": "appId",
+                "sharelocation": {
+                  "step": 0,
+                  "value": "[0].body.id"
+                }
+              }
+            }
+          }
+          
+          
+       ]
+      }
+    ]
+}

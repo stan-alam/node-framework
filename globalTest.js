@@ -107,6 +107,7 @@ let runTestFramework = function(microservice){
                     let stepController = require(path);
                     step.params.shared = sharedData;
                     adminFunctions.sharedDataCheck(step.params, function(options){
+                        console.log("calling controller"+JSON.stringify(options));
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);

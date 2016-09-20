@@ -67,9 +67,19 @@ let controller = function(driver, options, callback){
                     })
                     }
                 });
-            }else{
-                callback(driver, null, { "msg":"No hub-configuration-api Controller found for: "+options.action })
+
+            }else if(options.action=='addCredentials'){
+                  console.log("calling addcredentials");
+                  configFunctions.addCredentials(options.appId,Token,function(error, result){
+                    if(!error)
+                        callback(driver, result);
+                    else
+                        callback(driver,result,error);
+                  });
+             }else{
+                callback(driver, null, { "msg":"No hub-configuration-api Controller found for: "+options.action });
             }
+
         });
 }
 
