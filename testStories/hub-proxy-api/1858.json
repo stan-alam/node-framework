@@ -6,8 +6,17 @@
         "testCaseId": 1,
         "name": "Make Proxy privileged call with stored credentials on UI",
         "steps": [
-         {
+          {
             "id": 1,
+            "method": "deleteApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "deleteApplications",
+              "applications": ["1858pubApp"]
+            }
+          },
+          {
+            "id": 2,
             "method": "createApplications",
             "type": "hub-configuration-api",
             "params": {
@@ -16,7 +25,7 @@
             }
           },
           {
-            "id": 2,
+            "id": 3,
             "method": "addResource",
             "type": "hub-configuration-api",
             "params": {
@@ -26,17 +35,18 @@
             }
           },
           {
-            "id": 3,
+            "id": 4,
             "method": "addCredentials",
             "type": "hub-configuration-api",
             "params": {
               "action": "addCredentials",
               "username":"epausername",
               "password" :"epapassword",
+              "title": "EPA credentials",
               "sharedData": {
                 "key": "appId",
                 "sharelocation": {
-                  "step": 0,
+                  "step": 1,
                   "value": "[0].body.id"
                 }
               }

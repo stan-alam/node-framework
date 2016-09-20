@@ -16,10 +16,14 @@ let controller = function(driver, options, callback){
                     if(error){
                         callback(driver, null, error)
                     }
+                    let callbackDone = false
                     _.each(configuration, function(app){
                         if(app.name == options.application){
                             configFunctions.addPublishingResource(Token, app, options.resources, function(error, applications){
-                                callback(driver, applications.body, error)
+                                if(!callbackDone){
+                                    callbackDone = true;
+                                    callback(driver, applications.body, error)
+                                }
                             });
                         }
                     })
@@ -39,6 +43,7 @@ let controller = function(driver, options, callback){
                 });
             }else if(options.action == 'deleteApplications'){
                  configFunctions.getConfiguration(Token, function(error, configuration){
+                    let callbackDone = false;
                     if(error){
                         console.log("Error Calling Configuration Service");
                         callback(driver, null, error)
@@ -51,26 +56,28 @@ let controller = function(driver, options, callback){
                         appsSearched = appsSearched+1;
                         if((options.applications) && (options.applications.indexOf(app.name) !== -1)){
                             configFunctions.deleteApplications(app.id, Token, function(status, error){
-                                if(appsSearched == configuration.length){
+                                if((appsSearched == configuration.length) && (!callbackDone)){
+                                    callbackDone = true;
                                     callback(driver, status, error);
                                 }
                             });
                         }else if(!options.applications){
                             configFunctions.deleteApplications(app.id, Token, function(status, error){
-                                if(appsSearched == configuration.length){
+                                if((appsSearched == configuration.length) && (!callbackDone)){
+                                    callbackDone = true;
                                     callback(driver, status, error);
                                 }
                             });
-                        }else if(appsSearched == configuration.length){
+                        }else if((appsSearched == configuration.length) &&(!callbackDone)){
+                            callbackDone = true;
                              callback(driver);
                          }
                     })
                     }
                 });
 
-            }else if(options.action=='addCredentials'){
-                  console.log("calling addcredentials");
-                  configFunctions.addCredentials(options.appId,Token,function(error, result){
+            }else if(options.action == 'addCredentials'){
+                  configFunctions.addCredentials(options.appId, options.username, options.password, options.title, Token, function(error, result){
                     if(!error)
                         callback(driver, result);
                     else
