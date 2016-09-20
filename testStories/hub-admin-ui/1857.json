@@ -363,38 +363,6 @@
                 }
             }
         ]
-    },
-    {
-        "testCaseId": 7,
-        "name": "* To Be Completed * EPAs Proxy Call using valid credentials  * To Be Completed *",
-        "steps": [
-            {
-                "id": 1,
-                "method": "viewDashboard",
-                "type": "hub-admin-ui",
-                "params": {
-                    "action": "urllocation",
-                    "location": "/#/dashboard"
-                }
-            }
-        ],
-        "validation": []
-    },
-    {
-        "testCaseId": 8,
-        "name": "* To Be Completed * EPAs Proxy Call using no credentials  * To Be Completed *",
-        "steps": [
-            {
-                "id": 1,
-                "method": "viewDashboard",
-                "type": "hub-admin-ui",
-                "params": {
-                    "action": "urllocation",
-                    "location": "/#/dashboard"
-                }
-            }
-        ],
-        "validation": []
     }
     ]
 }
