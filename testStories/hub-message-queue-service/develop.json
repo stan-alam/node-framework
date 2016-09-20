@@ -83,38 +83,22 @@
         "validation": []
       },
       {
-        "testCaseId": 6,
+        "testCaseId": 7,
         "name": "Consume Messages from Hub",
-        "steps": [
-       {
-            "id": 1,
-            "method": "postFlagFalse",
-            "type": "hub-admin-api",
-            "params": {
-              "action": "setPermissions",
-              "setPermissions" : "disabled"
-
-
-            }
-          }
-
-        ],
+        "steps": [],
        "validation": [
-
 
        {
             "name": "assert status code of 200",
-            "action": "assert",
+            "action": "setPermissions",
+            "setPermissions" : "disabled",
+            "method": "postFlagFalse",
             "type": "hub-admin-api",
             "test": {
             "action": "equal",
             "value": 200
             }
           }
-
-
-
-
        ]
       }
     ]

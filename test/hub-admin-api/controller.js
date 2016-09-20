@@ -18,7 +18,12 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'setPermissions'){
             authFunctions.convertJwtEthos(Token, function(error, jwt){
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, Apikey) {
+                   if (Apikey.length > 0 ) {
+                     callback(driver, 200);
+                   }
+                   else {
                     callback(driver, Apikey);
+                 }
                 });
             });
         } else if (options.action == 'addResource') {
