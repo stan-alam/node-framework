@@ -106,7 +106,6 @@
             "name": "assert status code of 200",
             "action": "assert",
             "type": "hub-admin-api",
-       //     "element": "archiveHistoryRowOneStatus",
             "test": {
             "action": "equal",
             "value": 200
