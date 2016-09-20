@@ -6,6 +6,7 @@ const
     async = require('async'),
     assert = require("chai").assert,
     envVars = require('./framework/environments'),
+    availableAsserts = require('./framework/validation'),
     uiFunctions = require('./lib/uiFunctions.js'),
     adminFunctions = require('./lib/adminFunctions.js');
 
@@ -50,13 +51,36 @@ let runTestFramework = function(microservice){
                         let path = './test/' + validate.type + '/controller.js';
                         let stepController = require(path);
                         stepController.controller(driver, validate, function(driver, result) {
-                            if (validate.test.action == 'contains') {
-                                assert.include(result.text, validate.test.value);
-                                rerunTest();
-                            }else if(validate.test.action == 'equal'){
-                                if((validate.test.operator) && (validate.test.operator == 'or')){
-                                    assert.oneOf(result.text.toLowerCase(), validate.test.value);
+                            if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
+                                if(!Array.isArray(validate.test.value))
+                                    validate.test.value == validate.test.value.toLowerCase();
+                                if(!Array.isArray(result.text))
+                                    result.text = result.text.toLowerCase();
+                            }
+                            if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
+                                    assert[validate.test.action](result.text, validate.test.name || '');
                                     rerunTest();
+                            }else if( availableAsserts.chaiThree.indexOf(validate.test.action) !== -1){
+                                    assert[validate.test.action](result.text, validate.test.value, validate.test.name || '');
+                                    rerunTest();
+                            }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
+                                     assert[validate.test.action]( validate.test.value, result.text, validate.test.name || '');
+                                     rerunTest();
+                             }else{
+                                //List of Extra lookups other then chai
+                                if(validate.test.action == 'operator'){
+                                    if(!validate.test.operator){
+                                        console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
+                                        assert.equal(true, false, 'With using operator Action you need to set validate.test.operator (<,>,=,!=)');
+                                        done();
+                                    }else{
+                                        assert.operator(result.text, validate.test.operator, validate.test.value, validate.test.name || '');
+                                        rerunTest();
+                                    }
+                                }else{
+                                    console.error('The Validation defined in JSON is invalid referrer to "usage/validations" File')
+                                    assert.equal(true, false, 'No Validation Action Defined ('+validate.test.action+')');
+                                    done();
                                 }
                             }
                         });
@@ -79,12 +103,18 @@ let runTestFramework = function(microservice){
                         return true;
                     }
                     let step = runTest.steps[stepindex];
-
                     let path = './test/' + step.type + '/controller.js';
                     let stepController = require(path);
                     step.params.shared = sharedData;
                     adminFunctions.sharedDataCheck(step.params, function(options){
-                        stepController.controller(driver, options, function(driver, sharedResult) {
+                        stepController.controller(driver, options, function(driver, sharedResult, error) {
+                            if(error){
+                                console.error("Step: "+stepindex);
+                                console.error("Error Message: "+ JSON.stringify(error));
+                                console.trace("Stack Trace");
+                                assert.equal(true, false, 'Error on Step: '+ stepindex);
+                                done();
+                            }
                             if(sharedResult)
                                 sharedData['step'+stepindex] = sharedResult;
 

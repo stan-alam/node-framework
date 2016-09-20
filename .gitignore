@@ -11,3 +11,4 @@ logs/*
 .env
 build
 out.png
+testStories/*/develop.json

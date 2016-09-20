@@ -15,12 +15,11 @@ var logdir = new Date().getTime();
 try{
     fs.mkdirSync("logs");
 } catch(e){
-    console.info("logs already createed");
+    console.info("logs already created");
 }
 fs.mkdirSync("logs/"+logdir);
-spawn("./node_modules/.bin/selenium-standalone install");
-spawn("./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
-spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --verbose > logs/"+logdir+"/chromedriver.log");
+spawn("./node_modules/.bin/selenium-standalone install && ./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
+spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --port=19515 --verbose > logs/"+logdir+"/chromedriver.log");
 
 function runTests(loopCount){
     if (fileExists("logs/"+logdir+"/selenium.log")) {

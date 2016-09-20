@@ -18,6 +18,6 @@
   "uiTesting": {
     "username": "aakoepke@ellucian.me.sandbox",
     "password": "Demo99!?",
-    "browsers": ["chrome"]
+    "browsers": ["chromedriver"]
   }
 }

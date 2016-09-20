@@ -1,0 +1,400 @@
+{
+    "id" : "1857",
+    "name" : "Create credentials for EPAs in Ethos Integration for use by the Proxy service",
+    "testCases" : [
+    {
+        "testCaseId": 1,
+        "name" : "Configure Pub and Sub applications and resources",
+        "steps": [
+          {
+              "id": 1,
+              "method": "deleteApplications",
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "deleteApplications"
+                }
+          },
+          {
+            "id": 2,
+            "method": "addApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "createApplications",
+              "applications": ["Banner","Colleague","Elevate","applicationPub"]
+            }
+            },
+          {
+          "id": 3,
+          "method": "appPublisher",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addResource",
+            "application": "Banner",
+            "resources": "subjects"
+          }
+        },
+          {
+            "id": 4,
+            "method": "appPublisher",
+            "type": "hub-configuration-api",
+            "params": {
+                "action": "addResource",
+                "application": "Colleague",
+                "resources": "courses"
+            }
+        },
+          {
+            "id": 5,
+            "method": "appPublisher",
+            "type": "hub-configuration-api",
+            "params": {
+                "action": "addResource",
+                "application": "applicationPub",
+                "resources": ["buildings","rooms","sites"]
+            }
+        },
+          {
+          "id": 6,
+          "method": "addSubscriber",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addSubscription",
+            "application": "Elevate",
+            "subscriptions": ["subjects","courses","buildings","rooms","sites"]
+          }
+        }
+        ],
+        "validation": []
+    },
+    {
+      "testCaseId": 2,
+      "name": "View EPAs Credentials List",
+      "steps": [
+        {
+          "id": 1,
+          "method": "viewDashboard",
+          "type": "hub-admin-ui",
+          "params": {
+            "action": "urllocation",
+            "location": "/#/dashboard"
+          }
+        },
+        {
+          "id": 2,
+          "method": "viewPrivilegedApplication",
+          "type": "hub-admin-ui",
+          "params": {
+            "action": "click",
+            "element": "linkPrivilegedApp"
+          }
+        },
+        {
+          "id": 3,
+          "method": "viewCredentialsTab",
+          "type": "hub-admin-ui",
+          "params": {
+            "action": "click",
+            "element": "linkCredentialsTab"
+          }
+        }
+      ],
+      "validation": [
+          {
+            "name": "Authoritative Applications on the system listed in the EPAs Credentials List",
+            "action": "arrayValue",
+            "type": "hub-admin-ui",
+            "element": "authoritativeApplicationsCredentialsList",
+            "test": {
+              "action": "includeMembers",
+              "value": ["Banner","Colleague","applicationPub"]
+            }
+          }
+
+      ]
+    },
+    {
+        "testCaseId": 3,
+        "name": "EPAs Credentials Visual Cue",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            },
+            {
+                "id": 2,
+                "method": "viewPrivilegedApplication",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linkPrivilegedApp"
+                }
+            },
+            {
+                "id": 3,
+                "method": "viewCredentialsTab",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linkCredentialsTab"
+                }
+            },
+            {
+                "id": 4,
+                "method": "clickEditAuthoritativeApplication",
+                "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "buttonEditAuthoritativeApplicationTemplate",
+                        "elementTemplate": "Banner",
+                        "hoverElement": "cardAuthoritativeApplicationTemplate",
+                        "hoverElementTemplate": "Banner"
+                }
+            },
+            {
+                "id": 5,
+                "method": "clickEditUsername",
+                "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "buttonEditUsername"
+                }
+            },
+            {
+                "id": 6,
+                "method": "enterUserName",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "sendkeys",
+                    "element": "inputUsername",
+                    "elementValue": "VisualCue"
+                }
+            },
+            {
+                "id": 7,
+                "method": "clickSave",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "buttonSaveUsername"
+                }
+            },
+            {
+                "id": 8,
+                "method": "clickEditPassword",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "buttonEditPassword"
+                }
+            },
+            {
+                "id": 9,
+                "method": "enterPassword",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "sendkeys",
+                    "element": "inputPassword",
+                    "elementValue": "VisualCue"
+            }
+            },
+            {
+                "id": 10,
+                "method": "clickSave",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "buttonSavePassword"
+                }
+            },
+            {
+                "id": 11,
+                "method": "clickBackNavigation",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linkBackToCredentials"
+                }
+            }
+
+        ],
+        "validation": [
+            {
+                "name": "Validate Credentials Username",
+                "action": "elementView",
+                "type": "hub-admin-ui",
+                "element": "credentialsUsernameTemplate",
+                "elementTemplate": "Banner",
+                "test": {
+                    "action": "equal",
+                    "value": "VisualCue"
+                }
+            },
+            {
+                "name": "Validate Credentials Password",
+                "action": "elementView",
+                "type": "hub-admin-ui",
+                "element": "credentialsPasswordTemplate",
+                "elementTemplate": "Banner",
+                "test": {
+                    "action": "equal",
+                    "value": "*********"
+                }
+            }
+        ]
+    },
+    {
+        "testCaseId": 4,
+        "name": "* SKIP * Add EPAs Credentials * SKIP *",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            }
+        ],
+        "validation": []
+    },
+    {
+        "testCaseId": 5,
+        "name": "Update EPAs Credentials * SEE STEP 3 - EPAs Credentials Visual Cue *",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            }
+        ],
+        "validation": []
+    },
+    {
+        "testCaseId": 6,
+        "name": "Remove EPAs Credentials",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            },
+            {
+                "id": 2,
+                "method": "viewPrivilegedApplication",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linkPrivilegedApp"
+                }
+            },
+            {
+                "id": 3,
+                "method": "viewCredentialsTab",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linkCredentialsTab"
+                }
+            },
+            {
+                "id": 4,
+                "method": "clickDeleteAuthoritativeApplication",
+                "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "buttonDeleteAuthoritativeApplicationTemplate",
+                        "elementTemplate": "Colleague",
+                        "hoverElement": "cardAuthoritativeApplicationTemplate",
+                        "hoverElementTemplate": "Colleague"
+                }
+            },
+            {
+                "id": 5,
+                "method": "clickDeleteConfirm",
+                "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "buttonConfirmDelete"
+                }
+            },
+            {
+                "id": 6,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            },
+            {
+                "id": 7,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linksViewApplication"
+                }
+            }
+        ],
+        "validation": [
+            {
+                "name": "Validate Application Still Exists",
+                "action": "elementView",
+                "type": "hub-admin-ui",
+                "element": "findAnchorByTemplate",
+                "elementTemplate": "Colleague",
+                "test": {
+                    "action": "equal",
+                    "value": "Colleague"
+                }
+            }
+        ]
+    },
+    {
+        "testCaseId": 7,
+        "name": "* To Be Completed * EPAs Proxy Call using valid credentials  * To Be Completed *",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            }
+        ],
+        "validation": []
+    },
+    {
+        "testCaseId": 8,
+        "name": "* To Be Completed * EPAs Proxy Call using no credentials  * To Be Completed *",
+        "steps": [
+            {
+                "id": 1,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            }
+        ],
+        "validation": []
+    }
+    ]
+}

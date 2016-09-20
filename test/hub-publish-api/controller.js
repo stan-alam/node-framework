@@ -29,6 +29,7 @@ let controller = function(driver, options, callback){
             }else{
                 console.error("No Publisher Action for: "+options.action)
             }
+
         });
 }
 

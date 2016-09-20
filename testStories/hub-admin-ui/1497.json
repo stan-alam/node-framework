@@ -32,7 +32,7 @@
             "type": "hub-admin-ui",
             "element": "tabQueueHtml",
             "test": {
-              "action": "contains",
+              "action": "include",
               "value": "Queued"
             }
           },{
@@ -41,7 +41,7 @@
             "type": "hub-admin-ui",
             "element": "tabArchiveHtml",
             "test": {
-              "action": "contains",
+              "action": "include",
               "value": "Archive"
             }
           }
@@ -120,7 +120,7 @@
             "type": "hub-message-queue-service",
             "params": {
               "action": "consumeChangeNotifications",
-              "messageCount": 20,
+              "messageCounts": [10, 10, 0, 0, 0 ],
               "application": "applicationSub"
             }
           }
@@ -157,8 +157,8 @@
             "type": "hub-admin-ui",
             "element": "historyRowOneStatus",
             "test": {
-              "action": "equal",
-              "operator": "or",
+              "action": "oneOf",
+              "caseSensitive": false,
               "value": ["waiting","retrieved"]
             }
           }
@@ -201,14 +201,8 @@
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
-              "element": "tabArchiveHtml",
-              "sharedData": {
-                "key": "application",
-                "sharelocation": {
-                  "step": 1,
-                  "value": "[0].body.id"
-                }
-              }
+              "element": "tabArchiveHtml"
+
             }
           }
         ],
@@ -219,9 +213,183 @@
             "type": "hub-admin-ui",
             "element": "archiveHistoryRowOneStatus",
             "test": {
-              "action": "equal",
-              "operator": "or",
+              "action": "oneOf",
+              "caseSensitive": false,
               "value": ["confirmed","unconfirmed"]
+            }
+          }
+        ]
+      },
+      {
+        "testCaseId": 7,
+        "name": "Aggregate Stats Waiting Navigation",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "firstRow",
+              "elementTemplate": "Waiting"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "WAITING",
+            "test": {
+              "action": "equal",
+              "caseSensitive": false,
+              "value": "waiting"
+            }
+          }
+        ]
+      },
+      {
+        "testCaseId": 8,
+        "name": "Aggregate Stats Retrieved Navigation",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "firstRow",
+              "elementTemplate": "Retrieved"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "RETRIEVED",
+            "test": {
+              "action": "equal",
+              "caseSensitive": false,
+              "value": "retrieved"
+            }
+          }
+        ]
+      },
+      {
+        "testCaseId": 9,
+        "name": "Aggregate Stats Confirmed Navigation",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "firstRow",
+              "elementTemplate": "Confirmed"
+            }
+          },
+          {
+            "id": 3,
+            "method": "viewArchiveTable",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "tabArchiveHtml"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "CONFIRMED",
+            "test": {
+              "action": "equal",
+              "caseSensitive": false,
+              "value": "confirmed"
+            }
+          }
+        ]
+      },
+      {
+        "testCaseId": 10,
+        "name": "Aggregate Stats Unconfirmed Navigation",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "method": "viewMessageHistory",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "firstRow",
+              "elementTemplate": "Unconfirmed"
+            }
+          },
+          {
+            "id": 3,
+            "method": "viewArchiveTable",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "tabArchiveHtml"
+            }
+          }
+        ],
+        "validation": [
+          {
+            "name": "Queue Tab Visible on UI",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "filterHistoryRowOneStatus",
+            "elementTemplate": "UNCONFIRMED",
+            "test": {
+              "action": "equal",
+              "caseSensitive": false,
+              "value": "unconfirmed"
             }
           }
         ]
