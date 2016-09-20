@@ -80,23 +80,25 @@
             }
           }
         ],
-        "validation": []
-      },
-      {
-        "testCaseId": 7,
-        "name": "Consume Messages from Hub",
-        "steps": [],
-       "validation": [
-
+        "validation": [
        {
-            "name": "assert status code of 200",
-            "action": "setPermissions",
-            "setPermissions" : "disabled",
-            "method": "postFlagFalse",
+         "name": "assert status code of 200",
+         "action": "setPermissionsStatusCode",
+         "type": "hub-admin-api",
+         "setPermissions" : "disabled",
+         "test": {
+           "action": "equal",
+           "value": 200
+         }
+       },
+          {
+            "name": "assert status message",
+            "action": "setPermissionsStatusText",
             "type": "hub-admin-api",
+            "setPermissions" : "disabled",
             "test": {
-            "action": "equal",
-            "value": 200
+              "action": "include",
+              "value": "permissions have been updated updated"
             }
           }
        ]

@@ -15,15 +15,16 @@ let controller = function(driver, options, callback) {
                 callback(driver, applications);
             });
 
-        } else if (options.action == 'setPermissions'){
+        } else if (options.action == 'setPermissionsStatusCode'){
             authFunctions.convertJwtEthos(Token, function(error, jwt){
-                adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, Apikey) {
-                   if (Apikey.length > 0 ) {
-                     callback(driver, 200);
-                   }
-                   else {
-                    callback(driver, Apikey);
-                 }
+                adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
+                     callback(driver, {'text': result.statusCode }, error);
+                });
+            });
+        } else if (options.action == 'setPermissionsStatusText'){
+            authFunctions.convertJwtEthos(Token, function(error, jwt){
+                adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
+                     callback(driver, {'text': result.body.message }, error);
                 });
             });
         } else if (options.action == 'addResource') {
