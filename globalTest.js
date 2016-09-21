@@ -17,8 +17,8 @@ let runTestFramework = function(microservice){
     before(function(done) {
         this.timeout(500000000)
         let uiConfig = {
-            'username': envVars.uiTesting.username,
-            'password': envVars.uiTesting.password,
+            'username': envVars.credentials.username,
+            'password': envVars.credentials.password,
             'browser': 'chrome'
         };
 

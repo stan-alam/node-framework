@@ -4,7 +4,8 @@
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony app.js"
+    "start": "node --harmony app.js",
+    "docs": " ./node_modules/.bin/yuidoc2md lib/*.js test/**/*.js > usage.MD"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,6 @@
     "sync-request": "^3.0.1",
     "system-sleep": "^1.0.0-f",
     "uuid": "^2.0.2",
-    "yuidocjs": "^0.10.2"
+    "yuidoc2md": "^0.4.8"
   }
 }
