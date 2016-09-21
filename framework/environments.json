@@ -13,12 +13,10 @@
     "publisher": "application/vnd.hedtech.change-notification.v2+json",
     "privilegedappcredentials":"application/vnd.hedtech.privileged-app-credentials.v2+json"
   },
-  "test": {
-    "url": "https://test-integrationhub-integrate.10004.elluciancloud.com"
-  },
-  "uiTesting": {
+  "url": "https://test-integrationhub-integrate.10004.elluciancloud.com",
+  "credentials": {
     "username": "aakoepke@ellucian.me.sandbox",
-    "password": "Demo99!?",
+    "password": "Demo99!?"
+  },
     "browsers": ["chromedriver"]
-  }
 }

@@ -17,8 +17,8 @@ let runTestFramework = function(microservice){
     before(function(done) {
         this.timeout(500000000)
         let uiConfig = {
-            'username': envVars.uiTesting.username,
-            'password': envVars.uiTesting.password,
+            'username': envVars.credentials.username,
+            'password': envVars.credentials.password,
             'browser': 'chrome'
         };
 
@@ -107,7 +107,6 @@ let runTestFramework = function(microservice){
                     let stepController = require(path);
                     step.params.shared = sharedData;
                     adminFunctions.sharedDataCheck(step.params, function(options){
-                        console.log("calling controller"+JSON.stringify(options));
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);
