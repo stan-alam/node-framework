@@ -18,7 +18,13 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'setPermissionsStatusCode'){
             authFunctions.convertJwtEthos(Token, function(error, jwt){
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
+                     if (error) {
+                       callback(driver, {'text': error.statusCode }, error);
+
+
+                     } else {
                      callback(driver, {'text': result.statusCode }, error);
+                    }
                 });
             });
         } else if (options.action == 'setPermissionsStatusText'){

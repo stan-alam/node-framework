@@ -88,7 +88,7 @@
          "setPermissions" : "disabled",
          "test": {
            "action": "equal",
-           "value": 200
+           "value": 401
          }
        },
           {
