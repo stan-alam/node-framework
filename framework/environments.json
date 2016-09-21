@@ -11,12 +11,14 @@
     "error": "application/vnd.hedtech.errors.v2+json",
     "mqs": "application/vnd.hedtech.applications.v2+json",
     "publisher": "application/vnd.hedtech.change-notification.v2+json",
-    "privilegedappcredentials":"application/vnd.hedtech.privileged-app-credentials.v2+json"
+    "privilegedappcredentials":"application/vnd.hedtech.privileged-app-credentials.v2+json",
+    "integrationTemplates": "application/vnd.hedtech.integration-templates.v2+json",
+    "integration": "application/vnd.hedtech.integrations.v2+json"
   },
   "url": "https://test-integrationhub-integrate.10004.elluciancloud.com",
   "credentials": {
     "username": "aakoepke@ellucian.me.sandbox",
     "password": "Demo99!?"
   },
-    "browsers": ["chromedriver"]
+  "browsers": ["chromedriver"]
 }

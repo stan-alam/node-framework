@@ -8,11 +8,13 @@ const
     envVars = require('./framework/environments'),
     availableAsserts = require('./framework/validation'),
     uiFunctions = require('./lib/uiFunctions.js'),
+    preSetupLib = require('./lib/presetup.js'),
     adminFunctions = require('./lib/adminFunctions.js');
 
 let runTestFramework = function(microservice){
     var driver;
     var uiToken;
+    var preSetup;
 
     before(function(done) {
         this.timeout(500000000)
@@ -24,6 +26,17 @@ let runTestFramework = function(microservice){
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
+            preSetupLib.setup(driver, function(driver, setup){
+                preSetup = setup;
+                done();
+            });
+        });
+    });
+
+    after(function(done){
+        this.timeout(800000000);
+        preSetupLib.cleanUp(driver, preSetup, function(){
+        driver.quit();
             done();
         });
     });
@@ -106,6 +119,7 @@ let runTestFramework = function(microservice){
                     let path = './test/' + step.type + '/controller.js';
                     let stepController = require(path);
                     step.params.shared = sharedData;
+                    step.params.shared.preSetup = preSetup;
                     adminFunctions.sharedDataCheck(step.params, function(options){
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){

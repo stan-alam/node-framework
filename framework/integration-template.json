@@ -1,0 +1,46 @@
+{
+  "id": "239faa40-dad2-4ef4-ad00-b733d402c9aa",
+  "name": "Banner Student 9.2, Elevate 2.0",
+  "description": "An integration flow between Banner Student 9.2 and Elevate 2.0.",
+  "application1": {
+    "name": "AutomationBanner Student",
+    "version": "9.2.0",
+    "resourcesOwned": [
+      "academic-levels",
+      "academic-periods",
+      "administrative-periods",
+      "buildings",
+      "course-levels",
+      "courses",
+      "credit-categories",
+      "ethnicities",
+      "grade-schemes",
+      "person-filters",
+      "persons",
+      "rooms",
+      "sections",
+      "subjects"
+    ]
+  },
+  "application2": {
+    "name": "AutomationElevate",
+    "version": "2.0.0",
+    "subscriptions": [
+      "academic-levels",
+      "academic-periods",
+      "administrative-periods",
+      "buildings",
+      "course-levels",
+      "courses",
+      "credit-categories",
+      "ethnicities",
+      "grade-schemes",
+      "person-filters",
+      "persons",
+      "rooms",
+      "sections",
+      "subjects"
+    ],
+    "makesRequestsOfOtherApplication": true
+  }
+}
