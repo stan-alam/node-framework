@@ -76,14 +76,15 @@ let controller = function(driver, options, callback){
                     }
                 });
 
-            }else if(options.action == 'addCredentials'){
-                  configFunctions.addCredentials(options.appId, options.username, options.password, options.title, Token, function(error, result){
+            }else if(options.action == 'addEPACredentials'){
+                  configFunctions.addEPACredentials(options.appId, options.username, options.password, options.title, Token, function(error, result){
                     if(!error)
                         callback(driver, result);
                     else
                         callback(driver,result,error);
                   });
-             }else{
+             }
+             else{
                 callback(driver, null, { "msg":"No hub-configuration-api Controller found for: "+options.action });
             }
 
