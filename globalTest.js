@@ -47,7 +47,7 @@ let runTestFramework = function(microservice){
         testCasefiles = ['develop.json'];
     }
 
-    let runAssertions = function(driver, result, callback){
+    let runAssertions = function(driver, validate, result, callback){
         if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
             if(!Array.isArray(validate.test.value))
                 validate.test.value == validate.test.value.toLowerCase();
@@ -99,7 +99,7 @@ let runTestFramework = function(microservice){
                         let path = './test/' + validate.type + '/controller.js';
                         let stepController = require(path);
                         stepController.controller(driver, validate, function(driver, result) {
-                            runAssertions(driver, result, function(end){
+                            runAssertions(driver, validate, result, function(end){
                                 if(end)
                                     done();
                                 else
@@ -121,8 +121,8 @@ let runTestFramework = function(microservice){
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if(runTest.steps.length == 0){
-                        return true;
+                    if(!runTest && runTest.steps.length == 0){
+                       done();
                     }
                     let step = runTest.steps[stepindex];
                     let path = './test/' + step.type + '/controller.js';
@@ -138,18 +138,35 @@ let runTestFramework = function(microservice){
                                 assert.equal(true, false, 'Error on Step: '+ stepindex);
                                 done();
                             }
-                            //Check if Test is a validation also
-                            if((step.tests) && ()){
-                                let runStepTest = function(driver, index, result){
-                                    runAssertions(driver, result, function(end){
-                                    //Run all validations in a loop
-                                    });
-                                });
-                                runStepTest(0);
-                            }else{
-                                if(sharedResult)
-                                    sharedData['step'+stepindex] = sharedResult;
+                            if(sharedResult)
+                                sharedData['step'+stepindex] = sharedResult;
 
+                            //Check if Test is a validation also
+                            if((step.tests) && (step.tests[0])){
+                                let runStepTest = function(driver, index, result){
+                                    let testvalidate = { 'test': step.tests[index] };
+                                    runAssertions(driver, testvalidate, result, function(end){
+                                    //Run all validations in a loop
+                                        if(end){
+                                            done();
+                                        }else if(step.tests[index+1]){
+                                            runStepTest((index+1));
+                                        }else{
+                                            if (runTest.steps[stepindex + 1]) {
+                                                runSteps((stepindex + 1));
+                                            } else {
+                                                if (runTest.validation) {
+                                                    runValidation(0);
+                                                } else {
+                                                    i = i + 1;
+                                                    done();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                                runStepTest(driver, 0, sharedResult);
+                            }else{
                                 if (runTest.steps[stepindex + 1]) {
                                     runSteps((stepindex + 1));
                                 } else {
