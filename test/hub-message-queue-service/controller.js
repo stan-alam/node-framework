@@ -7,61 +7,88 @@ const _ = require('lodash'),
     mqsFunctions = require('../../lib/mqsFunctions.js'),
     uiFunctions = require('../../lib/uiFunctions.js');
 
-let mqsLoopConsume = function(accessToken, options, index, lastid, results, consumeall, loopCallback){
+let mqsLoopConsume = function(accessToken, options, index, lastid, results, consumeall, loopCallback) {
     let endpoint = '';
-    if(index == options.messageCounts.length){
+    if (index == options.messageCounts.length) {
         loopCallback(results)
-    }else{
-        if(lastid > 0){
+    } else {
+        if (lastid > 0) {
             lastid = lastid + options.messageCounts[index];
         }
-        if(accessToken){
-            if(consumeall){
+        if (accessToken) {
+            if (consumeall) {
                 endpoint = 'callConsumeAll';
-            }else{
+            } else {
                 endpoint = 'callConsume';
             }
-            mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults){
+            mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
-                let newlastId = mqsResults.body[mqsResults.body.length-1].id;
-                mqsLoopConsume(accessToken, options, (index+1), newlastId, results, consumeall, loopCallback);
+                let newlastId = mqsResults.body[mqsResults.body.length - 1].id;
+                mqsLoopConsume(accessToken, options, (index + 1), newlastId, results, consumeall, loopCallback);
             });
-        }else{
+        } else {
             loopCallback(results);
         }
     }
 }
 
-let controller = function(driver, options, callback){
-    authFunctions.getUiToken(driver, function(Token){
+let controller = function(driver, options, callback) {
+    authFunctions.getUiToken(driver, function(Token) {
 
         //Calling Action of consumeChangeNotifications
-        if(options.action == 'consumeChangeNotifications'){
-                configFunctions.getConfiguration(Token, function(error, config){
-                    _.each(config, function(conf){
-                        if(conf.name == options.application){
-                            authFunctions.getAccessToken(conf.apiKey, function(error, accessToken){
-                                mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result){
-                                    callback(result);
-                                });
+        if (options.action == 'consumeChangeNotifications') {
+            configFunctions.getConfiguration(Token, function(error, config) {
+                _.each(config, function(conf) {
+                    if (conf.name == options.application) {
+                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
+                            mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result) {
+                                callback(result);
                             });
-                        }
-                    });
+                        });
+                    }
                 });
-        }else if(options.action == 'postFlagFalse'){
-                configFunctions.getConfiguration(Token, function(error, config){
-                    _.each(config, function(conf){
-                        if(conf.name == options.application){
-                            authFunctions.getAccessToken(conf.apiKey, function(error, accessToken){
-                                mqsLoopConsume(accessToken, options, 0, 0, [], true, function(result){
-                                    callback(result);
-                                });
+            });
+        } else if (options.action == 'postFlagFalse') {
+            configFunctions.getConfiguration(Token, function(error, config) {
+                _.each(config, function(conf) {
+                    if (conf.name == options.application) {
+                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
+                            mqsLoopConsume(accessToken, options, 0, 0, [], true, function(result) {
+                                callback(result);
                             });
-                        }
-                    });
+                        });
+                    }
                 });
-        }else{
-            console.error("MQS Controller has No Action: "+ options.action)
+            });
+
+        } else if (options.action == 'consumeAllOne') {
+            configFunctions.getConfiguration(Token, function(error, config) {
+                authFunctions.convertJwtEthos(Token, function(error, JWT){
+
+                    console.log(JWT);
+
+
+
+                mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
+                    if (error) {
+
+                        callback(driver, {
+                            'text': result
+                        }, error)
+
+                    } else {
+
+                        callback(driver, {
+                            'text': result.statusCode
+                        }, error)
+                    }
+                })
+            });
+
+        });
+
+        } else {
+            console.error("MQS Controller has No Action: " + options.action)
         }
     });
 }
