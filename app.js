@@ -38,7 +38,7 @@ function runTests(loopCount){
                     process.exit();
                 }
                 let test = testList[testIndex];
-                shell.exec("./node_modules/mocha/bin/_mocha test/"+test+"/test.js --reporter mochawesome --reporter-options reportDir=mochawesome-reports/"+test+",reportName="+test+",reportTitle="+test+",inlineAssets=true", function(){
+                shell.exec("./node_modules/mocha/bin/_mocha test/"+test+"/test.js --reporter mochawesome --reporter-options reportDir=mochawesome-reports/"+test+",reportName="+test+",reportTitle="+test+",inlineAssets=false", function(){
                     let resultReport = require('./mochawesome-reports/'+test+'/'+test+'.json');
                     if(resultReport.stats.failures > 0){
                         process.exit(resultReport.stats.failures);
