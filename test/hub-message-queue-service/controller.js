@@ -63,7 +63,7 @@ let controller = function(driver, options, callback) {
 
         } else if (options.action == 'consumeAllOneStatusCode') {
             configFunctions.getConfiguration(Token, function(error, config) {
-                authFunctions.convertJwtEthos(Token, function(error, JWT){
+                authFunctions.getEPAtoken(Token, function(error, JWT){
 
 
                 mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
@@ -86,7 +86,7 @@ let controller = function(driver, options, callback) {
 
         } else if (options.action == 'consumeAllOneStatusText'){
             configFunctions.getConfiguration(Token, function(error, config){
-                authFunctions.convertJwtEthos(Token, function(error, JWT) {
+                authFunctions.getEPAtoken(Token, function(error, JWT) {
 
                     mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
                         if ( error ) {

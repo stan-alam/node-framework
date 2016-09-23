@@ -38,13 +38,10 @@
     "sync-request": "^3.0.1",
     "system-sleep": "^1.0.0-f",
     "uuid": "^2.0.2",
-<<<<<<< HEAD
     "yuidocjs": "^0.10.2"
   },
   "devDependencies": {
     "mochawesome": "^1.5.2"
-=======
-    "yuidoc2md": "^0.4.8"
->>>>>>> master
+
   }
 }
