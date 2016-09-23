@@ -1,0 +1,31 @@
+{
+    "id" : "1906",
+    "name" : "Error Reporting Service",
+    "testCases" : [
+      {
+        "testCaseId": 1,
+        "name" : "Verify Insert of Error Service",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessage",
+              "messageCount": 1
+            },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 201,
+                "location": "statusCode"
+              },
+              {
+                "action": "isObject",
+                "location": "body"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}

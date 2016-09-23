@@ -2,6 +2,7 @@
 
 const
     _ = require('lodash'),
+     _eval = require('eval'),
     fs = require('fs'),
     async = require('async'),
     assert = require("chai").assert,
@@ -47,21 +48,36 @@ let runTestFramework = function(microservice){
         testCasefiles = ['develop.json'];
     }
 
-    let runAssertions = function(driver, validate, result, callback){
+    let runAssertions = function(driver, validate, validateResult, callback){
+
+        let ValidateResult = { text: '' };
+        if(Array.isArray(validateResult.text)){
+            validateResult.text = validateResult.text[0];
+        }
+
+        if((validate.test.location) && (validate.test.location.indexOf('.') > -1)){
+            let rval = _eval('module.exports = function () { return '+ JSON.stringify(validateResult.text)+'.'+validate.test.location+'} ');
+            ValidateResult.text = rval();
+        }else if(validate.test.location){
+            ValidateResult.text = validateResult.text[validate.test.location];
+        }else{
+            ValidateResult.text = validateResult.text;
+        }
+        
         if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
             if(!Array.isArray(validate.test.value))
                 validate.test.value == validate.test.value.toLowerCase();
-            if(!Array.isArray(result.text))
-                result.text = result.text.toLowerCase();
+            if(!Array.isArray(ValidateResult.text))
+                ValidateResult.text = ValidateResult.text.toLowerCase();
         }
         if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
-                assert[validate.test.action](result.text, validate.test.name || '');
+                assert[validate.test.action](ValidateResult.text, validate.test.name || '');
                 callback();
         }else if( availableAsserts.chaiThree.indexOf(validate.test.action) !== -1){
-                assert[validate.test.action](result.text, validate.test.value, validate.test.name || '');
+                assert[validate.test.action](ValidateResult.text, validate.test.value, validate.test.name || '');
                 callback();
         }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
-                 assert[validate.test.action]( validate.test.value, result.text, validate.test.name || '');
+                 assert[validate.test.action]( validate.test.value, ValidateResult.text, validate.test.name || '');
                  callback();
          }else{
             //List of Extra lookups other then chai
@@ -71,7 +87,7 @@ let runTestFramework = function(microservice){
                     assert.equal(true, false, 'With using operator Action you need to set validate.test.operator (<,>,=,!=)');
                     callback(true);
                 }else{
-                    assert.operator(result.text, validate.test.operator, validate.test.value, validate.test.name || '');
+                    assert.operator(ValidateResult.text, validate.test.operator, validate.test.value, validate.test.name || '');
                     callback();
                 }
             }else{
@@ -143,14 +159,13 @@ let runTestFramework = function(microservice){
 
                             //Check if Test is a validation also
                             if((step.tests) && (step.tests[0])){
-                                let runStepTest = function(driver, index, result){
-                                    let testvalidate = { 'test': step.tests[index] };
-                                    runAssertions(driver, testvalidate, result, function(end){
+                                let runStepTest = function(driver, index){
+                                    runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
                                     //Run all validations in a loop
                                         if(end){
                                             done();
                                         }else if(step.tests[index+1]){
-                                            runStepTest((index+1));
+                                            runStepTest(driver, (index+1));
                                         }else{
                                             if (runTest.steps[stepindex + 1]) {
                                                 runSteps((stepindex + 1));
@@ -165,7 +180,7 @@ let runTestFramework = function(microservice){
                                         }
                                     });
                                 }
-                                runStepTest(driver, 0, sharedResult);
+                                runStepTest(driver, 0);
                             }else{
                                 if (runTest.steps[stepindex + 1]) {
                                     runSteps((stepindex + 1));
