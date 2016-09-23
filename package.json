@@ -1,10 +1,11 @@
 {
   "name": "hub-node-test",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony app.js"
+    "start": "node --harmony app.js",
+    "docs": " ./node_modules/.bin/yuidoc2md lib/*.js test/**/*.js > usage.MD"
   },
   "repository": {
     "type": "git",
@@ -37,9 +38,13 @@
     "sync-request": "^3.0.1",
     "system-sleep": "^1.0.0-f",
     "uuid": "^2.0.2",
+<<<<<<< HEAD
     "yuidocjs": "^0.10.2"
   },
   "devDependencies": {
     "mochawesome": "^1.5.2"
+=======
+    "yuidoc2md": "^0.4.8"
+>>>>>>> master
   }
 }

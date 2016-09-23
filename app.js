@@ -33,10 +33,21 @@ function runTests(loopCount){
         var testList = getDirectories();
         if(testList.indexOf(testToRun) == -1){
             console.error("Running Tests End To End Tests ");
-            shell.exec("./node_modules/mocha/bin/_mocha test/"+testList.join("/test.js test/") + " --reporter mochawesome", function(){
-                let resultReport = require('./mochawesome-reports/mochawesome.json');
-                process.exit(resultReport.stats.failures);
-            });
+            let startTest = function(testIndex){
+                if(!testList[testIndex]){
+                    process.exit();
+                }
+                let test = testList[testIndex];
+                shell.exec("./node_modules/mocha/bin/_mocha test/"+test+"/test.js --reporter mochawesome --reporter-options reportDir=mochawesome-reports/"+test+",reportName="+test+",reportTitle="+test+",inlineAssets=false", function(){
+                    let resultReport = require('./mochawesome-reports/'+test+'/'+test+'.json');
+                    if(resultReport.stats.failures > 0){
+                        process.exit(resultReport.stats.failures);
+                    }else{
+                        startTest((testIndex+1))
+                    }
+                });
+            };
+            startTest(0)
         }else{
             console.error("Running Tests Just for: "+ testToRun);
             shell.exec("./node_modules/mocha/bin/_mocha test/"+testToRun+"/test.js --reporter mochawesome", function(){

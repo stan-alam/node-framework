@@ -1,10 +1,50 @@
 'use strict';
 
-const uiFunctions = require('../../lib/uiFunctions');
+const authFunctions = require('../../lib/authFunctions'),
+    proxyFunctions = require('../../lib/proxyFunctions');
 
+var epatoken;
+var tenantID;
 //Controller for hub-proxy-api
 let controller = function(driver, options, callback){
-
+     if(options.action == 'getEPAccessToken'){
+         authFunctions.getAccessToken(options.APIKey, function(error,Token){
+         	if(error)
+         		callback(driver,null,error);
+         	else{
+	         	authFunctions.getEPAtoken(Token,function(error,token){
+	         	  if(error)
+	                  callback(driver,null,error);
+	              else{
+	         		epatoken=token;
+	         		callback(driver,token);
+	         	   }
+	         	});
+           }
+       });
+     }else if(options.action == 'epaRequest'){
+         if (epatoken)
+	         proxyFunctions.epaGetMany(epatoken,options.resource,tenantID,function(statusCode){
+	         	       epatoken="";
+	         	       tenantID="";  
+	         	       callback(driver, {"text":statusCode});
+	        });
+	     else
+	     	callback(driver,{"text":"Cannot make the proxy call because there is no EPAtoken"});
+     }else if(options.action=='getTenantIdFromUItoken'){
+     	authFunctions.getUiToken(driver, function(Token){
+                authFunctions.openJwt(Token, function(error,t){
+                	if(error)
+                		 callback(driver,null,error);
+                	else{	
+	                    tenantID=t.tenant.id;
+	                    callback(driver,t.tenant.id)
+                    }
+                });
+        });
+      }
+      else
+        callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });
 }
 
 module.exports = exports = {

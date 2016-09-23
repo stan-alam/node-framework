@@ -1,0 +1,13 @@
+{
+  "id": "670eb5ed-7c00-4cba-bcfa-0d16a1b1d73a",
+  "title": "EPA credentials",
+  "credentials": [
+    {
+      "application": {
+        "id": ""
+      },
+      "password": "epapassword",
+      "username": "epausername"
+    }
+  ]
+}

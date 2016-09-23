@@ -56,7 +56,7 @@ describe("Running Error Integration Tests", function() {
     this.timeout(1500000)
     errorSchema.applicationId = applicationList.id;
     errorSchema.description = validateDescription;
-    let url = envVars.test.url+envVars.global.error;
+    let url = envVars.url+envVars.global.error;
     let res = request('POST', url, {
         'headers': {
             "content-type": envVars.headers.error,
@@ -72,7 +72,7 @@ describe("Running Error Integration Tests", function() {
     this.timeout(1500000)
     delete errorSchema.responseCode;
     errorSchema.description = 'Random String';
-    let url = envVars.test.url+envVars.global.error;
+    let url = envVars.url+envVars.global.error;
     sleep.sleep(1);
     let res = request('POST', url, {
         'headers': {

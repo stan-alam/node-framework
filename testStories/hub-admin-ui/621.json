@@ -1,0 +1,687 @@
+{
+    "id" : "621",
+    "name" : "Prevent user from configuring more than one application as authoritative for a resource",
+    "testCases" : [
+      {
+        "testCaseId": 1,
+        "name" : "Configure Tenant for Test Environment",
+        "steps": [
+            {
+                "id": 1,
+                "method": "deleteApplications",
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "deleteApplications"
+                  }
+            },
+            {
+                "id": 2,
+                "method": "addApplications",
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "createApplications",
+                    "applications": ["Banner","Elevate","EIH621App"]
+                }
+            },
+            {
+                "id": 3,
+                "method": "appPublisher",
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "addResource",
+                    "application": "Banner",
+                    "resources": ["subjects","academic-credentials","books"]
+                }
+            },
+            {
+                "id": 4,
+                "method": "addSubscriber",
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "addSubscription",
+                    "application": "Elevate",
+                    "subscriptions": ["subjects","credentials","books"]
+                }
+            },
+            {
+                "id": 5,
+                "method": "viewDashboard",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "urllocation",
+                    "location": "/#/dashboard"
+                }
+            }
+        ],
+        "validation": []
+      },
+      {
+          "testCaseId": 2,
+          "name" : "Configure Tenant for Production Environment",
+          "steps": [
+              {
+                  "id": 1,
+                  "method": "clickSettingsIcon",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSettings"
+                  }
+              },
+              {
+                  "id": 2,
+                  "method": "clickProduction",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSelectProd"
+                  }
+              },
+              {
+                  "id": 3,
+                  "method": "deleteApplications",
+                  "type": "hub-configuration-api",
+                  "params": {
+                      "action": "deleteApplications"
+                  }
+              },
+              {
+                  "id": 4,
+                  "method": "addApplications",
+                  "type": "hub-configuration-api",
+                  "params": {
+                      "action": "createApplications",
+                      "applications": ["Colleague","Pilot"]
+                  }
+              },
+              {
+                  "id": 5,
+                  "method": "appPublisher",
+                  "type": "hub-configuration-api",
+                  "params": {
+                      "action": "addResource",
+                      "application": "Colleague",
+                      "resources": ["courses"]
+                  }
+              },
+              {
+                  "id": 6,
+                  "method": "addSubscriber",
+                  "type": "hub-configuration-api",
+                  "params": {
+                      "action": "addSubscription",
+                      "application": "Pilot",
+                      "subscriptions": ["courses"]
+                  }
+              },
+              {
+                  "id": 7,
+                  "method": "viewDashboard",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "urllocation",
+                      "location": "/#/dashboard"
+                  }
+              }
+          ],
+          "validation": []
+      },
+      {
+          "testCaseId": 3,
+          "name" : "Add Resource Owned By Another Authoritative Application (1 of 3)",
+          "steps": [
+              {
+                  "id": 1,
+                  "method": "clickSettingsIcon",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSettings"
+                  }
+              },
+              {
+                  "id": 2,
+                  "method": "clickTest",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSelectTest"
+                  }
+              },
+              {
+                  "id": 3,
+                  "method": "clickViewApplications",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linksViewApplication"
+                  }
+              },
+              {
+                  "id": 4,
+                  "method": "clickApplicationLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findAnchorByTemplate",
+                      "elementTemplate": "EIH621App"
+                }
+              },
+              {
+                  "id": 5,
+                  "method": "clickResourcesTab",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "resources_tab"
+                }
+              },
+              {
+                  "id": 6,
+                  "method": "clickURILink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementTextByTemplate",
+                      "elementTemplate": "Base URI *"
+                }
+              },
+              {
+                  "id": 7,
+                  "method": "enterUri",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "sendkeys",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "input_baseUri",
+                      "elementValue": "http://hub-authoritative-source-example.2020ar.com:443/nic/api"
+                }
+              },
+              {
+                  "id": 8,
+                  "method": "clickSave",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "save_baseUri"
+                }
+              },
+              {
+                  "id": 9,
+                  "method": "clickResourcesLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "inline_navigation_resources_input"
+                }
+              },
+              {
+                  "id": 10,
+                  "method": "clickResourcesLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "array_toolbar_add_button"
+                }
+              },
+              {
+                  "id": 11,
+                  "method": "clickResourcesLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findButtonDataHintByTemplate",
+                      "elementTemplate": "Search"
+                }
+              }
+          ],
+          "validation": [
+              {
+                  "name": "Verify Resource Not Available",
+                  "action": "elementGetAttribute",
+                  "attributeValue": "class",
+                  "type": "hub-admin-ui",
+                  "element": "findTdByTrContainsTemplate",
+                  "elementTemplate": "academic-credentials",
+                  "test": {
+                      "action": "include",
+                      "value": "disabled",
+                      "caseSensitive": "false"
+                  }
+              }
+          ]
+      },
+      {
+          "testCaseId": 4,
+          "name" : "Add Resource Owned By Another Authoritative Application (2 of 3)",
+          "steps": [
+               {
+                   "id": 1,
+                   "method": "",
+                   "type": "hub-admin-ui",
+                   "params": {
+                       "action": "click",
+                       "element": "findSpanClassContainsTemplate",
+                       "elementTemplate": "close"
+                   }
+               },
+               {
+                   "id": 2,
+                   "method": "",
+                   "type": "hub-admin-ui",
+                   "params": {
+                       "action": "sendkeys",
+                       "element": "findElementIdByTemplate",
+                       "elementTemplate": "input_name",
+                       "elementValue": "academic-credentials"
+                   }
+               },
+               {
+                   "id": 3,
+                   "method": "",
+                   "type": "hub-admin-ui",
+                   "params": {
+                       "action": "click",
+                       "element": "findElementIdByTemplate",
+                       "elementTemplate": "input_uriOverride"
+                   }
+               }
+          ],
+          "validation": [
+               {
+                   "name": "Validate Error Message",
+                   "action": "elementView",
+                   "type": "hub-admin-ui",
+                   "element": "findElementTextByTemplate",
+                   "elementTemplate": "Resource is already in use",
+                   "test": {
+                       "action": "equal",
+                       "value": "Resource is already in use"
+                   }
+               },
+               {
+                   "name": "Validate Save Button Disabled",
+                   "action": "elementGetAttribute",
+                   "attributeValue": "disabled",
+                   "type": "hub-admin-ui",
+                   "element": "findElementIdByTemplate",
+                   "elementTemplate": "card_dialog_add_button",
+                   "test": {
+                       "action": "equal",
+                       "value": "true",
+                       "caseSensitive": "false"
+                    }
+               }
+           ]
+       },
+       {
+            "testCaseId": 5,
+            "name" : "Add Resource Owned By Another Authoritative Application (3 of 3)",
+            "steps": [
+                {
+                    "id": 1,
+                    "method": "",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findSpanClassContainsTemplate",
+                        "elementTemplate": "close"
+                    }
+                }
+            ],
+            "validation": [
+                {
+                    "name": "Validate Resource Not Present In List",
+                    "action": "elementView",
+                    "type": "hub-admin-ui",
+                    "element": "resourceGroup",
+                    "test": {
+                        "action": "notInclude",
+                        "value": "academic-credentials"
+                    }
+                }
+            ]
+          },
+
+
+          {
+            "testCaseId": 6,
+            "name" : "Add Resource Owned By Same Authoritative Application (1 of 3)",
+            "steps": [
+                {
+                    "id": 1,
+                    "method": "viewDashboard",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "urllocation",
+                        "location": "/#/dashboard"
+                    }
+                },
+                {
+                    "id": 2,
+                    "method": "clickSettingsIcon",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linkSettings"
+                    }
+                },
+                {
+                    "id": 3,
+                    "method": "clickTest",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linkSelectTest"
+                    }
+                },
+                {
+                    "id": 4,
+                    "method": "clickViewApplications",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linksViewApplication"
+                    }
+                },
+                {
+                    "id": 5,
+                    "method": "clickApplicationLink",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findAnchorByTemplate",
+                        "elementTemplate": "Banner"
+                  }
+                },
+                {
+                    "id": 6,
+                    "method": "click resources tab",
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "resources_tab"
+                  }
+              },
+              {
+                  "id": 7,
+                  "method": "click resources link",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "inline_navigation_resources_input"
+                }
+              },
+              {
+                  "id": 8,
+                  "method": "click add button",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "array_toolbar_add_button"
+                }
+              },
+              {
+                  "id": 9,
+                  "method": "click search icon",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findButtonDataHintByTemplate",
+                      "elementTemplate": "Search"
+              }
+            }
+            ],
+            "validation": [
+                {
+                    "name": "Verify Resource Not Available",
+                    "action": "elementGetAttribute",
+                    "attributeValue": "class",
+                    "type": "hub-admin-ui",
+                    "element": "findTdByTrContainsTemplate",
+                    "elementTemplate": "academic-credentials",
+                    "test": {
+                        "action": "include",
+                        "value": "disabled",
+                        "caseSensitive": "false"
+                    }
+                }
+            ]
+          },
+          {
+          "testCaseId": 7,
+          "name" : "Add Resource Owned By Same Authoritative Application (2 of 3)",
+          "steps": [
+          {
+            "id": 1,
+            "method": "",
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "click",
+                "element": "findSpanClassContainsTemplate",
+                "elementTemplate": "close"
+            }
+          },
+          {
+            "id": 2,
+            "method": "",
+            "type": "hub-admin-ui",
+                "params": {
+                    "action": "sendkeys",
+                    "element": "findElementIdByTemplate",
+                    "elementTemplate": "input_name",
+                    "elementValue": "academic-credentials"
+                }
+          },
+          {
+            "id": 3,
+            "method": "",
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "click",
+                "element": "findElementIdByTemplate",
+                "elementTemplate": "input_uriOverride"
+                }
+          }
+          ],
+          "validation": [
+          {
+            "name": "Validate Error Message",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "findElementTextByTemplate",
+            "elementTemplate": "Resource is already in use",
+            "test": {
+                "action": "equal",
+                "value": "Resource is already in use"
+            }
+          },
+          {
+            "name": "Validate Save Button Disabled",
+            "action": "elementGetAttribute",
+            "attributeValue": "disabled",
+            "type": "hub-admin-ui",
+            "element": "findElementIdByTemplate",
+            "elementTemplate": "card_dialog_add_button",
+            "test": {
+                "action": "equal",
+                "value": "true",
+                "caseSensitive": "false"
+            }
+          }
+          ]
+          },
+          {
+          "testCaseId": 8,
+          "name" : "Add Resource Owned By Same Authoritative Application (3 of 3)",
+          "steps": [
+          {
+            "id": 1,
+            "method": "click close X",
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "click",
+                "element": "findSpanClassContainsTemplate",
+                "elementTemplate": "close"
+            }
+          }
+          ],
+          "validation": [
+          {
+            "name": "Validate Resource Present In List",
+            "action": "elementView",
+            "type": "hub-admin-ui",
+            "element": "resourceNameInCardsByTemplate",
+            "elementTemplate": "academic-credentials",
+            "test": {
+                "action": "equal",
+                "value": "academic-credentials"
+            }
+          }
+          ]
+      },
+      {
+          "testCaseId": 9,
+          "name" : "Add Resource To Colleague in Production Environment",
+          "steps": [
+              {
+                  "id": 1,
+                  "method": "viewDashboard",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "urllocation",
+                      "location": "/#/dashboard"
+                  }
+              },
+              {
+                  "id": 2,
+                  "method": "clickSettingsIcon",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSettings"
+                  }
+              },
+              {
+                  "id": 3,
+                  "method": "clickProd",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "linkSelectProd"
+                  }
+              },
+              {
+                "id": 4,
+                "method": "click view applications",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "linksViewApplication"
+                }
+              },
+              {
+                "id": 5,
+                "method": "click colleage",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "findAnchorByTemplate",
+                    "elementTemplate": "Colleague"
+                }
+              },
+              {
+                  "id": 6,
+                  "method": "clickResourcesTab",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "resources_tab"
+                }
+              },
+              {
+                  "id": 7,
+                  "method": "clickResourcesLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "inline_navigation_resources_input"
+                }
+              },
+              {
+                  "id": 8,
+                  "method": "click + icon",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findElementIdByTemplate",
+                      "elementTemplate": "array_toolbar_add_button"
+                }
+              },
+              {
+                "id": 9,
+                "method": "clickResourcesLink",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findButtonDataHintByTemplate",
+                      "elementTemplate": "Search"
+                }
+              },
+              {
+                "id": 10,
+                "method": "click resources row",
+                  "type": "hub-admin-ui",
+                  "params": {
+                      "action": "click",
+                      "element": "findTdByTrContainsTemplate",
+                      "elementTemplate": "academic-credentials"
+                }
+              },
+              {
+                "id": 11,
+                "method": "click add button",
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "findElementIdByTemplate",
+                    "elementTemplate": "card_dialog_add_button"
+                }
+              }
+          ],
+          "validation": [
+              {
+                  "name": "Validate Resource Present In List",
+                  "action": "elementView",
+                  "type": "hub-admin-ui",
+                  "element": "resourceNameInCardsByTemplate",
+                  "elementTemplate": "academic-credentials",
+                  "test": {
+                      "action": "equal",
+                      "value": "academic-credentials"
+                  }
+              },
+              {
+                  "name": "Validate Resource Present In List",
+                  "action": "elementView",
+                  "type": "hub-admin-ui",
+                  "element": "resourceNameInCardsByTemplate",
+                  "elementTemplate": "courses",
+                  "test": {
+                      "action": "equal",
+                      "value": "courses"
+                  }
+              }
+          ]
+       }
+    ]
+}

@@ -2,28 +2,42 @@
 
 const
     _ = require('lodash'),
+     _eval = require('eval'),
     fs = require('fs'),
     async = require('async'),
     assert = require("chai").assert,
     envVars = require('./framework/environments'),
     availableAsserts = require('./framework/validation'),
     uiFunctions = require('./lib/uiFunctions.js'),
+    preSetupLib = require('./lib/presetup.js'),
     adminFunctions = require('./lib/adminFunctions.js');
 
 let runTestFramework = function(microservice){
     var driver;
     var uiToken;
+    var preSetup;
 
     before(function(done) {
         this.timeout(500000000)
         let uiConfig = {
-            'username': envVars.uiTesting.username,
-            'password': envVars.uiTesting.password,
+            'username': envVars.credentials.username,
+            'password': envVars.credentials.password,
             'browser': 'chrome'
         };
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
+             preSetupLib.setup(driver, function(driver, setup){
+                preSetup = setup;
+                done();
+             });
+        });
+    });
+
+    after(function(done){
+        this.timeout(800000000);
+        preSetupLib.cleanUp(driver, preSetup, function(){
+        driver.quit();
             done();
         });
     });
@@ -32,6 +46,61 @@ let runTestFramework = function(microservice){
     let testCasefiles = fs.readdirSync('./testStories/'+microservice+'/');
     if(testCasefiles.indexOf('develop.json') !== -1){
         testCasefiles = ['develop.json'];
+    }
+
+    let runAssertions = function(driver, validate, validateResult, callback){
+
+        let ValidateResult = { text: '' };
+        if(Array.isArray(validateResult.text) && (validateResult.text[0].body)){
+            validateResult.text = validateResult.text[0];
+        }
+
+        if((validate.test.location) && (validate.test.location.indexOf('.') > -1)){
+            let rval = _eval('module.exports = function () { return '+ JSON.stringify(validateResult.text)+'.'+validate.test.location+'} ');
+            ValidateResult.text = rval();
+        }else if(validate.test.location){
+            ValidateResult.text = validateResult.text[validate.test.location];
+        }else{
+            ValidateResult.text = validateResult.text;
+        }
+        
+        if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
+            if(!Array.isArray(validate.test.value))
+                validate.test.value == validate.test.value.toLowerCase();
+            if(!Array.isArray(ValidateResult.text))
+                ValidateResult.text = ValidateResult.text.toLowerCase();
+        }
+
+        if('isEmpty' in validate.test){
+            assert.isAbove(result.text.length, 0);
+        }
+
+        if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
+                assert[validate.test.action](ValidateResult.text, validate.test.name || '');
+                callback();
+        }else if( availableAsserts.chaiThree.indexOf(validate.test.action) !== -1){
+                assert[validate.test.action](ValidateResult.text, validate.test.value, validate.test.name || '');
+                callback();
+        }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
+                 assert[validate.test.action]( validate.test.value, ValidateResult.text, validate.test.name || '');
+                 callback();
+         }else{
+            //List of Extra lookups other then chai
+            if(validate.test.action == 'operator'){
+                if(!validate.test.operator){
+                    console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
+                    assert.equal(true, false, 'With using operator Action you need to set validate.test.operator (<,>,=,!=)');
+                    callback(true);
+                }else{
+                    assert.operator(ValidateResult.text, validate.test.operator, validate.test.value, validate.test.name || '');
+                    callback();
+                }
+            }else{
+                console.error('The Validation defined in JSON is invalid referrer to "usage/validations" File')
+                assert.equal(true, false, 'No Validation Action Defined ('+validate.test.action+')');
+                callback(true);
+            }
+        }
     }
 
     let testCase = '';
@@ -51,61 +120,37 @@ let runTestFramework = function(microservice){
                         let path = './test/' + validate.type + '/controller.js';
                         let stepController = require(path);
                         stepController.controller(driver, validate, function(driver, result) {
-                            if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
-                                if(!Array.isArray(validate.test.value))
-                                    validate.test.value == validate.test.value.toLowerCase();
-                                if(!Array.isArray(result.text))
-                                    result.text = result.text.toLowerCase();
-                            }
-                            if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
-                                    assert[validate.test.action](result.text, validate.test.name || '');
-                                    rerunTest();
-                            }else if( availableAsserts.chaiThree.indexOf(validate.test.action) !== -1){
-                                    assert[validate.test.action](result.text, validate.test.value, validate.test.name || '');
-                                    rerunTest();
-                            }else if( availableAsserts.chaiThreeReverse.indexOf(validate.test.action) !== -1){
-                                     assert[validate.test.action]( validate.test.value, result.text, validate.test.name || '');
-                                     rerunTest();
-                             }else{
-                                //List of Extra lookups other then chai
-                                if(validate.test.action == 'operator'){
-                                    if(!validate.test.operator){
-                                        console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
-                                        assert.equal(true, false, 'With using operator Action you need to set validate.test.operator (<,>,=,!=)');
-                                        done();
-                                    }else{
-                                        assert.operator(result.text, validate.test.operator, validate.test.value, validate.test.name || '');
-                                        rerunTest();
-                                    }
-                                }else{
-                                    console.error('The Validation defined in JSON is invalid referrer to "usage/validations" File')
-                                    assert.equal(true, false, 'No Validation Action Defined ('+validate.test.action+')');
+                            runAssertions(driver, validate, result, function(end){
+                                if(end)
                                     done();
+                                else{
+                                    if (runTest.validation[(validationIndex + 1)]) {
+                                         runValidation((validationIndex + 1))
+                                    } else {
+                                         done();
+                                    }
                                 }
-                            }
+                            });
                         });
                     } else {
                         done();
                     }
 
                     let rerunTest = function() {
-                        if (runTest.validation[(validationIndex + 1)]) {
-                            runValidation((validationIndex + 1))
-                        } else {
-                            done();
-                        }
+
                     }
                 }
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if(runTest.steps.length == 0){
-                        return true;
+                    if(!runTest && runTest.steps.length == 0){
+                       done();
                     }
                     let step = runTest.steps[stepindex];
                     let path = './test/' + step.type + '/controller.js';
                     let stepController = require(path);
                     step.params.shared = sharedData;
+                    step.params.shared.preSetup = preSetup;
                     adminFunctions.sharedDataCheck(step.params, function(options){
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
@@ -118,14 +163,40 @@ let runTestFramework = function(microservice){
                             if(sharedResult)
                                 sharedData['step'+stepindex] = sharedResult;
 
-                            if (runTest.steps[stepindex + 1]) {
-                                runSteps((stepindex + 1));
-                            } else {
-                                if (runTest.validation) {
-                                    runValidation(0);
+                            //Check if Test is a validation also
+                            if((step.tests) && (step.tests[0])){
+                                let runStepTest = function(driver, index){
+                                    runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
+                                    //Run all validations in a loop
+                                        if(end){
+                                            done();
+                                        }else if(step.tests[index+1]){
+                                            runStepTest(driver, (index+1));
+                                        }else{
+                                            if (runTest.steps[stepindex + 1]) {
+                                                runSteps((stepindex + 1));
+                                            } else {
+                                                if (runTest.validation) {
+                                                    runValidation(0);
+                                                } else {
+                                                    i = i + 1;
+                                                    done();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                                runStepTest(driver, 0);
+                            }else{
+                                if (runTest.steps[stepindex + 1]) {
+                                    runSteps((stepindex + 1));
                                 } else {
-                                    i = i + 1;
-                                    done();
+                                    if (runTest.validation) {
+                                        runValidation(0);
+                                    } else {
+                                        i = i + 1;
+                                        done();
+                                    }
                                 }
                             }
                         });
