@@ -39,7 +39,7 @@ function runTests(loopCount){
                 }
                 let test = testList[testIndex];
                 shell.exec("./node_modules/mocha/bin/_mocha test/"+test+"/test.js --reporter mochawesome --reporter-options reportDir=mochawesome-reports/"+test+",reportName="+test+",reportTitle="+test+",inlineAssets=true", function(){
-                    let resultReport = require('./'+test+'/mochawesome-reports/mochawesome.json');
+                    let resultReport = require('./mochawesome-reports/'+test+'/mochawesome.json');
                     if(resultReport.stats.failures > 0){
                         process.exit(resultReport.stats.failures);
                     }else{
