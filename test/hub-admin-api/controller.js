@@ -20,10 +20,8 @@ let controller = function(driver, options, callback) {
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
                      if (error) {
                        callback(driver, {'text': error.statusCode }, error);
-
-
                      } else {
-                     callback(driver, {'text': result.statusCode }, error);
+                         callback(driver, {'text': result.statusCode }, error);
                     }
                 });
             });

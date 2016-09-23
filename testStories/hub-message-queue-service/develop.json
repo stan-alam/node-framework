@@ -117,11 +117,10 @@
         "action": "consumeAllOneStatusText",
         "type": "hub-message-queue-service",
         "test": {
-          "action": "isEmpty",
+          "action": "equal",
+          "isEmtpy": true,
           "application": " applicationSub",
           "value": ""
-
-
         }
       }]
 
@@ -192,8 +191,6 @@
           "action": "isArray",
           "application": " applicationSub",
           "value": "[]"
-
-
         }
       }]
 

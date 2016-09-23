@@ -41,6 +41,7 @@ let controller = function(driver, options, callback) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
+                            console.error(accessToken)
                             mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result) {
                                 callback(result);
                             });
@@ -64,20 +65,11 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'consumeAllOneStatusCode') {
             configFunctions.getConfiguration(Token, function(error, config) {
                 authFunctions.getEPAtoken(Token, function(error, JWT){
-
-
                 mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
                     if (error) {
-
-                        callback(driver, {
-                            'text': result
-                        }, error)
-
+                        callback(driver, { 'text': error.statusCode }, error)
                     } else {
-
-                        callback(driver, {
-                            'text': result.statusCode
-                        }, error)
+                        callback(driver, {  'text': result.statusCode }, error)
                     }
                 })
             });
@@ -87,18 +79,11 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'consumeAllOneStatusText'){
             configFunctions.getConfiguration(Token, function(error, config){
                 authFunctions.getEPAtoken(Token, function(error, JWT) {
-
                     mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
                         if ( error ) {
-
-                            callback(driver, {
-                                'text' : result }, error)
-
+                            callback(driver, { 'text' : error.body }, error)
                         } else {
-
-                            callback(driver, {
-                                'text': result.body }, error)
-
+                            callback(driver, { 'text': result.body }, error)
                        }
                   })
              });

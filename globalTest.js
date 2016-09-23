@@ -51,7 +51,7 @@ let runTestFramework = function(microservice){
     let runAssertions = function(driver, validate, validateResult, callback){
 
         let ValidateResult = { text: '' };
-        if(Array.isArray(validateResult.text) && (validateResult.text[0].body)){
+        if(Array.isArray(validateResult.text) && (validateResult.text.length > 0) && ('body' in validateResult.text[0]) && (validateResult.text[0].body)){
             validateResult.text = validateResult.text[0];
         }
 
@@ -73,6 +73,7 @@ let runTestFramework = function(microservice){
 
         if('isEmpty' in validate.test){
             assert.isAbove(result.text.length, 0);
+            callback();
         }
 
         if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
