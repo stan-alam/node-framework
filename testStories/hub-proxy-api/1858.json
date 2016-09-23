@@ -39,10 +39,10 @@
             "method": "addCredentials",
             "type": "hub-configuration-api",
             "params": {
-              "action": "addCredentials",
+              "action": "addEPACredentials",
               "username":"epausername",
               "password" :"epapassword",
-              "title": "EPA credentials",
+              "title": "EPA credentials3",
               "sharedData": {
                 "key": "appId",
                 "sharelocation": {
@@ -51,10 +51,62 @@
                 }
               }
             }
+          },
+          {
+            "id": 5,
+            "method": "getTenantIdFromUItoken",
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getTenantIdFromUItoken"
+             }
+          },
+           {
+            "id": 6,
+            "method": "switchUser",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "switchUser",
+              "username":"curtis",
+              "password":"Demo99!?"
+             }
+          },
+          {
+            "id": 7,
+            "method": "createApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "createApplications",
+              "applications": ["1858SubApp"]
+            }
+          },
+          {
+            "id": 8,
+            "method": "getEPAccessToken",
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getEPAccessToken",
+               "sharedData": {
+                  "key": "APIKey",
+                  "sharelocation": {
+                  "step": 6,
+                  "value": "[0].body.apiKey"
+                  }
+               }
+            }
           }
-          
-          
-       ]
-      }
-    ]
+       ],
+      "validation":[
+           {
+             "name": "EIH-1858 -Make Proxy privileged call with stored credentials on UI",
+             "action": "epaRequest",
+             "type": "hub-proxy-api",
+             "resource":"subjects",
+             "test": {
+               "action": "equal",
+               "value": 200
+             }
+           }
+         ]
+     }
+   ]
 }
