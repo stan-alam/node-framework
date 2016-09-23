@@ -128,7 +128,7 @@ let runTestFramework = function(microservice){
                                          runValidation((validationIndex + 1))
                                     } else {
                                          done();
-                                    }
+                                                            }
                                 }
                             });
                         });
@@ -143,7 +143,7 @@ let runTestFramework = function(microservice){
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if(!runTest && runTest.steps.length == 0){
+                    if(!runTest || runTest.steps.length == 0){
                        done();
                     }
                     let step = runTest.steps[stepindex];
