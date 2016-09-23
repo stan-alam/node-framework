@@ -1,26 +1,21 @@
 'use strict';
 
 const authFunctions = require('../../lib/authFunctions'),
-proxyFunctions = require('../../lib/ProxyFunctions');
+    proxyFunctions = require('../../lib/proxyFunctions');
+
 var epatoken;
 var tenantID;
 //Controller for hub-proxy-api
 let controller = function(driver, options, callback){
      if(options.action == 'getEPAccessToken'){
-     	console.log("getting Access Token");
          authFunctions.getAccessToken(options.APIKey, function(error,Token){
          	if(error)
          		callback(driver,null,error);
-         	else
-         	{
-	         	console.log("getting EPA Access Token");
+         	else{
 	         	authFunctions.getEPAtoken(Token,function(error,token){
-	         		if(error)
-	                {
+	         	  if(error)
 	                  callback(driver,null,error);
-	              }
-	              else
-	              {
+	              else{
 	         		epatoken=token;
 	         		callback(driver,token);
 	         	   }
@@ -28,7 +23,6 @@ let controller = function(driver, options, callback){
            }
        });
      }else if(options.action == 'epaRequest'){
-         console.log("calling proxyFunctions.epaGetMany with token" + epatoken);
          if (epatoken)
 	         proxyFunctions.epaGetMany(epatoken,options.resource,tenantID,function(statusCode){
 	         	       epatoken="";
@@ -36,12 +30,9 @@ let controller = function(driver, options, callback){
 	         	       callback(driver, {"text":statusCode});
 	        });
 	     else
-	     {
 	     	callback(driver,{"text":"Cannot make the proxy call because there is no EPAtoken"});
-	     }
      }else if(options.action=='getTenantIdFromUItoken'){
      	authFunctions.getUiToken(driver, function(Token){
-                console.log("getting tenantID from token");
                 authFunctions.openJwt(Token, function(error,t){
                 	if(error)
                 		 callback(driver,null,error);
@@ -52,9 +43,8 @@ let controller = function(driver, options, callback){
                 });
         });
       }
-      else{
-                callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });
-            }
+      else
+        callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });
 }
 
 module.exports = exports = {

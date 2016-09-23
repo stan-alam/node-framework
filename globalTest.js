@@ -27,8 +27,8 @@ let runTestFramework = function(microservice){
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
-              preSetupLib.setup(driver, function(driver, setup){
-                  preSetup = setup;
+             preSetupLib.setup(driver, function(driver, setup){
+                preSetup = setup;
                 done();
              });
         });
@@ -51,7 +51,7 @@ let runTestFramework = function(microservice){
     let runAssertions = function(driver, validate, validateResult, callback){
 
         let ValidateResult = { text: '' };
-        if(Array.isArray(validateResult.text)){
+        if(Array.isArray(validateResult.text) && (validateResult.text[0].body)){
             validateResult.text = validateResult.text[0];
         }
 
@@ -110,7 +110,6 @@ let runTestFramework = function(microservice){
                 let runTest = test.testCases[i++]; //Will need to loop through
                 //Run any Validation steps that are in testcase
                 let runValidation = function(validationIndex) {
-                    console.log("running validation"+validationIndex);
                     if (runTest.validation[validationIndex]) {
                         let validate = runTest.validation[validationIndex];
                         let path = './test/' + validate.type + '/controller.js';
@@ -147,7 +146,6 @@ let runTestFramework = function(microservice){
                     step.params.shared = sharedData;
                     step.params.shared.preSetup = preSetup;
                     adminFunctions.sharedDataCheck(step.params, function(options){
-                        console.log("options="+JSON.stringify(options));
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);
