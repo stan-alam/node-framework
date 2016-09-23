@@ -61,12 +61,9 @@ let controller = function(driver, options, callback) {
                 });
             });
 
-        } else if (options.action == 'consumeAllOne') {
+        } else if (options.action == 'consumeAllOneStatusCode') {
             configFunctions.getConfiguration(Token, function(error, config) {
                 authFunctions.convertJwtEthos(Token, function(error, JWT){
-
-                    console.log(JWT);
-
 
 
                 mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
@@ -87,7 +84,30 @@ let controller = function(driver, options, callback) {
 
         });
 
-        } else {
+        } else if (options.action == 'consumeAllOneStatusText'){
+            configFunctions.getConfiguration(Token, function(error, config){
+                authFunctions.convertJwtEthos(Token, function(error, JWT) {
+
+                    mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
+                        if ( error ) {
+
+                            callback(driver, {
+                                'text' : result }, error)
+
+                        } else {
+
+                            callback(driver, {
+                                'text': result.body }, error)
+
+                       }
+                  })
+             });
+
+        });
+
+
+
+    } else {
             console.error("MQS Controller has No Action: " + options.action)
         }
     });
