@@ -160,6 +160,43 @@
         }
       }]
 
+    },
+
+    {
+      "testCaseId": 9,
+      "name": "Consume Messages from Hub and validate",
+      "steps": [{
+        "id": 1,
+        "method": "consumeChangeNotifications",
+        "type": "hub-message-queue-service",
+        "params": {
+          "action": "consumeChangeNotifications",
+          "messageCounts": [10, 10, 0, 0, 0],
+          "application": "applicationSub"
+        }
+      }],
+      "validation": [{
+        "name": "assert status code of 200",
+        "action": "consumeAllOneStatusCode",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "application": "applicationSub",
+          "value": "200"
+        }
+      }, {
+        "name": "assert empty array from consumeAll",
+        "action": "consumeAllOneStatusText",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "isArray",
+          "application": " applicationSub",
+          "value": "[]"
+
+
+        }
+      }]
+
     }
 
   ]
