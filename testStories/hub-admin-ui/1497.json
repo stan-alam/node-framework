@@ -249,7 +249,7 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "filterHistoryRowOneStatus",
+            "element": "findElementTextByTemplate",
             "elementTemplate": "WAITING",
             "test": {
               "action": "equal",
@@ -288,7 +288,7 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "filterHistoryRowOneStatus",
+            "element": "findElementTextByTemplate",
             "elementTemplate": "RETRIEVED",
             "test": {
               "action": "equal",
@@ -336,7 +336,7 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "filterHistoryRowOneStatus",
+            "element": "findElementTextByTemplate",
             "elementTemplate": "CONFIRMED",
             "test": {
               "action": "equal",
@@ -384,7 +384,7 @@
             "name": "Queue Tab Visible on UI",
             "action": "elementView",
             "type": "hub-admin-ui",
-            "element": "filterHistoryRowOneStatus",
+            "element": "findElementTextByTemplate",
             "elementTemplate": "UNCONFIRMED",
             "test": {
               "action": "equal",

@@ -70,6 +70,11 @@ let runTestFramework = function(microservice){
             if(!Array.isArray(ValidateResult.text))
                 ValidateResult.text = ValidateResult.text.toLowerCase();
         }
+
+        if('isEmpty' in validate.test){
+            assert.isAbove(result.text.length, 0);
+        }
+
         if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
                 assert[validate.test.action](ValidateResult.text, validate.test.name || '');
                 callback();
