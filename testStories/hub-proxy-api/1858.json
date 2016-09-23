@@ -3,7 +3,7 @@
     "name" : "Use stored credentials for EPAs",
     "testCases" : [
       {
-        "testCaseId": 1,
+        "testCaseId": "PPX-TC10",
         "name": "Make Proxy privileged call with stored credentials on UI",
         "steps": [
           {
@@ -109,7 +109,7 @@
         ]
      },
      {
-        "testCaseId": 2,
+        "testCaseId": "PPX-TC11",
         "name": "Make Proxy privileged call without stored credentials on UI",
         "steps": [
          {
