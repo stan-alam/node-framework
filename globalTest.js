@@ -123,8 +123,13 @@ let runTestFramework = function(microservice){
                             runAssertions(driver, validate, result, function(end){
                                 if(end)
                                     done();
-                                else
-                                    rerunTest();
+                                else{
+                                    if (runTest.validation[(validationIndex + 1)]) {
+                                         runValidation((validationIndex + 1))
+                                    } else {
+                                         done();
+                                    }
+                                }
                             });
                         });
                     } else {
@@ -132,11 +137,7 @@ let runTestFramework = function(microservice){
                     }
 
                     let rerunTest = function() {
-                        if (runTest.validation[(validationIndex + 1)]) {
-                            runValidation((validationIndex + 1))
-                        } else {
-                            done();
-                        }
+
                     }
                 }
 

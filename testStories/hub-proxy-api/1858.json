@@ -31,7 +31,7 @@
             "params": {
               "action": "addResource",
               "application": "1858PubApp",
-              "resources": "subjects"
+              "resources": "proxyAutomationResource"
             }
           },
           {
@@ -100,7 +100,7 @@
              "name": "EIH-1858 -Make Proxy privileged call with stored credentials on UI",
              "action": "epaRequest",
              "type": "hub-proxy-api",
-             "resource":"subjects",
+             "resource":"proxyAutomationResource",
              "test": {
                "action": "equal",
                "value": 200
