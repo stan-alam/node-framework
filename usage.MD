@@ -31,6 +31,18 @@ Convert sharedDataCheck append any shared If needed to Next Step
     - Token to be used in API request
 
 
+###updateModel
+
+Convert updateModel modify a json object
+
+**Returns**: _Object_ - response modified options with shared data Information
+
+**Params**:  
+*   newAttributes _Object_
+
+    - List of attributes needed for updating
+
+
 #authFunctions
 
 This is Functions used for authentication and token manipulations
@@ -85,11 +97,23 @@ Call to convert an application apikey to an Access Token
     - Application ApiKey from application configuration
 
 
-###convertConsumeAll
+###getEPAToken
 
 Modify JWT to add Ethos to Tenant Name
 
 **Returns**: _String_ - Encrypted and signed JWT with Tenant name having Ethos Prepended
+
+**Params**:  
+*   jwt _String_
+
+    - Contents of JWT
+
+
+###expireToken
+
+Modify JWT to be expired
+
+**Returns**: _String_ - Encrypted and signed JWT that is expired
 
 **Params**:  
 *   jwt _String_
@@ -211,6 +235,69 @@ Call to Add Credentials for EPA's
     - Bearer Token for making call
 
 
+#errorFunctions
+
+This is Functions used for making calls to error-reporting-service
+
+##Methods
+
+###sendErrorMessages
+
+Call to send an Error Message to service
+
+**Returns**: _Array_ - Array of responses for each request to error service
+
+**Params**:  
+*   jwt _String_
+
+    - Token to use when sending error Message
+*   payload _Object_
+
+    - The error Message Payload that is to be sent to error service
+*   count _Integer_
+
+    - Number of requests to send to error service
+*   responses _Array_
+
+    - Array of responses from error service
+
+
+###sendMessageBadMediaType
+
+Call to send an Send bad media type to any endpoint
+
+**Returns**: _Array_ - Array of responses for each request to error service
+
+**Params**:  
+*   jwt _String_
+
+    - Token to use when sending
+*   endpoint _String_
+
+    - Which endpoint to make call too
+*   payload _Object_
+
+    - The error Message Payload that is to be sent to error service
+
+
+###sendMessageExpiredToken
+
+Call to send an Send an expired token to any endpoint
+
+**Returns**: _Array_ - Array of responses for each request to error service
+
+**Params**:  
+*   jwt _String_
+
+    - Token to use when sending
+*   endpoint _String_
+
+    - Which endpoint to make call too
+*   payload _Object_
+
+    - The error Message Payload that is to be sent to error service
+
+
 #mqsFunctions
 
 This is Functions used for making calls to hub-message-queue-service
@@ -245,6 +332,39 @@ Call to MQS using Consume
 *   lastId _LastId_
 
     - last process ID
+
+
+#preSetup
+
+This is Function that setups a working environment for users to start using used for making calls to a already setup config
+
+##Methods
+
+###setup
+
+setup this is for setting up a default environment for running tests on
+
+**Returns**: _Object_ - driver - selenium driver
+
+**Params**:  
+*   driver _Object_
+
+    - selenium driver
+
+
+###cleanUp
+
+clean Up just to remove everything added by setup
+
+**Returns**: _Object_ - driver - selenium driver
+
+**Params**:  
+*   driver _Object_
+
+    - selenium driver
+*   setupData _Object_
+
+    - Data used for removing
 
 
 #pubFunctions
