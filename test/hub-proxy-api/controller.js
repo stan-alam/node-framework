@@ -2,9 +2,9 @@
 
 const authFunctions = require('../../lib/authFunctions'),
     proxyFunctions = require('../../lib/proxyFunctions');
-
 var epatoken;
 var tenantID;
+var accesstoken;
 //Controller for hub-proxy-api
 let controller = function(driver, options, callback){
      if(options.action == 'getEPAccessToken'){
@@ -42,6 +42,25 @@ let controller = function(driver, options, callback){
                     }
                 });
         });
+      }else if(options.action=='getAccessToken'){
+          authFunctions.getAccessToken(options.APIKey, function(error,Token){
+            if(error)
+                callback(driver,null,error);
+            else{
+                accesstoken=Token;
+                callback(driver,Token);
+            }
+           });
+      }else if(options.action=='post'){
+         proxyFunctions.post(accesstoken,function(statusCode){
+              console.log("statusCode="+statusCode);
+              callback(driver, {"text":statusCode});
+         });
+
+      }else if(options.action=='getMany'){
+          proxyFunctions.getMany(accesstoken,function(statusCode){
+              console.log("statusCode="+statusCode);
+              callback(driver, {"text":statusCode});
       }
       else
         callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });

@@ -4,14 +4,14 @@
     "id": "3c7ba6ba-f6b9-46b6-aaeb-ed0d6097eafb"
   },
   "app1Url": {
-    "baseUrl": "http://hub-authoritative-source-example.2020ar.com:443/ihub1/api/books"
+    "baseUrl": "http://hub-authoritative-source-example.2020ar.com:443/ihub1/api"
   },
   "app1Credentials": {
     "username": "sdf",
     "password": "sdf"
   },
   "app2Url": {
-    "baseUrl": "http://hub-authoritative-source-example.2020ar.com:443/ihub1/api/books"
+    "baseUrl": "http://hub-authoritative-source-example.2020ar.com:443/ihub1/api"
   },
   "app2Credentials": {
     "username": "un",
