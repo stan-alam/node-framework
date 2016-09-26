@@ -143,7 +143,7 @@
         "name": "assert status code of 200",
         "action": "setPermissionsStatusCode",
         "type": "hub-admin-api",
-        "setPermissions": "enabled",
+        "setPermissions": "enable",
         "test": {
           "action": "equal",
           "value": "200"
@@ -152,7 +152,7 @@
         "name": "assert status message",
         "action": "setPermissionsStatusText",
         "type": "hub-admin-api",
-        "setPermissions": "enabled",
+        "setPermissions": "enable",
         "test": {
           "action": "include",
           "value": "permissions have been updated"
@@ -160,8 +160,6 @@
       }]
 
     },
-
-
     {
       "testCaseId": 9,
       "name": "Push Messages into Hub with flag set to True",
@@ -171,17 +169,13 @@
         "type": "hub-publish-api",
         "params": {
           "action": "sendChangeNotifications",
-          "messageCount": 50,
+          "messageCount": 55,
           "application": "applicationPub",
           "resource": "subjects"
         }
       }],
       "validation": []
     },
-
-
-
-
     {
       "testCaseId": 10,
       "name": "Consume Messages from Hub and validate",
@@ -209,9 +203,10 @@
         "action": "consumeAllOneStatusText",
         "type": "hub-message-queue-service",
         "test": {
-          "action": "include",
+          "action": "equal",
+          "isEmtpy": false,
           "application": " applicationSub",
-          "value": ":"
+          "value": ""
         }
       }]
 

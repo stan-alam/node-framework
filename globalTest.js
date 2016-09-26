@@ -153,7 +153,6 @@ let runTestFramework = function(microservice){
                     step.params.shared = sharedData;
                     step.params.shared.preSetup = preSetup;
                     adminFunctions.sharedDataCheck(step.params, function(options){
-                        console.error('OPTIONS: '+ JSON.stringify(options))
                         stepController.controller(driver, options, function(driver, sharedResult, error) {
                             if(error){
                                 console.error("Step: "+stepindex);
