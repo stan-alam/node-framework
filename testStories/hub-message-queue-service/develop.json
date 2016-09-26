@@ -171,7 +171,7 @@
         "type": "hub-publish-api",
         "params": {
           "action": "sendChangeNotifications",
-          "messageCount": 50,
+          "messageCount": 500,
           "application": "applicationPub",
           "resource": "subjects"
         }
@@ -194,15 +194,6 @@
         }
       }],
       "validation": [{
-        "name": "assert status code of 200",
-        "action": "consumeAllOneStatusCode",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "application": "applicationSub",
-          "value": "200"
-        }
-      }, {
         "name": "assert array is not empty on consumeAll",
         "action": "consumeAllOneStatusText",
         "type": "hub-message-queue-service",
@@ -210,16 +201,30 @@
           "action": "include",
           "application": "applicationSub",
           "value": ":"
+
         }
+      }, {
+
+        "name": "assert status code of 200",
+        "action": "consumeAllOneStatusCode",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "application": "applicationSub",
+          "value": "200"
+
+        }
+
+
       }]
 
     },
 
     {
-        "testCaseId": 11,
-        "id": 2,
-        "name" : "test",
-        "steps": [{
+      "testCaseId": 11,
+      "id": 2,
+      "name": "test",
+      "steps": [{
         "method": "addApplications",
         "type": "hub-configuration-api",
         "params": {
