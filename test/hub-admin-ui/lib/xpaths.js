@@ -30,6 +30,7 @@ module.exports.xpaths = {
     findTdByTrContainsTemplate: "//tr[contains(td,'TEMPLATE')]",
     findSpanClassContainsTemplate: "//span[contains(@class,'TEMPLATE')]",
     findName: "//*[@name='TEMPLATE']",
+    findId: "//*[@id='TEMPLATE']",
     findTitleColumn: '//*[contains(@class, "title-column")][text()="TEMPLATE"]',
     firstRow: "//a[text()='TEMPLATE']",
     grabStringForEnvironment: "//section/div/h3/cp-translate",
@@ -65,5 +66,14 @@ module.exports.xpaths = {
     tabArchiveHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[2]",
     tabQueueHtml: "/html/body/div[2]/div[2]/section/section/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[1]",
     userprofilecard: "//*[@id='user_profile_link']",
-    signout: "//*[@id='sign_out_button']"
+    signout: "//*[@id='sign_out_button']",
+    errorsLinkDashboard: '//*[@id="errorsCount_link"]/div/span',
+    tableResultHeader: '//*[contains(@class, "search-results")]//th/span',
+    errorsLinkFirstRowDateTime: '//*[contains(@class, "title-column")]/a',
+    errorsOverviewLabels: '//*[contains(@class, "single-wrapper")]//label',
+    errorsOverviewTexts: '//*[contains(@class, "single-wrapper")]//span[not(contains(@class, "ng-hide"))]',
+    filterBtn: '//*[contains(@class, "filter")]',
+    resultCount: '//*[contains(@class, "results-found")]',
+    noRecordsFound: '//*[contains(@class, "alert-td-fullspan")]',
+    clearSearch: '//*[contains(@class, "secondary float-left")]'
 }

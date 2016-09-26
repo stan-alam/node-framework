@@ -51,7 +51,7 @@ let runTestFramework = function(microservice){
     let runAssertions = function(driver, validate, validateResult, callback){
 
         let ValidateResult = { text: '' };
-        if(Array.isArray(validateResult.text) && (validateResult.text[0].body)){
+        if(Array.isArray(validateResult.text) && (validateResult.text.length > 0) && (validateResult.text[0].body)){
             validateResult.text = validateResult.text[0];
         }
 
@@ -73,6 +73,7 @@ let runTestFramework = function(microservice){
 
         if('isEmpty' in validate.test){
             assert.isAbove(result.text.length, 0);
+            callback();
         }
 
         if( availableAsserts.chaiTwo.indexOf(validate.test.action) !== -1){
@@ -143,64 +144,71 @@ let runTestFramework = function(microservice){
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if(!runTest || runTest.steps.length == 0){
+                    if(!runTest || (runTest.steps.length == 0)){
                        done();
-                    }
-                    let step = runTest.steps[stepindex];
-                    let path = './test/' + step.type + '/controller.js';
-                    let stepController = require(path);
-                    step.params.shared = sharedData;
-                    step.params.shared.preSetup = preSetup;
-                    adminFunctions.sharedDataCheck(step.params, function(options){
-                        stepController.controller(driver, options, function(driver, sharedResult, error) {
-                            if(error){
-                                console.error("Step: "+stepindex);
-                                console.error("Error Message: "+ JSON.stringify(error));
-                                console.trace("Stack Trace");
-                                assert.equal(true, false, 'Error on Step: '+ stepindex);
-                                done();
-                            }
-                            if(sharedResult)
-                                sharedData['step'+stepindex] = sharedResult;
+                    }else{
+                        //Sort Steps By ID
+                        runTest.steps.sort(function(a, b) {
+                          if (a.id > b.id)
+                             return 1;
+                          return a.id === b.id ? 0 : -1;
+                        });
+                        let step = runTest.steps[stepindex];
+                        let path = './test/' + step.type + '/controller.js';
+                        let stepController = require(path);
+                        step.params.shared = sharedData;
+                        step.params.shared.preSetup = preSetup;
+                        adminFunctions.sharedDataCheck(step.params, function(options){
+                            stepController.controller(driver, options, function(driver, sharedResult, error) {
+                                if(error){
+                                    console.error("Step: "+stepindex);
+                                    console.error("Error Message: "+ JSON.stringify(error));
+                                    console.trace("Stack Trace");
+                                    assert.equal(true, false, 'Error on Step: '+ stepindex);
+                                    done();
+                                }
+                                if(sharedResult)
+                                    sharedData['step'+stepindex] = sharedResult;
 
-                            //Check if Test is a validation also
-                            if((step.tests) && (step.tests[0])){
-                                let runStepTest = function(driver, index){
-                                    runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
-                                    //Run all validations in a loop
-                                        if(end){
-                                            done();
-                                        }else if(step.tests[index+1]){
-                                            runStepTest(driver, (index+1));
-                                        }else{
-                                            if (runTest.steps[stepindex + 1]) {
-                                                runSteps((stepindex + 1));
-                                            } else {
-                                                if (runTest.validation) {
-                                                    runValidation(0);
+                                //Check if Test is a validation also
+                                if((step.tests) && (step.tests[0])){
+                                    let runStepTest = function(driver, index){
+                                        runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
+                                        //Run all validations in a loop
+                                            if(end){
+                                                done();
+                                            }else if(step.tests[(index+1)]){
+                                                runStepTest(driver, (index+1));
+                                            }else{
+                                                if (runTest.steps[stepindex + 1]) {
+                                                    runSteps((stepindex + 1));
                                                 } else {
-                                                    i = i + 1;
-                                                    done();
+                                                    if (runTest.validation) {
+                                                        runValidation(0);
+                                                    } else {
+                                                        i = i + 1;
+                                                        done();
+                                                    }
                                                 }
                                             }
-                                        }
-                                    });
-                                }
-                                runStepTest(driver, 0);
-                            }else{
-                                if (runTest.steps[stepindex + 1]) {
-                                    runSteps((stepindex + 1));
-                                } else {
-                                    if (runTest.validation) {
-                                        runValidation(0);
+                                        });
+                                    }
+                                    runStepTest(driver, 0);
+                                }else{
+                                    if (runTest.steps[stepindex + 1]) {
+                                        runSteps((stepindex + 1));
                                     } else {
-                                        i = i + 1;
-                                        done();
+                                        if (runTest.validation) {
+                                            runValidation(0);
+                                        } else {
+                                            i = i + 1;
+                                            done();
+                                        }
                                     }
                                 }
-                            }
+                            });
                         });
-                    });
+                    }
                 }
                 runSteps(0);
             });

@@ -8,11 +8,10 @@ const authFunctions = require('../../lib/authFunctions.js'),
 //Controller for error-reporting-service
 let controller = function(driver, options, callback){
         authFunctions.getUiToken(driver, function(Token){
-            if(options.actions = 'sendErrorMessage'){
+            if(options.action == 'sendErrorMessage'){
                 if(options.updateModel){
                     adminFunctions.updateModel(options.updateModel.attributes, errorMessage, function(model){
                         errorFunctions.sendErrorMessages(Token, model, 1, [], function(error, results){
-                        console.error('=========================================')
                             callback(driver, { 'text': results } , error);
                         });
                     });
@@ -21,7 +20,7 @@ let controller = function(driver, options, callback){
                         callback(driver, { 'text': results } , error);
                     });
                 }
-            }else if(options.actions = 'sendErrorMessageBadMediaType'){
+            }else if(options.action == 'sendErrorMessageBadMediaType'){
               if(options.updateModel){
                   adminFunctions.updateModel(options.updateModel.attributes, errorMessage, function(model){
                       errorFunctions.sendErrorMessagesBadMediaType(Token, model, function(error, results){
@@ -29,10 +28,18 @@ let controller = function(driver, options, callback){
                       });
                   });
               }else{
-                  errorFunctions.sendErrorMessagesBadMediaType(Token, errorMessage, function(error, results){
+                  errorFunctions.sendMessageBadMediaType(Token, 'error', errorMessage, function(error, results){
                       callback(driver, { 'text': results } , error);
                   });
               }
+            }else if(options.action == 'sendErrorMessageInvalidToken'){
+                    errorFunctions.sendErrorMessages(Token.slice(0, -1), errorMessage, 1, [], function(error, results){
+                        callback(driver, { 'text': error } , results);
+                    });
+            }else if(options.action == 'sendErrorMessageExpiredToken'){
+                  errorFunctions.sendMessageExpiredToken(Token, 'error', errorMessage, function(error, results){
+                      callback(driver, { 'text': results } , error);
+                  });
             }else{
                 callback(driver, null, { "msg":"No error-reporting-service Controller found for: "+options.action })
             }
