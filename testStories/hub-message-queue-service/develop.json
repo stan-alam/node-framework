@@ -143,7 +143,7 @@
         "name": "assert status code of 200",
         "action": "setPermissionsStatusCode",
         "type": "hub-admin-api",
-        "setPermissions": "enable",
+        "setPermissions": "enabled",
         "test": {
           "action": "equal",
           "value": "200"
@@ -152,7 +152,7 @@
         "name": "assert status message",
         "action": "setPermissionsStatusText",
         "type": "hub-admin-api",
-        "setPermissions": "enable",
+        "setPermissions": "enabled",
         "test": {
           "action": "include",
           "value": "permissions have been updated"
@@ -160,6 +160,8 @@
       }]
 
     },
+
+
     {
       "testCaseId": 9,
       "name": "Push Messages into Hub with flag set to True",
@@ -169,13 +171,15 @@
         "type": "hub-publish-api",
         "params": {
           "action": "sendChangeNotifications",
-          "messageCount": 55,
+          "messageCount": 50,
           "application": "applicationPub",
           "resource": "subjects"
         }
       }],
       "validation": []
     },
+
+
     {
       "testCaseId": 10,
       "name": "Consume Messages from Hub and validate",
@@ -203,13 +207,27 @@
         "action": "consumeAllOneStatusText",
         "type": "hub-message-queue-service",
         "test": {
-          "action": "equal",
-          "isEmtpy": false,
-          "application": " applicationSub",
-          "value": ""
+          "action": "include",
+          "application": "applicationSub",
+          "value": ":"
         }
       }]
 
+    },
+
+    {
+        "testCaseId": 11,
+        "id": 2,
+        "name" : "test",
+        "steps": [{
+        "method": "addApplications",
+        "type": "hub-configuration-api",
+        "params": {
+          "action": "createApplications",
+          "applications": ["applicationStan", "applicationDarrick"]
+        }
+
+      }]
     }
 
   ]
