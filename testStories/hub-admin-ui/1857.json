@@ -8,94 +8,85 @@
         "steps": [
           {
               "id": 1,
-              "method": "deleteApplications",
               "type": "hub-configuration-api",
               "params": {
                   "action": "deleteApplications"
                 }
           },
           {
-            "id": 2,
-            "method": "addApplications",
-            "type": "hub-configuration-api",
-            "params": {
-              "action": "createApplications",
-              "applications": ["Banner","Colleague","Elevate","applicationPub"]
-            }
-            },
+              "id": 2,
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "createApplications",
+                  "applications": ["Banner","Colleague","Elevate","applicationPub"]
+              }
+          },
           {
-          "id": 3,
-          "method": "appPublisher",
-          "type": "hub-configuration-api",
-          "params": {
-            "action": "addResource",
-            "application": "Banner",
-            "resources": "subjects"
+              "id": 3,
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "addResource",
+                  "application": "Banner",
+                  "resources": "subjects"
+              }
+          },
+          {
+              "id": 4,
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "addResource",
+                  "application": "Colleague",
+                  "resources": "courses"
+              }
+          },
+          {
+              "id": 5,
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "addResource",
+                  "application": "applicationPub",
+                  "resources": ["buildings","rooms","sites"]
+              }
+          },
+          {
+              "id": 6,
+              "type": "hub-configuration-api",
+              "params": {
+                  "action": "addSubscription",
+                  "application": "Elevate",
+                  "subscriptions": ["subjects","courses","buildings","rooms","sites"]
+              }
           }
-        },
-          {
-            "id": 4,
-            "method": "appPublisher",
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "addResource",
-                "application": "Colleague",
-                "resources": "courses"
-            }
-        },
-          {
-            "id": 5,
-            "method": "appPublisher",
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "addResource",
-                "application": "applicationPub",
-                "resources": ["buildings","rooms","sites"]
-            }
-        },
-          {
-          "id": 6,
-          "method": "addSubscriber",
-          "type": "hub-configuration-api",
-          "params": {
-            "action": "addSubscription",
-            "application": "Elevate",
-            "subscriptions": ["subjects","courses","buildings","rooms","sites"]
-          }
-        }
         ],
         "validation": []
-    },
+        },
     {
-      "testCaseId": 2,
-      "name": "View EPAs Credentials List",
-      "steps": [
+        "testCaseId": 2,
+        "name": "View EPAs Credentials List",
+        "steps": [
         {
-          "id": 1,
-          "method": "viewDashboard",
-          "type": "hub-admin-ui",
-          "params": {
-            "action": "urllocation",
-            "location": "/#/dashboard"
-          }
+            "id": 1,
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "urllocation",
+                "location": "/#/dashboard"
+            }
         },
         {
-          "id": 2,
-          "method": "viewPrivilegedApplication",
-          "type": "hub-admin-ui",
-          "params": {
-            "action": "click",
-            "element": "linkPrivilegedApp"
-          }
+            "id": 2,
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "click",
+                "element": "linkPrivilegedApp"
+            }
         },
         {
-          "id": 3,
-          "method": "viewCredentialsTab",
-          "type": "hub-admin-ui",
-          "params": {
-            "action": "click",
-            "element": "linkCredentialsTab"
-          }
+            "id": 3,
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "click",
+                "element": "linkCredentialsTab"
+            }
         }
       ],
       "validation": [
@@ -118,7 +109,6 @@
         "steps": [
             {
                 "id": 1,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "urllocation",
@@ -127,7 +117,6 @@
             },
             {
                 "id": 2,
-                "method": "viewPrivilegedApplication",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -136,7 +125,6 @@
             },
             {
                 "id": 3,
-                "method": "viewCredentialsTab",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -145,7 +133,6 @@
             },
             {
                 "id": 4,
-                "method": "clickEditAuthoritativeApplication",
                 "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -157,7 +144,6 @@
             },
             {
                 "id": 5,
-                "method": "clickEditUsername",
                 "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -166,7 +152,6 @@
             },
             {
                 "id": 6,
-                "method": "enterUserName",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "sendkeys",
@@ -176,7 +161,6 @@
             },
             {
                 "id": 7,
-                "method": "clickSave",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -185,7 +169,6 @@
             },
             {
                 "id": 8,
-                "method": "clickEditPassword",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -194,7 +177,6 @@
             },
             {
                 "id": 9,
-                "method": "enterPassword",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "sendkeys",
@@ -204,7 +186,6 @@
             },
             {
                 "id": 10,
-                "method": "clickSave",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -213,14 +194,12 @@
             },
             {
                 "id": 11,
-                "method": "clickBackNavigation",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
                     "element": "linkBackToCredentials"
                 }
             }
-
         ],
         "validation": [
             {
@@ -253,7 +232,6 @@
         "steps": [
             {
                 "id": 1,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "urllocation",
@@ -269,7 +247,6 @@
         "steps": [
             {
                 "id": 1,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "urllocation",
@@ -285,7 +262,6 @@
         "steps": [
             {
                 "id": 1,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "urllocation",
@@ -294,7 +270,6 @@
             },
             {
                 "id": 2,
-                "method": "viewPrivilegedApplication",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -303,7 +278,6 @@
             },
             {
                 "id": 3,
-                "method": "viewCredentialsTab",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",
@@ -312,7 +286,6 @@
             },
             {
                 "id": 4,
-                "method": "clickDeleteAuthoritativeApplication",
                 "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -324,16 +297,14 @@
             },
             {
                 "id": 5,
-                "method": "clickDeleteConfirm",
                 "type": "hub-admin-ui",
-                    "params": {
-                        "action": "click",
-                        "element": "buttonConfirmDelete"
+                "params": {
+                    "action": "click",
+                    "element": "buttonConfirmDelete"
                 }
             },
             {
                 "id": 6,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "urllocation",
@@ -342,7 +313,6 @@
             },
             {
                 "id": 7,
-                "method": "viewDashboard",
                 "type": "hub-admin-ui",
                 "params": {
                     "action": "click",

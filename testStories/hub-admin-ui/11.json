@@ -18,7 +18,7 @@
             }
           },
           {
-            "id": 1,
+            "id": 2,
             "method": "addApplicationMan",
             "type": "hub-admin-ui",
             "params": {
@@ -27,7 +27,7 @@
             }
           },
           {
-            "id": 2,
+            "id": 3,
             "method": "enterApplicationName",
             "type": "hub-admin-ui",
             "params": {
@@ -37,7 +37,7 @@
             }
           },
           {
-            "id": 3,
+            "id": 4,
             "method": "saveApplicationName",
             "type": "hub-admin-ui",
             "params": {
