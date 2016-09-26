@@ -63,7 +63,7 @@ let runTestFramework = function(microservice){
         }else{
             ValidateResult.text = validateResult.text;
         }
-        
+
         if(('caseSensitive' in validate.test) && (validate.test.caseSensitive == false)){
             if(!Array.isArray(validate.test.value))
                 validate.test.value == validate.test.value.toLowerCase();
@@ -86,7 +86,7 @@ let runTestFramework = function(microservice){
                  assert[validate.test.action]( validate.test.value, ValidateResult.text, validate.test.name || '');
                  callback();
          }else{
-            //List of Extra lookups other then chai
+            //List of Extra lookups other than chai
             if(validate.test.action == 'operator'){
                 if(!validate.test.operator){
                     console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
