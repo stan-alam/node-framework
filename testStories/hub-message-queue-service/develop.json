@@ -128,7 +128,7 @@
 
     {
       "testCaseId": 8,
-      "name": "Consume Messages from Hub",
+      "name": "Set flag to True",
       "steps": [{
         "id": 1,
         "method": "consumeChangeNotifications",
@@ -161,8 +161,29 @@
 
     },
 
+
     {
       "testCaseId": 9,
+      "name": "Push Messages into Hub with flag set to True",
+      "steps": [{
+        "id": 1,
+        "method": "sendChangeNotifications",
+        "type": "hub-publish-api",
+        "params": {
+          "action": "sendChangeNotifications",
+          "messageCount": 50,
+          "application": "applicationPub",
+          "resource": "subjects"
+        }
+      }],
+      "validation": []
+    },
+
+
+
+
+    {
+      "testCaseId": 10,
       "name": "Consume Messages from Hub and validate",
       "steps": [{
         "id": 1,
@@ -170,7 +191,7 @@
         "type": "hub-message-queue-service",
         "params": {
           "action": "consumeChangeNotifications",
-          "messageCounts": [10, 10, 0, 0, 0],
+          "messageCounts": [0, 0, 0, 0, 0],
           "application": "applicationSub"
         }
       }],
@@ -184,13 +205,13 @@
           "value": "200"
         }
       }, {
-        "name": "assert empty array from consumeAll",
+        "name": "assert array is not empty on consumeAll",
         "action": "consumeAllOneStatusText",
         "type": "hub-message-queue-service",
         "test": {
-          "action": "isArray",
+          "action": "include",
           "application": " applicationSub",
-          "value": "[]"
+          "value": ":"
         }
       }]
 

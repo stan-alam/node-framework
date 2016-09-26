@@ -7,7 +7,7 @@ const _ = require('lodash'),
     adminFunctions = require('../../lib/adminFunctions');
 
 let controller = function(driver, options, callback) {
-
+    console.log("These are the options for line 10" + JSON.stringify(options));
    authFunctions.getUiToken(driver, function(Token) {
 
         if (options.action == 'createApplications') {
@@ -28,6 +28,7 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'setPermissionsStatusText'){
             authFunctions.getEPAtoken(Token, function(error, jwt){
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
+                     console.log("This is the options " + JSON.stringify(options));
                      callback(driver, {'text': result.body.message }, error);
                 });
             });

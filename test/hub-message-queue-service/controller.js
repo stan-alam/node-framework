@@ -81,8 +81,10 @@ let controller = function(driver, options, callback) {
                 authFunctions.getEPAtoken(Token, function(error, JWT) {
                     mqsFunctions.callConsumeAll(JWT, 0, function(error, result) {
                         if ( error ) {
+                           console.log("This is the error" + error.body);
                             callback(driver, { 'text' : error.body }, error)
                         } else {
+                           console.log("This is the body" + result.body);
                             callback(driver, { 'text': result.body }, error)
                        }
                   })
