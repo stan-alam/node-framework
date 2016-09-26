@@ -1,6 +1,6 @@
 {
   "name": "hub-node-test",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
