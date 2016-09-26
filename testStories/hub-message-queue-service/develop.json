@@ -143,7 +143,7 @@
         "name": "assert status code of 200",
         "action": "setPermissionsStatusCode",
         "type": "hub-admin-api",
-        "setPermissions": "enabled",
+        "setPermissions": "enable",
         "test": {
           "action": "equal",
           "value": "200"
@@ -152,7 +152,7 @@
         "name": "assert status message",
         "action": "setPermissionsStatusText",
         "type": "hub-admin-api",
-        "setPermissions": "enabled",
+        "setPermissions": "enable",
         "test": {
           "action": "include",
           "value": "permissions have been updated"
@@ -160,8 +160,6 @@
       }]
 
     },
-
-
     {
       "testCaseId": 9,
       "name": "Push Messages into Hub with flag set to True",
@@ -171,15 +169,13 @@
         "type": "hub-publish-api",
         "params": {
           "action": "sendChangeNotifications",
-          "messageCount": 500,
+          "messageCount": 55,
           "application": "applicationPub",
           "resource": "subjects"
         }
       }],
       "validation": []
     },
-
-
     {
       "testCaseId": 10,
       "name": "Consume Messages from Hub and validate",
@@ -194,17 +190,6 @@
         }
       }],
       "validation": [{
-        "name": "assert array is not empty on consumeAll",
-        "action": "consumeAllOneStatusText",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "include",
-          "application": "applicationSub",
-          "value": ":"
-
-        }
-      }, {
-
         "name": "assert status code of 200",
         "action": "consumeAllOneStatusCode",
         "type": "hub-message-queue-service",
@@ -212,19 +197,27 @@
           "action": "equal",
           "application": "applicationSub",
           "value": "200"
-
         }
-
-
+      }, {
+        "name": "assert array is not empty on consumeAll",
+        "action": "consumeAllOneStatusText",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "isEmtpy": false,
+          "application": " applicationSub",
+          "value": ""
+        }
       }]
 
-    },
+
+       },
 
     {
-      "testCaseId": 11,
-      "id": 2,
-      "name": "test",
-      "steps": [{
+        "testCaseId": 11,
+        "id": 2,
+        "name" : "test",
+        "steps": [{
         "method": "addApplications",
         "type": "hub-configuration-api",
         "params": {
@@ -233,6 +226,8 @@
         }
 
       }]
+
+
     }
 
   ]

@@ -86,7 +86,7 @@ let runTestFramework = function(microservice){
                  assert[validate.test.action]( validate.test.value, ValidateResult.text, validate.test.name || '');
                  callback();
          }else{
-            //List of Extra lookups other than chai
+            //List of Extra lookups other then chai
             if(validate.test.action == 'operator'){
                 if(!validate.test.operator){
                     console.error('With using operator Action you need to set validate.test.operator (<,>,=,!=)');
