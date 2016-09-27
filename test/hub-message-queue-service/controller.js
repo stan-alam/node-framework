@@ -41,9 +41,8 @@ let controller = function(driver, options, callback) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
-                            console.error(accessToken)
                             mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result) {
-                                callback(result);
+                                callback(driver, { 'text': result }, error);
                             });
                         });
                     }
@@ -55,7 +54,7 @@ let controller = function(driver, options, callback) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
                             mqsLoopConsume(accessToken, options, 0, 0, [], true, function(result) {
-                                callback(result);
+                                callback(driver, { 'text': result }, error);
                             });
                         });
                     }
@@ -69,7 +68,7 @@ let controller = function(driver, options, callback) {
                     if (error) {
                         callback(driver, { 'text': error.statusCode }, error)
                     } else {
-                        callback(driver, {  'text': result.statusCode }, error)
+                        callback(driver, { 'text': result.statusCode }, error)
                     }
                 })
             });

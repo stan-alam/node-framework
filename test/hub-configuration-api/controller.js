@@ -61,6 +61,13 @@ let controller = function(driver, options, callback){
                                     callback(driver, status, error);
                                 }
                             });
+                        }else if(!options.applications){
+                            configFunctions.deleteApplications(app.id, Token, function(status, error){
+                                if((appsSearched == configuration.length) && (!callbackDone)){
+                                    callbackDone = true;
+                                    callback(driver, status, error);
+                                }
+                            });
                         }else if((appsSearched == configuration.length) &&(!callbackDone)){
                             callbackDone = true;
                              callback(driver);
