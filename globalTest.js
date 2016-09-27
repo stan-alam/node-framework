@@ -139,10 +139,6 @@ let runTestFramework = function(microservice){
                     } else {
                         done();
                     }
-
-                    let rerunTest = function() {
-
-                    }
                 }
 
                 //code to Run through the steps in testCase File
@@ -174,6 +170,7 @@ let runTestFramework = function(microservice){
 
                                 if(error){
                                     console.error("Step: "+stepindex);
+                                    console.error("Options: "+ JSON.stringify(step));
                                     console.error("Error Message: "+ JSON.stringify(error));
                                     console.trace("Stack Trace");
                                     assert.equal(true, false, 'Error on Step: '+ stepindex);
@@ -193,6 +190,7 @@ let runTestFramework = function(microservice){
                                                 runStepTest(driver, (index+1));
                                             }else{
                                                 if (runTest.steps[stepindex + 1]) {
+                                                    done();
                                                     runSteps((stepindex + 1));
 
                                                 } else {

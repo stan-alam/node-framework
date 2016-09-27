@@ -75,5 +75,7 @@ module.exports.xpaths = {
     filterBtn: '//*[contains(@class, "filter")]',
     resultCount: '//*[contains(@class, "results-found")]',
     noRecordsFound: '//*[contains(@class, "alert-td-fullspan")]',
-    clearSearch: '//*[contains(@class, "secondary float-left")]'
+    clearSearch: '//*[contains(@class, "secondary float-left")]',
+    dropdownPerPage: '//*[@id="perPage"]',
+    dropdownPerPageLast: '//*[@id="perPage"]/option[last()]'
 }
