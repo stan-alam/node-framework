@@ -116,7 +116,7 @@ let runTestFramework = function(microservice){
         for (var testCaseLoop of test.testCases) {
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
-                let runTest = test.testCases[i++]; //Will need to loop through
+                let runTest = test.testCases[i]; //Will need to loop through
                 //Run any Validation steps that are in testcase
                 let runValidation = function(validationIndex) {
                     if (runTest.validation[validationIndex]) {
@@ -131,12 +131,14 @@ let runTestFramework = function(microservice){
                                     if (runTest.validation[(validationIndex + 1)]) {
                                          runValidation((validationIndex + 1))
                                     } else {
+                                        i = i + 1;
                                          done();
                                                             }
                                 }
                             });
                         });
                     } else {
+                    i = i +1;
                         done();
                     }
                 }
