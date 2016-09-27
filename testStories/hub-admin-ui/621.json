@@ -11,8 +11,7 @@
                     "method": "deleteApplications",
                     "type": "hub-configuration-api",
                     "params": {
-                        "action": "deleteApplications",
-                        "applications": ["Banner","Elevate","EIH621App"]
+                        "action": "deleteApplications"
                     }
                 },
                 {
