@@ -19,7 +19,7 @@ let controller = function(driver, options, callback){
                             if(conf.name == options.application){
                                 authFunctions.getAccessToken(conf.apiKey, function(error, accessToken){
                                     pubFunctions.sendChangeNotifications(accessToken, CN, options.messageCount, [], function(error, results){
-                                        callback(results);
+                                        callback(driver, results, error);
                                      });
                                 });
                             }
