@@ -4,6 +4,8 @@ const _ = require('lodash'),
     authFunctions = require('../../lib/authFunctions.js'),
     configFunctions = require('../../lib/configFunctions.js'),
     uiFunctions = require('../../lib/uiFunctions.js'),
+    errorFunctions = require('../../lib/errorFunctions.js'),
+    errorsPayLoad = require('../../framework/error.json'),
     adminFunctions = require('../../lib/adminFunctions');
 
 let controller = function(driver, options, callback) {
@@ -28,6 +30,13 @@ let controller = function(driver, options, callback) {
         } else if (options.action == 'setPermissionsStatusText'){
             authFunctions.getEPAtoken(Token, function(error, jwt){
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
+                     console.log("This is the options " + JSON.stringify(options));
+                     callback(driver, {'text': result.body.message }, error);
+                });
+            });
+        } else if (options.action == 'setInvalidEndPoint'){
+            authFunctions.openJwt(Token, function(error, OpenToken){
+                errorFunctions.sendMessageBadEndpoint(jwt,options.endPoint + openToken.tenant.id, errorsPayLoad, function(error, result) {
                      console.log("This is the options " + JSON.stringify(options));
                      callback(driver, {'text': result.body.message }, error);
                 });

@@ -159,8 +159,7 @@
         }
       }]
 
-    },
-    {
+    }, {
       "testCaseId": 9,
       "name": "Push Messages into Hub with flag set to True",
       "steps": [{
@@ -175,8 +174,7 @@
         }
       }],
       "validation": []
-    },
-    {
+    }, {
       "testCaseId": 10,
       "name": "Consume Messages from Hub and validate",
       "steps": [{
@@ -211,23 +209,85 @@
       }]
 
 
-       },
+    },
 
     {
-        "testCaseId": 11,
-        "id": 2,
-        "name" : "test",
-        "steps": [{
+      "testCaseId": 11,
+      "id": 2,
+      "name": "test",
+      "steps": [{
         "method": "addApplications",
         "type": "hub-configuration-api",
         "params": {
           "action": "createApplications",
-          "applications": ["applicationStan", "applicationDarrick"]
+          "applications": ["applicationStanPub0", "applicationDarrickSub0"]
         }
 
       }]
 
 
+
+    },
+
+    {
+      "testCaseId": 12,
+      "name": "Consume Messages from Hub and validate",
+      "steps": [{
+        "id": 1,
+        "method": "consumeChangeNotifications",
+        "type": "hub-message-queue-service",
+        "params": {
+          "action": "consumeChangeNotifications",
+          "messageCounts": [10, 10, 0, 0, 0],
+          "application": "applicationSub"
+        }
+      }],
+      "validation": [{
+        "name": "assert status code of 200",
+        "action": "consumeAllOneStatusCode",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "applicationStanPub0": "applicationDarrickSub0",
+          "value": "200"
+        }
+      }, {
+        "name": "assert empty array from consumeAll",
+        "action": "consumeAllOneStatusText",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "isEmtpy": true,
+          "application": " applicationDarrickSub0",
+          "value": ""
+        }
+      }]
+
+    },
+
+    {
+      "testCaseId": 13,
+      "name": "Invalid endpoint Admins",
+      "steps": [{
+        "id": 1,
+        "method": "invalidEndPoint",
+        "type": "hub-admin-api",
+        "params": {
+        "action": "setInvalidEndPoint",
+        "endPoint": "/admins/privileges/"
+        }
+      }],
+      "validation": [{
+        "name": "assert status code of 400",
+        "action": "consumeAllOneStatusCode",
+        "type": "hub-message-queue-service",
+        "test": {
+          "action": "equal",
+          "applicationStanPub0": "applicationDarrickSub0",
+          "value": "400"
+        }
+
+      }]
     }
 
   ]
