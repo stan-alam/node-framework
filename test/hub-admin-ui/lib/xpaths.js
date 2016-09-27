@@ -68,7 +68,7 @@ module.exports.xpaths = {
     userprofilecard: "//*[@id='user_profile_link']",
     signout: "//*[@id='sign_out_button']",
     errorsLinkDashboard: '//*[@id="errorsCount_link"]/div/span',
-    tableResultHeader: '//*[contains(@class, "search-results")]//th/span',
+    tableResultHeader: '//*[contains(@class, "search-results")]//th',
     errorsLinkFirstRowDateTime: '//*[contains(@class, "title-column")]/a',
     errorsOverviewLabels: '//*[contains(@class, "single-wrapper")]//label',
     errorsOverviewTexts: '//*[contains(@class, "single-wrapper")]//span[not(contains(@class, "ng-hide"))]',
