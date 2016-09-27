@@ -28,7 +28,7 @@ module.exports.xpaths = {
     findElementIdByTemplate: "//*[@id='TEMPLATE']",
     findElementTextByTemplate: "//*[text() = 'TEMPLATE']",
     findTdByTrContainsTemplate: "//tr[contains(td,'TEMPLATE')]",
-    findSpanClassContainsTemplate: "//span[contains(@class,'TEMPLATE')]",
+    findButtonSpanClassContainsTemplate: "//span[contains(@class,'TEMPLATE') and contains(@role,'button')]",
     findName: "//*[@name='TEMPLATE']",
     findId: "//*[@id='TEMPLATE']",
     findTitleColumn: '//*[contains(@class, "title-column")][text()="TEMPLATE"]',

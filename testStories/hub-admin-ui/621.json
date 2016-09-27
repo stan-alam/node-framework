@@ -266,7 +266,7 @@
                    "type": "hub-admin-ui",
                    "params": {
                        "action": "click",
-                       "element": "findSpanClassContainsTemplate",
+                       "element": "findButtonSpanClassContainsTemplate",
                        "elementTemplate": "close"
                    }
                },
@@ -329,7 +329,7 @@
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
-                        "element": "findSpanClassContainsTemplate",
+                        "element": "findButtonSpanClassContainsTemplate",
                         "elementTemplate": "close"
                     }
                 }
@@ -466,7 +466,7 @@
             "type": "hub-admin-ui",
             "params": {
                 "action": "click",
-                "element": "findSpanClassContainsTemplate",
+                "element": "findButtonSpanClassContainsTemplate",
                 "elementTemplate": "close"
             }
           },
@@ -529,7 +529,7 @@
             "type": "hub-admin-ui",
             "params": {
                 "action": "click",
-                "element": "findSpanClassContainsTemplate",
+                "element": "findButtonSpanClassContainsTemplate",
                 "elementTemplate": "close"
             }
           }
