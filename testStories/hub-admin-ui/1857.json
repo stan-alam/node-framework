@@ -319,6 +319,24 @@
                     "action": "click",
                     "element": "linksViewApplication"
                 }
+            },
+            {
+                "id": 8,
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "dropdownPerPage",
+                    "allowFail": true
+                }
+            },
+            {
+                "id": 9,
+                "type": "hub-admin-ui",
+                "params": {
+                    "action": "click",
+                    "element": "dropdownPerPageLast",
+                    "allowFail": true
+                }
             }
         ],
         "validation": [

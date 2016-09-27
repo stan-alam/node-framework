@@ -12,6 +12,9 @@ let controller = function(driver, options, callback){
         uiFunctions.loadUrl(driver, options, function(driver, result, error){
             callback(driver, result, error);
         });
+    }else if(options.action == 'sleep'){
+        sleep(options.value);
+        callback(driver, null, null);
     }else if(options.action == 'switchUser'){
         options['xpath'] = xpaths['userprofilecard'];
         options['action'] = 'click';
