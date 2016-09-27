@@ -12,3 +12,4 @@ logs/*
 build
 out.png
 testStories/*/develop.json
+screenshots/*

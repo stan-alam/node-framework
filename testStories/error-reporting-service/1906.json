@@ -4,14 +4,13 @@
     "testCases" : [
       {
         "testCaseId": 1,
-        "name" : "Verify Insert of Error Service",
+        "name" : "Verify Insert of Error Service (Info)",
         "steps": [
           {
             "id": 1,
             "type": "error-reporting-service",
             "params": {
-              "action": "sendErrorMessage",
-              "messageCount": 1
+              "action": "sendErrorMessage"
             },
             "tests":[
               {
@@ -24,6 +23,435 @@
                 "location": "body"
               }
             ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 2,
+        "name" : "Verify Insert of Error Service (Warning)",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessage",
+              "updateModel": {
+                "model": "errors",
+                "attributes": {
+                  "severity":"Warning",
+                  "description":"This is description for Warning",
+                  "details":"This is a more info on the Warning"
+                }
+              }
+            },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 201,
+                "location": "statusCode"
+              },
+              {
+                "action": "isObject",
+                "location": "body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 3,
+        "name" : "Verify Insert of Error Service (Error)",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessage",
+              "updateModel": {
+                "model": "errors",
+                "attributes": {
+                  "severity":"Error",
+                  "description":"This is description for Error",
+                  "details":"This is a more info on the Error"
+                }
+              }
+            },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 201,
+                "location": "statusCode"
+              },
+              {
+                "action": "isObject",
+                "location": "body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 4,
+        "name": "Verify Insert of Error Service (Bad Media Type)",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessageBadMediaType"
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 415,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 5,
+        "name" : "Verify Insert of Error Service (Invalid token)",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessageInvalidToken"
+            },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 401,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 8,
+        "name" : "Verify Insert of Error Service (Expired Token)",
+        "steps": [
+          {
+            "id": 1,
+            "type": "error-reporting-service",
+            "params": {
+              "action": "sendErrorMessageExpiredToken"
+            },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 401,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 9,
+        "name": "View Errors UI is working",
+        "steps": [
+          {
+            "id": 1,
+            "method": "viewDashboard",
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "urllocation",
+              "location": "/#/dashboard"
+            }
+          },
+          {
+            "id": 2,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "elementView",
+              "element": "errorsLinkDashboard"
+            },
+            "tests": [
+              {
+                "action": "include",
+                "value": "View Errors"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "errorsLinkDashboard"
+            }
+          },
+          {
+            "id": 4,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "filterBtn"
+            }
+          },
+          {
+            "id": 5,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "sendkeys",
+              "element": "findId",
+              "elementTemplate": "input_severity",
+              "elementValue": "Info"
+            }
+          },
+          {
+            "id": 6,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "findName",
+              "elementTemplate": "filter"
+            }
+          },
+          {
+            "id": 7,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "resultCount"
+            },
+            "tests": [{
+              "action": "notInclude",
+              "value": "Results found: 0"
+            }]
+          },
+          {
+            "id": 8,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "filterBtn"
+            }
+          },
+          {
+            "id": 9,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "sendkeys",
+              "element": "findId",
+              "elementTemplate": "input_applicationName",
+              "elementValue": "Elevate"
+            }
+          },
+          {
+            "id": 10,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "findName",
+              "elementTemplate": "filter"
+            }
+          },
+          {
+            "id": 11,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "resultCount"
+            },
+            "tests": [{
+              "action": "notInclude",
+              "value": "Results found: 0"
+            }]
+          },
+          {
+            "id": 12,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "filterBtn"
+            }
+          },
+          {
+            "id": 13,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "sendkeys",
+              "element": "findId",
+              "elementTemplate": "input_responseCode",
+              "elementValue": "201"
+            }
+          },
+          {
+            "id": 14,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "findName",
+              "elementTemplate": "filter"
+            }
+          },
+          {
+            "id": 15,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "resultCount"
+            },
+            "tests": [{
+              "action": "notInclude",
+              "value": "Results found: 0"
+            }]
+          },
+          {
+            "id": 16,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "filterBtn"
+            }
+          },
+          {
+            "id": 17,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "sendkeys",
+              "element": "findId",
+              "elementTemplate": "input_description",
+              "elementValue": "Info"
+            }
+          },
+          {
+            "id": 18,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "findName",
+              "elementTemplate": "filter"
+            }
+          },
+          {
+            "id": 19,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "resultCount"
+            },
+            "tests": [{
+              "action": "notInclude",
+              "value": "Results found: 0"
+            }]
+          },
+          {
+            "id": 20,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "filterBtn"
+            }
+          },
+          {
+            "id": 21,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "sendkeys",
+              "element": "findId",
+              "elementTemplate": "input_description",
+              "elementValue": "#@$!"
+            }
+          },
+          {
+            "id": 22,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "findName",
+              "elementTemplate": "filter"
+            }
+          },
+          {
+            "id": 23,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "noRecordsFound"
+            },
+            "tests": [{
+              "action": "include",
+              "value": "No records found."
+            }]
+          },
+          {
+            "id": 24,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "clearSearch"
+            }
+          },
+          {
+            "id": 25,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "tableResultHeader"
+            },
+            "tests": [{
+              "action": "includeMembers",
+              "value": [ "Date/Time", "Severity", "Application", "Code", "Description" ]
+            }]
+          },
+          {
+            "id": 26,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "errorsLinkFirstRowDateTime"
+            }
+          },
+          {
+            "id": 27,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "errorsOverviewLabels"
+            },
+            "tests": [{
+              "action": "includeMembers",
+              "value": [ "Date-Time" , "Severity", "Publisher Application Name", "Response Code", "Description", "Details", "Correlation ID", "Publisher Application ID" ]
+            }]
+          },
+          {
+            "id": 28,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "errorsOverviewTexts"
+            },
+            "tests": [{
+              "action": "notInclude",
+              "value": "errorsMaintenance.views.overview.widgets.severity.choices.info.label"
+            }]
+          },
+          {
+            "id": 29,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "click",
+              "element": "sectionSearch",
+              "elementTemplate": "Request"
+            }
+          },
+          {
+            "id": 30,
+            "type": "hub-admin-ui",
+            "params": {
+              "action": "arrayValue",
+              "element": "errorsOverviewLabels"
+            },
+            "tests": [{
+              "action": "includeMembers",
+              "value": [ "Request Payload", "URI" ]
+            }]
           }
         ]
       }

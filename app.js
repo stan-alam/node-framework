@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs'),
+    fsExtra = require('fs-extra'),
     sleep = require('system-sleep'),
     spawn = require('child_process').exec,
     shell = require('shelljs'),
@@ -14,10 +15,12 @@ var logdir = new Date().getTime();
 
 try{
     fs.mkdirSync("logs");
+    fs.mkdirSync("screenshots");
 } catch(e){
     console.info("logs already created");
 }
 fs.mkdirSync("logs/"+logdir);
+fsExtra.emptyDir("screenshots");
 spawn("./node_modules/.bin/selenium-standalone install && ./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
 spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --port=19515 --verbose > logs/"+logdir+"/chromedriver.log");
 
