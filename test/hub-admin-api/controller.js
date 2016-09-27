@@ -35,10 +35,13 @@ let controller = function(driver, options, callback) {
                 });
             });
         } else if (options.action == 'setInvalidEndPoint'){
-            authFunctions.openJwt(Token, function(error, OpenToken){
-                errorFunctions.sendMessageBadEndpoint(jwt,options.endPoint + openToken.tenant.id, errorsPayLoad, function(error, result) {
-                     console.log("This is the options " + JSON.stringify(options));
-                     callback(driver, {'text': result.body.message }, error);
+            authFunctions.openJwt(Token, function(error, openToken){
+                errorFunctions.sendMessageBadEndpoint(Token, options.endPoint + openToken.tenant.id, function(error, result) {
+                     if(error){
+                        callback(driver, {'text': error.statusCode }, error);
+                     }else{
+                        callback(driver, {'text': result.statusCode }, error);
+                     }
                 });
             });
         } else if (options.action == 'addResource') {

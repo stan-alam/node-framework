@@ -116,7 +116,7 @@ let runTestFramework = function(microservice){
         for (var testCaseLoop of test.testCases) {
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
-                let runTest = test.testCases[i++]; //Will need to loop through
+                let runTest = test.testCases[i]; //Will need to loop through
                 //Run any Validation steps that are in testcase
                 let runValidation = function(validationIndex) {
                     if (runTest.validation[validationIndex]) {
@@ -125,24 +125,24 @@ let runTestFramework = function(microservice){
                         let stepController = require(path);
                         stepController.controller(driver, validate, function(driver, result) {
                             runAssertions(driver, validate, result, function(end){
-                                if(end)
+                                if(end){
+                                    i = i + 1;
                                     done();
-                                else{
+                                }else{
                                     if (runTest.validation[(validationIndex + 1)]) {
                                          runValidation((validationIndex + 1))
                                     } else {
+                                        i = i +1;
                                          done();
                                                             }
                                 }
                             });
                         });
                     } else {
+                        i = i +1;
                         done();
                     }
 
-                    let rerunTest = function() {
-
-                    }
                 }
 
                 //code to Run through the steps in testCase File
