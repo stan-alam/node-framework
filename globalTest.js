@@ -52,6 +52,7 @@ let runTestFramework = function(microservice){
         console.error('============================================')
         console.error("Validate: "+ JSON.stringify(validate));
         console.error("Result: "+ JSON.stringify(validateResult));
+        
         let ValidateResult = { text: '' };
         if(Array.isArray(validateResult.text) && (validateResult.text.length > 0) && (validateResult.text[0].body)){
             validateResult.text = validateResult.text[0];
