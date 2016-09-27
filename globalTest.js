@@ -167,11 +167,9 @@ let runTestFramework = function(microservice){
                                   fs.writeFileSync('screenshots/' + name, data, 'base64');
                                 };
 
-                                if(driver.hasOwnProperty('takeScreenshot')){
                                     driver.takeScreenshot().then(function(data) {
                                       writeScreenshot(data, microservice+'_' + testCase+'ID_'+test.id+'Step_'+stepindex+'.png');
                                     });
-                                }
 
                                 if(error){
                                     console.error("Step: "+stepindex);
