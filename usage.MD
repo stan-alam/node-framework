@@ -298,6 +298,24 @@ Call to send an Send an expired token to any endpoint
     - The error Message Payload that is to be sent to error service
 
 
+###sendMessageBadEndpoint
+
+Call to send an payload to false endpoint
+
+**Returns**: _Array_ - Array of responses for each request to error service
+
+**Params**:  
+*   jwt _String_
+
+    - Token to use when sending
+*   endpoint _String_
+
+    - Which endpoint to make call too
+*   payload _Object_
+
+    - The error Message Payload that is to be sent to error service
+
+
 #mqsFunctions
 
 This is Functions used for making calls to hub-message-queue-service
