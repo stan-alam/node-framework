@@ -28,7 +28,7 @@ module.exports.xpaths = {
     findElementIdByTemplate: "//*[@id='TEMPLATE']",
     findElementTextByTemplate: "//*[text() = 'TEMPLATE']",
     findTdByTrContainsTemplate: "//tr[contains(td,'TEMPLATE')]",
-    findSpanClassContainsTemplate: "//span[contains(@class,'TEMPLATE')]",
+    findButtonSpanClassContainsTemplate: "//span[contains(@class,'TEMPLATE') and contains(@role,'button')]",
     findName: "//*[@name='TEMPLATE']",
     findId: "//*[@id='TEMPLATE']",
     findTitleColumn: '//*[contains(@class, "title-column")][text()="TEMPLATE"]',
@@ -68,12 +68,14 @@ module.exports.xpaths = {
     userprofilecard: "//*[@id='user_profile_link']",
     signout: "//*[@id='sign_out_button']",
     errorsLinkDashboard: '//*[@id="errorsCount_link"]/div/span',
-    tableResultHeader: '//*[contains(@class, "search-results")]//th/span',
+    tableResultHeader: '//*[contains(@class, "search-results")]//th',
     errorsLinkFirstRowDateTime: '//*[contains(@class, "title-column")]/a',
     errorsOverviewLabels: '//*[contains(@class, "single-wrapper")]//label',
     errorsOverviewTexts: '//*[contains(@class, "single-wrapper")]//span[not(contains(@class, "ng-hide"))]',
     filterBtn: '//*[contains(@class, "filter")]',
     resultCount: '//*[contains(@class, "results-found")]',
     noRecordsFound: '//*[contains(@class, "alert-td-fullspan")]',
-    clearSearch: '//*[contains(@class, "secondary float-left")]'
+    clearSearch: '//*[contains(@class, "secondary float-left")]',
+    dropdownPerPage: '//*[@id="perPage"]',
+    dropdownPerPageLast: '//*[@id="perPage"]/option[last()]'
 }

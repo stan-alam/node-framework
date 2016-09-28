@@ -22,7 +22,7 @@ try{
 fs.mkdirSync("logs/"+logdir);
 fsExtra.emptyDir("screenshots");
 spawn("./node_modules/.bin/selenium-standalone install && ./node_modules/.bin/selenium-standalone start > logs/"+logdir+"/selenium.log");
-spawn("xvfb-run ./node_modules/chromedriver/bin/chromedriver --port=19515 --verbose > logs/"+logdir+"/chromedriver.log");
+spawn("xvfb-run --server-args='-screen 0, 1024x768x16' ./node_modules/chromedriver/bin/chromedriver --port=19515 --verbose > logs/"+logdir+"/chromedriver.log");
 
 function runTests(loopCount){
     if (fileExists("logs/"+logdir+"/selenium.log")) {

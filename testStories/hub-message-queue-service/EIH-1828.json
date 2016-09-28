@@ -284,8 +284,30 @@
           "type": "hub-admin-api",
           "test": {
             "action": "equal",
-            "endPoint" : "/admins/privileges/",
+            "endPoint": "/admins/privileges/",
             "value": "400"
+          }
+
+        }]
+
+      }]
+
+
+    },
+
+    {
+      "testCaseId": 14,
+      "name": "Invalid endpoint privileges/spelled wrong",
+      "steps": [{
+
+        "validation": [{
+          "name": "assert status code of 404",
+          "action": "setInvalidEndPoint",
+          "type": "hub-admin-api",
+          "test": {
+            "action": "equal",
+            "endPoint": "/admin/privilOges/",
+            "value": "404"
           }
 
         }]
