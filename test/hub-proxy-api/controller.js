@@ -18,7 +18,7 @@ let controller = function(driver, options, callback){
 	                  callback(driver,null,error);
 	              else{
 	         		epatoken=token;
-	         		callback(driver,token);
+	         		callback(driver,{ 'text': token });
 	         	   }
 	         	});
            }
@@ -49,7 +49,7 @@ let controller = function(driver, options, callback){
                 callback(driver,null,error);
             else{
                 accesstoken=Token;
-                callback(driver,Token);
+                callback(driver,{ 'text': Token });
             }
            });
       }else if(options.action=='post'){
