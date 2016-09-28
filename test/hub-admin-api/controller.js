@@ -45,7 +45,22 @@ let controller = function(driver, options, callback) {
                      }
                 });
             });
-        } else if (options.action == 'addResource') {
+        } else if (options.action == 'noTenantIDEndPoint') {
+            authFunctions.openJwt(Token, function(error, openToken){
+                console.error('openToken: '+ JSON.stringify(openToken))
+                errorFunctions.sendMessageBadEndpointPost(Token, options.endPoint, function(error) {
+                     if(error){
+                        callback(driver, {'text': error.statusCode });
+                     }
+                });
+            });
+        }
+
+
+
+
+
+        else if (options.action == 'addResource') {
             configFunctions.getConfiguration(Token, function(error, configuration) {
                 _.each(configuration, function(app) {
                     if (app.name == options.application) {

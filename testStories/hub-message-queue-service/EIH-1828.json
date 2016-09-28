@@ -267,7 +267,7 @@
 
     {
       "testCaseId": 13,
-      "name": "Invalid endpoint Admins",
+      "name": "CNA-TC08 - Invalid endpoint Admins",
       "steps": [{
         "id": 1,
         "method": "invalidEndPoint",
@@ -297,24 +297,37 @@
 
     {
       "testCaseId": 14,
-      "name": "Invalid endpoint privileges/spelled wrong",
-      "steps": [
-        {
-           "id": 1,
-              "type": "hub-admin-api",
-              "params": {
-                "action": "setInvalidEndPoint",
-                "endPoint": "/admin/privilOges/"
-              },
-              "tests":[
-                {
-                  "action": "equal",
-                  "value": "404"
-                }
-              ]
-            }
-          ]
-    }
+      "name": "CNA-TC09 - Invalid endpoint privileges/spelled wrong",
+      "steps": [{
+        "id": 1,
+        "type": "hub-admin-api",
+        "params": {
+          "action": "setInvalidEndPoint",
+          "endPoint": "/admin/privilOges/"
+        },
+        "tests": [{
+          "action": "equal",
+          "value": "404"
+        }]
+      }]
+    },
 
+
+    {
+      "testCaseId": 15,
+      "name": "CNA-TC10 - omit tenant id in endpoint",
+      "steps": [{
+        "id": 1,
+        "type": "hub-admin-api",
+        "params": {
+          "action": "noTenantIDEndPoint",
+          "endPoint": "/admin/privileges/"
+        },
+        "tests": [{
+          "action": "equal",
+          "value": "417"
+        }]
+      }]
+    }
   ]
 }
