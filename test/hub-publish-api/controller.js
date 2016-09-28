@@ -51,12 +51,18 @@ let controller = function(driver, options, callback){
                                     if(options.updateModel){
                                         adminFunctions.updateModel(options.updateModel.attributes, CN, function(model){
                                             errorFunctions.sendMessageExpiredToken(accessToken, 'publisher', model, function(error, results){
-                                                callback(driver, { 'text': error });
+                                                if(error)
+                                                    callback(driver, { 'text': error });
+                                                else
+                                                    callback(driver, { 'text': results })
                                             });
                                         });
                                     } else {
                                       errorFunctions.sendMessageExpiredToken(accessToken, 'publisher', CN, function(error, results){
-                                         callback(driver, { 'text': error });
+                                        if(error)
+                                            callback(driver, { 'text': error });
+                                        else
+                                            callback(driver, { 'text': results });
                                       });
                                     }
                                   });

@@ -208,7 +208,7 @@
           "tests": [
             {
               "action": "equal",
-              "value": "400",
+              "value": "401",
               "location": "statusCode"
             }
           ]
@@ -221,12 +221,32 @@
       "steps": [
         {
           "id": 1,
+          "method": "appPublisher",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addResource",
+            "application": "PublisherPub",
+            "resources": "publishertestingCN"
+          }
+        },
+        {
+          "id": 1,
+          "method": "addSubscriber",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addSubscription",
+            "application": "PublisherSub-1",
+            "subscriptions": "publishertestingCN"
+          }
+        },
+        {
+          "id": 3,
           "type": "hub-publish-api",
           "params": {
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -260,7 +280,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -294,7 +314,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -328,7 +348,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -357,7 +377,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -391,7 +411,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -425,7 +445,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -459,7 +479,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -493,7 +513,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -527,7 +547,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {
@@ -556,7 +576,7 @@
             "action": "sendChangeNotifications",
             "messageCount": 1,
             "application": "PublisherPub",
-            "resource": "publishertesting",
+            "resource": "publishertestingCN",
             "updateModel": {
               "model": "changeNotification",
               "attributes": {

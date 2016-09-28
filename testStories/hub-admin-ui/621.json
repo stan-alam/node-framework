@@ -511,7 +511,7 @@
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "sleep",
-                        "value": 5000
+                        "value": 10000
                     }
                 }
             ],
