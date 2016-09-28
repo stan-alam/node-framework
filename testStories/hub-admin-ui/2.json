@@ -1,6 +1,6 @@
 {
-    "id" : "11",
-    "name" : "Adding Application using UI",
+    "id" : "2",
+    "name" : "Adding Application using UI with special keys",
     "testCases" : [
       {
         "testCaseId": 1,
@@ -38,13 +38,23 @@
           },
           {
             "id": 4,
-            "method": "saveApplicationName",
             "type": "hub-admin-ui",
             "params": {
-              "action": "click",
-              "element": "saveButtonForApplicationAdd"
+              "action": "sendSpecialKey",
+              "element": "inputForApp",
+              "key": "TAB"
             }
-          }
+        },
+        {
+            "id": 5,
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "sendSpecialKey",
+                "element": "findElementIdByTemplate",
+                "elementTemplate": "wizard_save_button",
+                "key": "ENTER"
+            }
+        }
         ],
         "validation": [
           {
