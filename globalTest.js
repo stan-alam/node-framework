@@ -27,10 +27,19 @@ let runTestFramework = function(microservice){
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
-            preSetupLib.setup(driver, function(driver, setup){
-                preSetup = setup;
-                done();
-            });
+            if(envVars.credentials.username == 'mbmormann'){
+                preSetupLib.deleteAll(driver, function(driver){
+                    preSetupLib.setup(driver, function(driver, setup){
+                        preSetup = setup;
+                        done();
+                    });
+                });
+            }else{
+                preSetupLib.setup(driver, function(driver, setup){
+                    preSetup = setup;
+                    done();
+                });
+            }
         });
     });
 
