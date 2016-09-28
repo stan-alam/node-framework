@@ -5,6 +5,7 @@ const authFunctions = require('../../lib/authFunctions'),
 var epatoken;
 var tenantID;
 var accesstoken;
+var id;
 //Controller for hub-proxy-api
 let controller = function(driver, options, callback){
      if(options.action == 'getEPAccessToken'){
@@ -52,16 +53,37 @@ let controller = function(driver, options, callback){
             }
            });
       }else if(options.action=='post'){
+         console.log("calling post");
          proxyFunctions.post(accesstoken,function(statusCode){
-              console.log("statusCode="+statusCode);
-              callback(driver, {"text":statusCode});
+               callback(driver, {"text":statusCode});
          });
 
       }else if(options.action=='getMany'){
-          proxyFunctions.getMany(accesstoken,function(statusCode){
-              console.log("statusCode="+statusCode);
-              callback(driver, {"text":statusCode});
-      }
+          console.log("calling getMany");
+          proxyFunctions.getMany(accesstoken,function(result){
+              id=JSON.parse(result.body)[0].id;
+              callback(driver, {"text":result});
+          });
+     }
+     else if(options.action=='put')
+     {
+         console.log("calling put");
+         proxyFunctions.put(accesstoken,id,function(result){
+               callback(driver, {"text":result});
+         });
+     }
+     else if(options.action='deleteResource'){
+         console.log("calling deleteResource");
+         proxyFunctions.deleteResource(accesstoken,id,function(statusCode){
+               callback(driver, {"text":statusCode});
+         });
+    }else if(options.action=='getOne'){
+          console.log("calling getOne");
+          proxyFunctions.getOne(accesstoken,id,function(result){
+              callback(driver, {"text":result});
+          });
+     }
+
       else
         callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });
 }

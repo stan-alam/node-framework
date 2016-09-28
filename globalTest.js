@@ -114,6 +114,7 @@ let runTestFramework = function(microservice){
 
         var sharedData = {};
         for (var testCaseLoop of test.testCases) {
+            console.log(testCaseLoop.name);
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
                 let runTest = test.testCases[i]; //Will need to loop through
@@ -148,7 +149,7 @@ let runTestFramework = function(microservice){
                     if(!runTest || (runTest.steps.length == 0)){
                        done();
                     }else{
-                        //Sort Steps By ID
+                       // Sort Steps By ID
                         runTest.steps.sort(function(a, b) {
                           if (a.id > b.id)
                              return 1;
@@ -160,6 +161,7 @@ let runTestFramework = function(microservice){
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
                         adminFunctions.sharedDataCheck(step.params, function(options){
+                            console.log(JSON.stringify(step.params));
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
@@ -186,20 +188,19 @@ let runTestFramework = function(microservice){
                                     let runStepTest = function(driver, index){
                                         runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
                                         //Run all validations in a loop
-                                            if(end){
-                                                done();
+                                           if(end){
+                                                  done();
                                             }else if(step.tests[(index+1)]){
                                                 runStepTest(driver, (index+1));
                                             }else{
                                                 if (runTest.steps[stepindex + 1]) {
                                                     runSteps((stepindex + 1));
-
                                                 } else {
                                                     if (runTest.validation) {
                                                         runValidation(0);
                                                     } else {
-                                                        i = i + 1;
-                                                        done();
+                                                       i = i + 1;
+                                                       done();
                                                     }
                                                 }
                                             }
