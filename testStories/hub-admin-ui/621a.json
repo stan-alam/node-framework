@@ -549,8 +549,7 @@
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
-                        "element": "findButtonSpanClassContainsTemplate",
-                        "elementTemplate": "close"
+                        "element": "buttonSearchClose"
                     }
                 }
             ],
