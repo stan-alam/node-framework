@@ -39,7 +39,7 @@ let runTestFramework = function(microservice){
                     preSetup = setup;
                     done();
                 });
-            }
+           }
         });
     });
 
