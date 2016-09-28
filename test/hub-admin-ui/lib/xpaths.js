@@ -16,6 +16,7 @@ module.exports.xpaths = {
     buttonSaveDesc: "//button[@id='save_description']",
     buttonSavePassword: "//*[@id='save_password']",
     buttonSaveUsername: "//*[@id='save_username']",
+    buttonSearchClose: '//cp-translate[text()="Search"]/../../span',
     cancel: "//*[@id='card_dialog_cancel_button']",
     cardAuthoritativeApplicationTemplate: "//*[text()='TEMPLATE']/../../..",
     closeDialog: "//*[contains(@data-ng-click, 'cancelPromptForNewElement')][contains(@class, 'close')]",
