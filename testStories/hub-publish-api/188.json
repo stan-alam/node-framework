@@ -1,0 +1,636 @@
+{
+  "id" : "188",
+  "name" : "Publisher Publishing Tests",
+  "testCases" : [
+    {
+      "testCaseId": 1,
+      "name" : "Verify Insert Publisher 1 subscribers",
+      "steps": [
+          {
+            "id": 1,
+            "method": "deleteApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "deleteApplications",
+              "applications": ["PublisherPub", "PublisherSub-1", "PublisherSub-2", "PublisherPub-3"]
+            }
+          },
+          {
+            "id": 2,
+            "method": "addApplications",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "createApplications",
+              "applications": ["PublisherPub", "PublisherSub-1"]
+            }
+          },
+          {
+            "id": 3,
+            "method": "appPublisher",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "addResource",
+              "application": "PublisherPub",
+              "resources": ["publishertesting", "publishertesting-2"]
+            }
+          },
+          {
+            "id": 4,
+            "method": "addSubscriber",
+            "type": "hub-configuration-api",
+            "params": {
+              "action": "addSubscription",
+              "application": "PublisherSub-1",
+              "subscriptions": "publishertesting"
+            }
+          },
+        {
+          "id": 5,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting"
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 2,
+      "name" : "Verify Insert Publisher 2 subscribers",
+      "steps": [
+        {
+          "id": 1,
+          "method": "addApplications",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "createApplications",
+            "applications": ["PublisherSub-2"]
+          }
+        },
+        {
+          "id": 2,
+          "method": "addSubscriber",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addSubscription",
+            "application": "PublisherSub-1",
+            "subscriptions": "publishertesting-2"
+          }
+        },
+        {
+          "id": 3,
+          "method": "addSubscriber",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addSubscription",
+            "application": "PublisherSub-2",
+            "subscriptions": "publishertesting-2"
+          }
+        },
+        {
+          "id": 4,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting-2"
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "2",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 3,
+      "name" : "Publish without Subscribers",
+      "steps": [
+        {
+          "id": 1,
+          "method": "addApplications",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "createApplications",
+            "applications": ["PublisherPub-3"]
+          }
+        },
+        {
+          "id": 2,
+          "method": "appPublisher",
+          "type": "hub-configuration-api",
+          "params": {
+            "action": "addResource",
+            "application": "PublisherPub-3",
+            "resources": ["publishertestingNoSub"]
+          }
+        },
+        {
+          "id": 3,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+          "application": "PublisherPub-3",
+          "resource": "publishertestingNoSub",
+            "messageCount": 1
+        },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 4,
+      "name" : "Invalid payload",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation":""
+              }
+            },
+            "application": "PublisherPub",
+            "resource": "publishertesting-2"
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 4,
+      "name" : "Invalid JWT",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotificationsExpiredJwt",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "replaced"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 5,
+      "name" : "Change Notification Content-Type: Empty",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "contentType": ""
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 6,
+      "name" : "Change Notification Content-Type: Patch",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "contentType": "patch"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 7,
+      "name" : "Change Notification Content-Type: Partial",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "contentType": "partial"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 8,
+      "name" : "Change Notification Content-Type: PitBull",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "contentType": "PitBull"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 9,
+      "name" : "Change Notification Content-Type: limited",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "contentType": "limited"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 10,
+      "name" : "Change Notification operation: created",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "created"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 11,
+      "name" : "Change Notification operation: replaced",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "replaced"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 12,
+      "name" : "Change Notification operation: patched",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "patched"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 13,
+      "name" : "Change Notification operation: deleted",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "deleted"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "200",
+              "location": "statusCode"
+            },
+            {
+              "action": "equal",
+              "value": "1",
+              "location": "body.numberOfSubscribers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 14,
+      "name" : "Change Notification with No operation",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": ""
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 15,
+      "name" : "Change Notification operation: ellucian",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "publishertesting",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "ellucian"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 16,
+      "name" : "Change Notification Not an Authoritative",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "junk",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "operation": "deleted"
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "403",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "testCaseId": 17,
+      "name" : "Change Notification No Resource",
+      "steps": [
+        {
+          "id": 1,
+          "type": "hub-publish-api",
+          "params": {
+            "action": "sendChangeNotifications",
+            "messageCount": 1,
+            "application": "PublisherPub",
+            "resource": "rooms",
+            "updateModel": {
+              "model": "changeNotification",
+              "attributes": {
+                "resource": ""
+              }
+            }
+          },
+          "tests": [
+            {
+              "action": "equal",
+              "value": "400",
+              "location": "statusCode"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

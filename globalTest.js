@@ -27,17 +27,17 @@ let runTestFramework = function(microservice){
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
-             preSetupLib.setup(driver, function(driver, setup){
+            preSetupLib.setup(driver, function(driver, setup){
                 preSetup = setup;
                 done();
-             });
+            });
         });
     });
 
     after(function(done){
         this.timeout(800000000);
         preSetupLib.cleanUp(driver, preSetup, function(){
-        driver.quit();
+            driver.quit();
             done();
         });
     });
@@ -192,7 +192,6 @@ let runTestFramework = function(microservice){
                                                 runStepTest(driver, (index+1));
                                             }else{
                                                 if (runTest.steps[stepindex + 1]) {
-                                                    done();
                                                     runSteps((stepindex + 1));
 
                                                 } else {
