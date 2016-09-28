@@ -168,8 +168,10 @@ let runTestFramework = function(microservice){
                         let stepController = require(path);
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
+                        //console.log("step="+JSON.stringify(step));
                         adminFunctions.sharedDataCheck(step.params, function(options){
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
+                                console.log("calling controller: "+options.action);
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
                                   fs.writeFileSync('screenshots/' + name, data, 'base64');
@@ -196,7 +198,7 @@ let runTestFramework = function(microservice){
                                         runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
                                         //Run all validations in a loop
                                            if(end){
-                                                  done();
+                                              done();
                                             }else if(step.tests[(index+1)]){
                                                 runStepTest(driver, (index+1));
                                             }else{
