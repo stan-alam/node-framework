@@ -298,23 +298,22 @@
     {
       "testCaseId": 14,
       "name": "Invalid endpoint privileges/spelled wrong",
-      "steps": [{
-
-        "validation": [{
-          "name": "assert status code of 404",
-          "action": "setInvalidEndPoint",
-          "type": "hub-admin-api",
-          "test": {
-            "action": "equal",
-            "endPoint": "/admin/privilOges/",
-            "value": "404"
-          }
-
-        }]
-
-      }]
-
-
+      "steps": [
+        {
+           "id": 1,
+              "type": "hub-admin-api",
+              "params": {
+                "action": "setInvalidEndPoint",
+                "endPoint": "/admin/privilOges/"
+              },
+              "tests":[
+                {
+                  "action": "equal",
+                  "value": "404"
+                }
+              ]
+            }
+          ]
     }
 
   ]

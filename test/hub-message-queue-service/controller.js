@@ -23,8 +23,11 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             }
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
-                let newlastId = mqsResults.body[mqsResults.body.length - 1].id;
-                mqsLoopConsume(accessToken, options, (index + 1), newlastId, results, consumeall, loopCallback);
+                if(mqsResults.body[mqsResults.body.length - 1]){
+                    mqsLoopConsume(accessToken, options, (index + 1), mqsResults.body[mqsResults.body.length - 1].id, results, consumeall, loopCallback)
+                }else{
+                    mqsLoopConsume(accessToken, options, (index + 1), lastid, results, consumeall, loopCallback)
+                };
             });
         } else {
             loopCallback(results);

@@ -21,7 +21,7 @@ let controller = function(driver, options, callback) {
             authFunctions.getEPAtoken(Token, function(error, jwt){
                 adminFunctions.allTenantsFlag(jwt, options.setPermissions, function(error, result) {
                      if (error) {
-                       callback(driver, {'text': error.statusCode }, error);
+                       callback(driver, {'text': error.statusCode });
                      } else {
                          callback(driver, {'text': result.statusCode }, error);
                     }
@@ -36,9 +36,10 @@ let controller = function(driver, options, callback) {
             });
         } else if (options.action == 'setInvalidEndPoint'){
             authFunctions.openJwt(Token, function(error, openToken){
+                console.error('openToken: '+ JSON.stringify(openToken))
                 errorFunctions.sendMessageBadEndpoint(Token, options.endPoint + openToken.tenant.id, function(error, result) {
                      if(error){
-                        callback(driver, {'text': error.statusCode }, error);
+                        callback(driver, {'text': error.statusCode });
                      }else{
                         callback(driver, {'text': result.statusCode }, error);
                      }
