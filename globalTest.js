@@ -36,7 +36,7 @@ let runTestFramework = function(microservice) {
 
     after(function(done) {
         this.timeout(800000000);
-        preSetupLib.cleanUp(driver, preSetup, function() {
+        preSetupLib.cleanUp(driver, preSetup, function(){
             driver.quit();
             done();
         });
@@ -153,10 +153,10 @@ let runTestFramework = function(microservice) {
 
                 //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
-                    if (!runTest || (runTest.steps.length == 0)) {
-                        done();
-                    } else {
-                        //Sort Steps By ID
+                    if(!runTest || (runTest.steps.length == 0)){
+                       done();
+                    }else{
+                       // Sort Steps By ID
                         runTest.steps.sort(function(a, b) {
                             if (a.id > b.id)
                                 return 1;
@@ -190,27 +190,23 @@ let runTestFramework = function(microservice) {
                                     sharedData['step' + stepindex] = sharedResult;
 
                                 //Check if Test is a validation also
-                                if ((step.tests) && (step.tests[0])) {
-                                    let runStepTest = function(driver, index) {
-                                        runAssertions(driver, {
-                                            'test': step.tests[index]
-                                        }, sharedResult, function(end) {
-                                            //Run all validations in a loop
-                                            if (end) {
-                                                done();
-                                            } else if (step.tests[(index + 1)]) {
-                                                runStepTest(driver, (index + 1));
-                                            } else {
+                                if((step.tests) && (step.tests[0])){
+                                    let runStepTest = function(driver, index){
+                                        runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
+                                        //Run all validations in a loop
+                                           if(end){
+                                                  done();
+                                            }else if(step.tests[(index+1)]){
+                                                runStepTest(driver, (index+1));
+                                            }else{
                                                 if (runTest.steps[stepindex + 1]) {
-                                                    done();
                                                     runSteps((stepindex + 1));
-
                                                 } else {
                                                     if (runTest.validation) {
                                                         runValidation(0);
                                                     } else {
-                                                        i = i + 1;
-                                                        done();
+                                                       i = i + 1;
+                                                       done();
                                                     }
                                                 }
                                             }

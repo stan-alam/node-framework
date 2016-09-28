@@ -1,5 +1,6 @@
 {
   "operation": "replaced",
+  "contentType": "resource-representation",
   "resource": {
     "id" : "393cda90-543b-4d98-adb7-00732cad96bd",
     "name": "addresses",

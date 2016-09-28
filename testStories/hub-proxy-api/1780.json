@@ -1,0 +1,144 @@
+{
+    "id" : "1780",
+    "name" : "Proxy Testcases Covered",
+    "testCases" : [
+      {
+        "testCaseId": "PRX-TC01",
+        "name" : "Make Proxy POST Call",
+        "steps": [
+         {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getAccessToken",
+              "sharedData": {
+                  "key": "APIKey",
+                  "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record2.apiKey"
+                  }
+               }
+            }
+          },       
+          {
+            "id": 2,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "post"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 200
+              }
+
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC02",
+        "name" : "Make Proxy GET Call",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getMany"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 200,
+                "location":"statusCode"
+              },
+               {
+                "action": "include",
+                "value": "id",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC03",
+        "name" : "Make Proxy PUT Call",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "put"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 200,
+                "location":"statusCode"
+              },
+               {
+                "action": "include",
+                "value": "module",
+                "location":"body"
+              },
+              {
+                "action": "include",
+                "value": "testcase",
+                "location":"body"
+              },
+              {
+                "action": "include",
+                "value": "method",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC04",
+        "name" : "Make Proxy DELETE Call",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "deleteResource"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 200
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC05",
+        "name" : "Make Proxy GET Call",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getOne"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 404,
+                "location":"statusCode"
+              },
+              {
+                "action": "include",
+                "value": "error",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}
