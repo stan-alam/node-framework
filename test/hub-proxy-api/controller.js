@@ -73,12 +73,12 @@ let controller = function(driver, options, callback){
          });
      }
      else if(options.action='deleteResource'){
-         console.log("calling deleteResource");
+         console.log("calling deleteResource Using ID: "+id);
          proxyFunctions.deleteResource(accesstoken,id,function(statusCode){
                callback(driver, {"text":statusCode});
          });
     }else if(options.action=='getOne'){
-          console.log("calling getOne");
+          console.log("calling getOne Using ID: "+id);
           proxyFunctions.getOne(accesstoken,id,function(result){
               callback(driver, {"text":result});
           });
