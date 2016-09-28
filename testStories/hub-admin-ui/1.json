@@ -6,17 +6,16 @@
         "testCaseId": 1,
         "name" : "Verify Adding Applications",
         "steps": [
-          {
-                "id": 1,
-                "type": "hub-admin-ui",
-                "params": {
-                    "action": "urllocation",
-                    "location": "/#/dashboard"
-                }
-          },
-          {
+        {
+            "id": 1,
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "urllocation",
+                "location": "/#/dashboard"
+            }
+        },
+        {
             "id": 2,
-            "method": "deleteApplications",
             "type": "hub-configuration-api",
             "params": {
               "action": "deleteApplications",
@@ -24,35 +23,32 @@
                 "Application1"
               ]
             }
-          },
-          {
+        },
+        {
             "id": 3,
-            "method": "addApplicationMan",
             "type": "hub-admin-ui",
             "params": {
                 "action": "click",
                 "element": "manWizardAppCreate"
             }
-          },
-          {
+        },
+        {
             "id": 4,
-            "method": "enterApplicationName",
             "type": "hub-admin-ui",
             "params": {
               "action": "sendkeys",
               "element": "inputForApp",
               "elementValue": "Application1"
             }
-          },
-          {
+        },
+        {
             "id": 5,
-            "method": "saveApplicationName",
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
               "element": "saveButtonForApplicationAdd"
             }
-          }
+        }
         ],
         "validation": [
           {
