@@ -27,17 +27,26 @@ let runTestFramework = function(microservice){
 
         uiFunctions.configLoadUi(uiConfig, function(uiDriver) {
             driver = uiDriver;
-             preSetupLib.setup(driver, function(driver, setup){
-                preSetup = setup;
-                done();
-             });
+            if(envVars.credentials.username == 'mbmormann'){
+                preSetupLib.deleteAll(driver, function(driver){
+                    preSetupLib.setup(driver, function(driver, setup){
+                        preSetup = setup;
+                        done();
+                    });
+                });
+            }else{
+                preSetupLib.setup(driver, function(driver, setup){
+                    preSetup = setup;
+                    done();
+                });
+            }
         });
     });
 
     after(function(done){
         this.timeout(800000000);
         preSetupLib.cleanUp(driver, preSetup, function(){
-        driver.quit();
+            driver.quit();
             done();
         });
     });
@@ -114,7 +123,6 @@ let runTestFramework = function(microservice){
 
         var sharedData = {};
         for (var testCaseLoop of test.testCases) {
-            console.log(testCaseLoop.name);
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
                 let runTest = test.testCases[i]; //Will need to loop through
@@ -161,7 +169,6 @@ let runTestFramework = function(microservice){
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
                         adminFunctions.sharedDataCheck(step.params, function(options){
-                            console.log(JSON.stringify(step.params));
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
@@ -194,7 +201,6 @@ let runTestFramework = function(microservice){
                                                 runStepTest(driver, (index+1));
                                             }else{
                                                 if (runTest.steps[stepindex + 1]) {
-                                                    done();
                                                     runSteps((stepindex + 1));
                                                 } else {
                                                     if (runTest.validation) {

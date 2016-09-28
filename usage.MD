@@ -360,6 +360,18 @@ This is Function that setups a working environment for users to start using used
 
 ###setup
 
+deleteAll This is for removing all applications on start
+
+**Returns**: _Object_ - driver - selenium driver
+
+**Params**:  
+*   driver _Object_
+
+    - selenium driver
+
+
+###setup
+
 setup this is for setting up a default environment for running tests on
 
 **Returns**: _Object_ - driver - selenium driver
