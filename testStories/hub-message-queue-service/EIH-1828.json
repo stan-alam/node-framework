@@ -302,7 +302,7 @@
         "id": 1,
         "type": "hub-admin-api",
         "params": {
-          "action": "setInvalidEndPoint",
+          "action": "setInvalidPayLoad",
           "endPoint": "/admin/privilOges/"
         },
         "tests": [{
@@ -328,6 +328,31 @@
           "value": "417"
         }]
       }]
+    },
+
+
+     {
+      "testCaseId": 16,
+      "name": "CNA-TC11 - misspelled payload",
+      "steps": [{
+        "id": 1,
+        "type": "hub-admin-api",
+        "params": {
+          "action": "sendPermissionsInvalidPayload",
+          "endPoint": "/admin/privileges/"
+        },
+        "tests": [{
+          "action": "equal",
+          "value": "417"
+        }]
+      }]
     }
+
+
+
+
+
+
+
   ]
 }
