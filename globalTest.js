@@ -126,33 +126,6 @@ let runTestFramework = function(microservice){
             it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
                 this.timeout(80000000);
                 let runTest = test.testCases[i]; //Will need to loop through
-                //Run any Validation steps that are in testcase
-                let runValidation = function(validationIndex) {
-                    if (runTest.validation[validationIndex]) {
-                        let validate = runTest.validation[validationIndex];
-                        let path = './test/' + validate.type + '/controller.js';
-                        let stepController = require(path);
-                        stepController.controller(driver, validate, function(driver, result) {
-                            runAssertions(driver, validate, result, function(end){
-                                if(end)
-                                    done();
-                                else{
-                                    if (runTest.validation[(validationIndex + 1)]) {
-                                         runValidation((validationIndex + 1))
-                                    } else {
-                                        i = i + 1;
-                                         done();
-                                                            }
-                                }
-                            });
-                        });
-                    } else {
-                    i = i +1;
-                        done();
-                    }
-                }
-
-                //code to Run through the steps in testCase File
                 let runSteps = function(stepindex) {
                     if(!runTest || (runTest.steps.length == 0)){
                        done();
@@ -168,10 +141,8 @@ let runTestFramework = function(microservice){
                         let stepController = require(path);
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
-                        //console.log("step="+JSON.stringify(step));
                         adminFunctions.sharedDataCheck(step.params, function(options){
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
-                                console.log("calling controller: "+options.action);
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
                                   fs.writeFileSync('screenshots/' + name, data, 'base64');
@@ -202,31 +173,23 @@ let runTestFramework = function(microservice){
                                             }else if(step.tests[(index+1)]){
                                                 runStepTest(driver, (index+1));
                                             }else{
-                                                if (runTest.steps[stepindex + 1]) {
+                                                if (runTest.steps[stepindex + 1])
                                                     runSteps((stepindex + 1));
-                                                } else {
-                                                    if (runTest.validation) {
-                                                        runValidation(0);
-                                                    } else {
-                                                       i = i + 1;
-                                                       done();
-                                                    }
-                                                }
+                                                else{ 
+                                                    i = i + 1;
+                                                    done();
+												}
                                             }
                                         });
                                     }
                                     runStepTest(driver, 0);
                                 }else{
-                                    if (runTest.steps[stepindex + 1]) {
+                                    if (runTest.steps[stepindex + 1]) 
                                         runSteps((stepindex + 1));
-                                    } else {
-                                        if (runTest.validation) {
-                                            runValidation(0);
-                                        } else {
-                                            i = i + 1;
-                                            done();
-                                        }
-                                    }
+                                    else {
+                                        i = i + 1;
+                                        done();
+									}
                                 }
                             });
                         });

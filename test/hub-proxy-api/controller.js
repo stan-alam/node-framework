@@ -60,6 +60,8 @@ let controller = function(driver, options, callback){
       }else if(options.action=='getMany'){
           console.log("calling getMany");
           proxyFunctions.getMany(accesstoken,options.resource,function(result){
+		  console.error('=====================================');
+		  console.error(result);
             if(options.resource=='subjects')
                id=JSON.parse(result.body)[0].id;
              callback(driver, {"text":result});
