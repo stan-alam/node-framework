@@ -45,10 +45,10 @@ let runTestFramework = function(microservice){
 
     after(function(done){
         this.timeout(800000000);
-        preSetupLib.cleanUp(driver, preSetup, function(){
-            driver.quit();
+        //preSetupLib.cleanUp(driver, preSetup, function(){
+        //    driver.quit();
             done();
-        });
+        //});
     });
 
     //Loop thought all the TestCases for Hub-admin-ui
