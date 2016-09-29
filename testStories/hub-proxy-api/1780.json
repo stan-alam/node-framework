@@ -229,7 +229,7 @@
             "tests":[
               {
                 "action": "equal",
-                "value": 415,
+                "value": 200,
                 "location":"statusCode"
               },
               {
