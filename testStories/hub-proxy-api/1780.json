@@ -234,7 +234,17 @@
               },
               {
                 "action": "include",
-                "value": "error",
+                "value": "module",
+                "location":"body"
+              },
+              {
+                "action": "include",
+                "value": "testcase",
+                "location":"body"
+              },
+              {
+                "action": "include",
+                "value": "method",
                 "location":"body"
               }
             ]
@@ -255,6 +265,32 @@
               {
                 "action": "equal",
                 "value": 401
+              }
+            ]
+          }
+        ]
+      },
+       {
+        "testCaseId": "PRX-TC12",
+        "name" : "Make Proxy PUT call with Incorrect Content-Type in Header",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "put",
+              "contentType":"text/plain"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 415,
+                "location":"statusCode"
+              },
+              {
+                "action": "include",
+                "value": "error",
+                "location":"body"
               }
             ]
           }
