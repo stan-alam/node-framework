@@ -48,19 +48,21 @@
               "action": "click",
               "element": "saveButtonForApplicationAdd"
             }
-        }
-        ],
-        "validation": [
-          {
-            "name": "Verify Application Name",
-            "action": "elementView",
+        },
+        {
+            "id": 6,
             "type": "hub-admin-ui",
-            "element": "breadCrumbsOne",
-            "test": {
-              "action": "include",
-              "value": "Application1"
-            }
-          }
+            "params": {
+              "action": "elementView",
+              "element": "breadCrumbsOne"
+            },
+            "tests":[
+                {
+                    "action": "include",
+                    "value": "Application1"
+                }
+            ]
+        }
         ]
       }
     ]
