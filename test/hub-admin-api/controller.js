@@ -45,6 +45,10 @@ let controller = function(driver, options, callback) {
                      }
                 });
             });
+
+
+
+
         } else if (options.action == 'noTenantIDEndPoint') {
             authFunctions.openJwt(Token, function(error, openToken){
                 console.error('openToken: '+ JSON.stringify(openToken))
@@ -55,6 +59,21 @@ let controller = function(driver, options, callback) {
                 });
             });
         }
+
+
+
+         } else if (options.action == 'sendPermissionsInvalidPayload'){
+            authFunctions.openJwt(Token, function(error, openToken){
+                console.error('openToken: '+ JSON.stringify(openToken))
+                errorFunctions.sendPermissionsInvalidPayload(Token, options.endPoint + openToken.tenant.id, function(error, result) {
+                     if(error){
+                        callback(driver, {'text': error.statusCode });
+                     }else{
+                        callback(driver, {'text': result.statusCode }, error);
+                     }
+                });
+            });
+
 
 
 
@@ -115,5 +134,8 @@ let controller = function(driver, options, callback) {
 }
 
 module.exports = exports = {
-    controller: controller
+    controller: controller,
+    setInvalidEndPoint : setInvalidEndPoint,
+    noTenantIDEndPoint : noTenantIDEndPoint,
+    sendPermissionsInvalidPayload : sendPermissionsInvalidPayload
 }
