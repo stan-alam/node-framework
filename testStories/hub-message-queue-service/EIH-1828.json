@@ -302,7 +302,7 @@
         "id": 1,
         "type": "hub-admin-api",
         "params": {
-          "action": "setInvalidPayLoad",
+          "action": "setInvalidEndPoint",
           "endPoint": "/admin/privilOges/"
         },
         "tests": [{
