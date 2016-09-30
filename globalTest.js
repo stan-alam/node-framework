@@ -145,11 +145,11 @@ let runTestFramework = function(microservice){
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
-                                  fs.writeFileSync('screenshots/' + name, data, 'base64');
+                                  fs.writeFileSync('screenshots/'+microservice+'/' + name, data, 'base64');
                                 };
 
                                 driver.takeScreenshot().then(function(data) {
-                                  writeScreenshot(data, microservice+'_' + testCase+'ID_'+test.id+'Step_'+stepindex+'.png');
+                                  writeScreenshot(data, 'testCaseID_'+test.id+'-Step_'+stepindex+'.png');
                                 });
 
                                 if(error){
