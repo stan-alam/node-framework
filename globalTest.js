@@ -4,6 +4,7 @@ const
     _ = require('lodash'),
      _eval = require('eval'),
     fs = require('fs'),
+    formatJson = require('format-json'),
     async = require('async'),
     assert = require("chai").assert,
     envVars = require('./framework/environments'),
@@ -11,6 +12,8 @@ const
     uiFunctions = require('./lib/uiFunctions.js'),
     preSetupLib = require('./lib/presetup.js'),
     adminFunctions = require('./lib/adminFunctions.js');
+
+var runExtraLogs = process.env.logging || false;
 
 let runTestFramework = function(microservice){
     var driver;
@@ -142,6 +145,8 @@ let runTestFramework = function(microservice){
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
                         adminFunctions.sharedDataCheck(step.params, function(options){
+                            if(runExtraLogs)
+                                console.log(formatJson.diffy(options));
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';

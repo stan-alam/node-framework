@@ -229,22 +229,17 @@
             "tests":[
               {
                 "action": "equal",
-                "value": 200,
+                "value": 415,
                 "location":"statusCode"
               },
               {
                 "action": "include",
-                "value": "module",
+                "value": "Unsupported Media Type",
                 "location":"body"
               },
               {
                 "action": "include",
-                "value": "testcase",
-                "location":"body"
-              },
-              {
-                "action": "include",
-                "value": "method",
+                "value": "payload must represent an object",
                 "location":"body"
               }
             ]
