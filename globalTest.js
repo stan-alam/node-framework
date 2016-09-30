@@ -145,8 +145,11 @@ let runTestFramework = function(microservice){
                         step.params.shared = sharedData;
                         step.params.shared.preSetup = preSetup;
                         adminFunctions.sharedDataCheck(step.params, function(options){
-                            if(runExtraLogs)
-                                console.log(formatJson.diffy(options));
+//                            if(runExtraLogs){
+//                                console.log(formatJson.diffy(options));
+//                                console.log('Steps to Preform:');
+//                                console.log(formatJson.diffy(options.params));
+//                            }
                             stepController.controller(driver, options, function(driver, sharedResult, error) {
                                 function writeScreenshot(data, name) {
                                   name = name || 'default.png';
