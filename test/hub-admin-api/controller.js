@@ -71,7 +71,7 @@ let controller = function(driver, options, callback) {
             });
         }
     });
-});
+}
 
 module.exports = exports = {
     controller: controller

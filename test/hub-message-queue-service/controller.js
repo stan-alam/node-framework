@@ -24,12 +24,8 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
                 if(mqsResults.body[mqsResults.body.length - 1]){
-                    console.error('===================')
-                    console.error(accessToken, options, (index + 1), (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, loopCallback)
                     mqsLoopConsume(accessToken, options, (index + 1), (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, loopCallback)
                 }else{
-                    console.error('+++++++++++++++++++++++++++++++')
-                    console.error(accessToken, options, (index + 1), lastid, results, consumeall, loopCallback)
                     mqsLoopConsume(accessToken, options, (index + 1), lastid, results, consumeall, loopCallback)
                 };
             });
@@ -49,8 +45,7 @@ let controller = function(driver, options, callback) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
                           mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result) {
-                                callback(driver, { 'text': result }, error);
-
+                                callback(driver, { 'text': result });
                             });
                         });
                     }
@@ -62,8 +57,7 @@ let controller = function(driver, options, callback) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
                             mqsLoopConsume(accessToken, options, 0, 0, [], true, function(result) {
-                                callback(driver, { 'text': result }, error);
-
+                                callback(driver, { 'text': result });
                             });
                         });
                     }
@@ -106,7 +100,7 @@ let controller = function(driver, options, callback) {
             console.error("MQS Controller has No Action: " + options.action)
         }
     });
-
+}
 
 module.exports = exports = {
     controller: controller
