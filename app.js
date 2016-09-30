@@ -27,7 +27,7 @@ function runTests(loopCount){
     if (fileExists("logs/"+logdir+"/selenium.log")) {
         //Get Available Tests
         function getDirectories() {
-          return fs.readdirSync('test').filter(function(file) {
+          return fs.readdirSync('testStories').filter(function(file) {
             return fs.statSync(path.join('test', file)).isDirectory();
           });
         }
