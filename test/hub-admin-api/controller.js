@@ -76,6 +76,24 @@ let controller = function(driver, options, callback) {
                 });
             });
           });
+        } else if (options.action == 'sendPermissionsNoPayload'){
+
+            console.log("This is the token" + Token);
+
+            authFunctions.getEPAtoken(Token, function(error, jwt) {
+                authFunctions.openJwt(Token, function(error, openToken) {
+
+                console.log("This is the token from thisToken " + Token);
+
+                errorFunctions.sendPermissionsInvalidPayload(jwt, (options.endPoint + openToken.tenant.id), function(error, result) {
+                     if(error){
+                        callback(driver, {'text': error.statusCode });
+                     }else{
+                        callback(driver, {'text': result.statusCode }, error);
+                     }
+                });
+            });
+          });
         }
     });
 }
