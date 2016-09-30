@@ -268,7 +268,7 @@
                         "action": "sendkeys",
                         "element": "findElementIdByTemplate",
                         "elementTemplate": "input_name",
-                        "elementValue": "academic-credentials_"
+                        "elementValue": "academic-credentials"
                     }
                 },
                 {
@@ -284,10 +284,8 @@
                     "id": 18,
                     "type": "hub-admin-ui",
                     "params": {
-                        "action": "sendkeys",
-                        "element": "findElementIdByTemplate",
-                        "elementTemplate": "input_name",
-                        "elementValue": "\b"
+                        "action": "sleep",
+                        "value": 5000
                     }
                 },
 				{
@@ -331,9 +329,8 @@
                 },
                 {
                     "id": 22,
-                    "type": "hub-admin-ui",
+                    "action": "elementView",
                     "params": {
-                        "action": "elementView",
                         "element": "resourceGroup"
                     },
                     "tests": [
@@ -347,7 +344,7 @@
         },
         {
             "testCaseId": 6,
-            "name" : "Add Resource Owned By Same Authoritative Application",
+            "name" : "Add Resource Owned By Same Authoritative Application (1 of 3)",
             "steps": [
                 {
                     "id": 1,
@@ -469,9 +466,15 @@
                             "caseSensitive": "false"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "testCaseId": 7,
+            "name" : "Add Resource Owned By Same Authoritative Application (2 of 3)",
+            "steps": [
                 {
-                    "id": 13,
+                    "id": 1,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -480,17 +483,17 @@
                     }
                 },
                 {
-                    "id": 14,
+                    "id": 2,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "sendkeys",
                         "element": "findElementIdByTemplate",
                         "elementTemplate": "input_name",
-                        "elementValue": "academic-credentials_"
+                        "elementValue": "academic-credentials"
                     }
                 },
                 {
-                    "id": 15,
+                    "id": 3,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -499,17 +502,15 @@
                     }
                 },
                 {
-                    "id": 18,
+                    "id": 4,
                     "type": "hub-admin-ui",
                     "params": {
-                        "action": "sendkeys",
-                        "element": "findElementIdByTemplate",
-                        "elementTemplate": "input_name",
-                        "elementValue": "\b"
+                        "action": "sleep",
+                        "value": 10000
                     }
                 },
                 {
-                    "id": 17,
+                    "id": 5,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "elementView",
@@ -524,7 +525,7 @@
                     ]
                 },
                 {
-                    "id": 18,
+                    "id": 6,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "elementGetAttribute",
@@ -539,9 +540,15 @@
                             "caseSensitive": "false"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "testCaseId": 8,
+            "name" : "Add Resource Owned By Same Authoritative Application (3 of 3)",
+            "steps": [
                 {
-                    "id": 19,
+                    "id": 1,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -550,7 +557,7 @@
                     }
                 },
                 {
-                    "id": 20,
+                    "id": 2,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "elementView",
@@ -567,7 +574,7 @@
             ]
         },
         {
-            "testCaseId": 7,
+            "testCaseId": 9,
             "name" : "Add Resource To Colleague in Production Environment",
             "steps": [
                 {
