@@ -120,7 +120,7 @@
       },
       {
         "testCaseId": "PRX-TC05",
-        "name" : "Make Proxy GET Call",
+        "name" : "Make Proxy GET Call After Delete",
         "steps": [
           {
             "id": 1,
