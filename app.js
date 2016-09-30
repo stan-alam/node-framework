@@ -33,11 +33,16 @@ function runTests(loopCount){
         }
 
         var testList = getDirectories();
+        var failedRun = false;
         if(testList.indexOf(testToRun) == -1){
             console.error("Running Tests End To End Tests ");
             let startTest = function(testIndex){
                 if(!testList[testIndex]){
-                    process.exit();
+                    if(failedRun){
+                        process.exit(1);
+                    }else{
+                        process.exit(0);
+                    }
                 }
                 let test = testList[testIndex];
                 fsExtra.remove("screenshots/"+test, function(){
@@ -46,10 +51,9 @@ function runTests(loopCount){
                 shell.exec("./node_modules/mocha/bin/_mocha test/"+test+"/test.js --reporter mochawesome --reporter-options reportDir=mochawesome-reports/"+test+",reportName="+test+",reportTitle="+test+",inlineAssets=false", function(){
                     let resultReport = require('./mochawesome-reports/'+test+'/'+test+'.json');
                     if(resultReport.stats.failures > 0){
-                        process.exit(resultReport.stats.failures);
-                    }else{
-                        startTest((testIndex+1))
+                        failedRun = true;
                     }
+                    startTest((testIndex+1))
                 });
             };
             startTest(0)
