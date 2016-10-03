@@ -496,10 +496,35 @@
             }
          }]
       }, {
-
-         "testCaseId": 3200,
-         "name": "Test",
+         "testCaseId": 8,
+         "name": "Set flag to True",
          "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "setPermissionsStatusCode",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "test": {
+               "action": "equal",
+               "value": "200"
+            }
+         }, {
+            "name": "assert status message",
             "action": "setPermissionsStatusText",
             "type": "hub-admin-api",
             "setPermissions": "enable",
@@ -508,7 +533,6 @@
                "value": "permissions have been updated"
             }
          }]
-
       }
    ]
 }
