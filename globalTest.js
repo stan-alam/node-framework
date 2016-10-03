@@ -154,6 +154,11 @@ let runTestFramework = function(microservice){
                 let runSteps = function(stepindex) {
                     if(!runTest || (runTest.steps.length == 0)){
                        done();
+                    } else if('validation' in runTest){
+                        console.log('Validation is in wrong location Move to new location in steps');
+                        console.error("Step: "+stepindex);
+                        assert.equal(true, false, 'Error on Step: '+ stepindex);
+                        done();
                     }else{
                        // Sort Steps By ID
                         runTest.steps.sort(function(a, b) {
