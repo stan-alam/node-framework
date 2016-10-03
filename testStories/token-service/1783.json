@@ -1,0 +1,176 @@
+{
+    "id" : "1783",
+    "name" : "Token Service",
+    "testCases" : [
+      {
+        "testCaseId": 1,
+        "name" : "Get Access Token",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "getAccessToken",
+              "sharedData": {
+                "key": "apikey",
+                "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record1.apiKey"
+                }
+              }
+            },
+            "tests": [
+              {
+                "action": "include",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 2,
+        "name" : "Auth Request JWT Token",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "openAccessToken",
+              "sharedData": {
+                "key": "apikey",
+                "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record1.apiKey"
+                }
+              }
+            },
+            "tests": [
+              {
+                "action": "property",
+                "value": "id",
+                "location": "tenant"
+              },
+              {
+                "action": "property",
+                "value": "name",
+                "location": "tenant"
+              },
+              {
+                "action": "property",
+                "value": "alias",
+                "location": "tenant"
+              },
+              {
+                "action": "property",
+                "value": "environments",
+                "location": "tenant"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 3,
+        "name" : "Auth No Header",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "getAccessTokenNoHeader",
+              "sharedData": {
+                "key": "apikey",
+                "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record1.apiKey"
+                }
+              }
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 406,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 4,
+        "name" : "Auth Bad APIKey",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "getAccessToken",
+              "apikey": "0000000e-0000-000f-g0w0-000abcd0qq0w"
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 406,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 5,
+        "name" : "Error Bad Endpoint",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "getAccessTokenBadEndpoint",
+              "sharedData": {
+                "key": "apikey",
+                "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record1.apiKey"
+                }
+              }
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 404,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": 6,
+        "name" : "Error Bad Method",
+        "steps": [
+          {
+            "id": 1,
+            "type": "token-service",
+            "params": {
+              "action": "getAccessTokenBadMethod",
+              "sharedData": {
+                "key": "apikey",
+                "sharelocation": {
+                  "step": "preSetup",
+                  "value": "integration.record1.apiKey"
+                }
+              }
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 404,
+                "location": "statusCode"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}

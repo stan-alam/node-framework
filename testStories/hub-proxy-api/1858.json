@@ -93,19 +93,21 @@
                   }
                }
             }
+          },
+          {
+            "id": 9,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "epaRequest",
+              "resource":"proxyAutomationResource"
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 200
+              }
+            ]
           }
-       ],
-      "validation":[
-           {
-             "name": "EIH-1858 -Make Proxy privileged call with stored credentials on UI",
-             "action": "epaRequest",
-             "type": "hub-proxy-api",
-             "resource":"proxyAutomationResource",
-             "test": {
-               "action": "equal",
-               "value": 200
-             }
-           }
         ]
      },
      {
@@ -191,19 +193,21 @@
                   }
                }
             }
+          },
+          {
+            "id": 9,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "epaRequest",
+              "resource":"proxyAutomationResource"
+            },
+            "tests": [
+              {
+                "action": "equal",
+                "value": 417
+              }
+            ]
           }
-       ],
-      "validation":[
-           {
-             "name": "EIH-1858 -Make Proxy privileged call without stored credentials on UI",
-             "action": "epaRequest",
-             "type": "hub-proxy-api",
-             "resource":"proxyAutomationResource",
-             "test": {
-               "action": "equal",
-               "value": 417
-             }
-           }
         ]
      }
 

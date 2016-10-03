@@ -38,6 +38,7 @@
     "notTypeOf",
     "includeMembers",
     "instanceOf",
+    "property",
     "notInstanceOf",
     "sameMembers",
     "sameDeepMembers",
@@ -46,7 +47,6 @@
   "chaiThreeReverse":[
     "match",
     "notMatch",
-    "property",
     "notProperty",
     "deepProperty",
     "notDeepProperty",

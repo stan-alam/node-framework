@@ -118,7 +118,7 @@
         },
         {
             "testCaseId": 3,
-            "name" : "Add Resource Owned By Another Authoritative Application (1 of 3)",
+            "name" : "Add Resource Owned By Another Authoritative Application",
             "steps": [
                 {
                     "id": 1,
@@ -234,30 +234,26 @@
                         "element": "findButtonDataHintByTemplate",
                         "elementTemplate": "Search"
                     }
-                }
-            ],
-            "validation": [
+                },
+				{
+					"id": 14,
+					"type": "hub-admin-ui",
+					"params": {
+						"action": "elementGetAttribute",
+						"attributeValue": "class",
+						"element": "findTdByTrContainsTemplate",
+						"elementTemplate": "academic-credentials"
+					},
+					"tests": [
+						{
+							"action": "include",
+							"value": "disabled",
+							"caseSensitive": "false"
+						}
+					]
+				},
                 {
-                    "name": "Verify Resource Not Available",
-                    "action": "elementGetAttribute",
-                    "attributeValue": "class",
-                    "type": "hub-admin-ui",
-                    "element": "findTdByTrContainsTemplate",
-                    "elementTemplate": "academic-credentials",
-                    "test": {
-                        "action": "include",
-                        "value": "disabled",
-                        "caseSensitive": "false"
-                    }
-                }
-            ]
-        },
-        {
-            "testCaseId": 4,
-            "name" : "Add Resource Owned By Another Authoritative Application (2 of 3)",
-            "steps": [
-                {
-                    "id": 1,
+                    "id": 15,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -266,17 +262,17 @@
                     }
                 },
                 {
-                    "id": 2,
+                    "id": 16,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "sendkeys",
                         "element": "findElementIdByTemplate",
                         "elementTemplate": "input_name",
-                        "elementValue": "academic-credentials"
+                        "elementValue": "academic-credentials_"
                     }
                 },
                 {
-                    "id": 3,
+                    "id": 17,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -285,73 +281,73 @@
                     }
                 },
                 {
-                    "id": 4,
+                    "id": 18,
                     "type": "hub-admin-ui",
                     "params": {
-                        "action": "sleep",
-                        "value": 5000
-                    }
-                }
-            ],
-            "validation": [
-                {
-                    "name": "Validate Error Message",
-                    "action": "elementView",
-                    "type": "hub-admin-ui",
-                    "element": "findElementTextByTemplate",
-                    "elementTemplate": "Resource is already in use",
-                    "test": {
-                        "action": "equal",
-                        "value": "Resource is already in use"
+                        "action": "sendkeys",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "input_name",
+                        "elementValue": "\b"
                     }
                 },
+				{
+					"id": 19,
+					"type": "hub-admin-ui",
+					"params": {
+						"action": "elementView",
+						"element": "findElementTextByTemplate",
+						"elementTemplate": "Resource is already in use"
+					},
+					"tests": [
+						{
+							"action": "equal",
+							"value": "Resource is already in use"
+						}
+					]
+				},
+				{
+					"id": 20,
+					"type": "hub-admin-ui",
+					"params": {
+						"action": "elementGetAttribute",
+						"attributeValue": "disabled",
+						"element": "findElementIdByTemplate",
+						"elementTemplate": "card_dialog_add_button"
+					},
+					"tests": [{
+						"action": "equal",
+						"value": "true",
+						"caseSensitive": "false"
+					}]
+				},
                 {
-                    "name": "Validate Add Button Disabled",
-                    "action": "elementGetAttribute",
-                    "attributeValue": "disabled",
-                    "type": "hub-admin-ui",
-                    "element": "findElementIdByTemplate",
-                    "elementTemplate": "card_dialog_add_button",
-                    "test": {
-                        "action": "equal",
-                        "value": "true",
-                        "caseSensitive": "false"
-                    }
-                }
-            ]
-        },
-        {
-            "testCaseId": 5,
-            "name" : "Add Resource Owned By Another Authoritative Application (3 of 3)",
-            "steps": [
-                {
-                    "id": 1,
+                    "id": 21,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
-                        "element": "findButtonSpanClassContainsTemplate",
-                        "elementTemplate": "close"
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "card_dialog_cancel_button"
                     }
-                }
-            ],
-            "validation": [
+                },
                 {
-                    "name": "Validate Resource Not Present In List",
-                    "action": "elementView",
+                    "id": 22,
                     "type": "hub-admin-ui",
-                    "element": "resourceGroup",
-                    "test": {
-                        "action": "notInclude",
-                        "value": "academic-credentials"
-                    }
+                    "params": {
+                        "action": "elementView",
+                        "element": "resourceGroup"
+                    },
+                    "tests": [
+                        {
+                            "action": "notInclude",
+                            "value": "academic-credentials"
+                        }
+                    ]
                 }
             ]
         },
-
-
         {
             "testCaseId": 6,
-            "name" : "Add Resource Owned By Same Authoritative Application (1 of 3)",
+            "name" : "Add Resource Owned By Same Authoritative Application",
             "steps": [
                 {
                     "id": 1,
@@ -456,30 +452,26 @@
                         "element": "findButtonDataHintByTemplate",
                         "elementTemplate": "Search"
                     }
-                }
-            ],
-            "validation": [
+                },
                 {
-                    "name": "Verify Resource Not Available",
-                    "action": "elementGetAttribute",
-                    "attributeValue": "class",
+                    "id": 12,
                     "type": "hub-admin-ui",
-                    "element": "findTdByTrContainsTemplate",
-                    "elementTemplate": "academic-credentials",
-                    "test": {
-                        "action": "include",
-                        "value": "disabled",
-                        "caseSensitive": "false"
-                    }
-                }
-            ]
-        },
-        {
-            "testCaseId": 7,
-            "name" : "Add Resource Owned By Same Authoritative Application (2 of 3)",
-            "steps": [
+                    "params": {
+                        "action": "elementGetAttribute",
+                        "attributeValue": "class",
+                        "element": "findTdByTrContainsTemplate",
+                        "elementTemplate": "academic-credentials"
+                    },
+                    "tests": [
+                        {
+                            "action": "include",
+                            "value": "disabled",
+                            "caseSensitive": "false"
+                        }
+                    ]
+                },
                 {
-                    "id": 1,
+                    "id": 13,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -488,17 +480,17 @@
                     }
                 },
                 {
-                    "id": 2,
+                    "id": 14,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "sendkeys",
                         "element": "findElementIdByTemplate",
                         "elementTemplate": "input_name",
-                        "elementValue": "academic-credentials"
+                        "elementValue": "academic-credentials_"
                     }
                 },
                 {
-                    "id": 3,
+                    "id": 15,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
@@ -507,71 +499,75 @@
                     }
                 },
                 {
-                    "id": 4,
+                    "id": 18,
                     "type": "hub-admin-ui",
                     "params": {
-                        "action": "sleep",
-                        "value": 10000
-                    }
-                }
-            ],
-            "validation": [
-                {
-                    "name": "Validate Error Message",
-                    "action": "elementView",
-                    "type": "hub-admin-ui",
-                    "element": "findElementTextByTemplate",
-                    "elementTemplate": "Resource is already in use",
-                    "test": {
-                        "action": "equal",
-                        "value": "Resource is already in use"
+                        "action": "sendkeys",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "input_name",
+                        "elementValue": "\b"
                     }
                 },
                 {
-                    "name": "Validate Add Button Disabled",
-                    "action": "elementGetAttribute",
-                    "attributeValue": "disabled",
+                    "id": 17,
                     "type": "hub-admin-ui",
-                    "element": "findElementIdByTemplate",
-                    "elementTemplate": "card_dialog_add_button",
-                    "test": {
-                        "action": "equal",
-                        "value": "true",
-                        "caseSensitive": "false"
-                    }
-                }
-            ]
-        },
-        {
-            "testCaseId": 8,
-            "name" : "Add Resource Owned By Same Authoritative Application (3 of 3)",
-            "steps": [
+                    "params": {
+                        "action": "elementView",
+                        "element": "findElementTextByTemplate",
+                        "elementTemplate": "Resource is already in use"
+                    },
+                    "tests": [
+                        {
+                            "action": "equal",
+                            "value": "Resource is already in use"
+                        }
+                    ]
+                },
                 {
-                    "id": 1,
+                    "id": 18,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementGetAttribute",
+                        "attributeValue": "disabled",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "card_dialog_add_button"
+                    },
+                    "tests": [
+                        {
+                            "action": "equal",
+                            "value": "true",
+                            "caseSensitive": "false"
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
                     "type": "hub-admin-ui",
                     "params": {
                         "action": "click",
                         "element": "findButtonSpanClassContainsTemplate",
                         "elementTemplate": "close"
                     }
-                }
-            ],
-            "validation": [
+                },
                 {
-                    "name": "Validate Resource Present In List",
-                    "action": "elementView",
+                    "id": 20,
                     "type": "hub-admin-ui",
-                    "element": "resourceNameInCardsByTemplate",
-                    "elementTemplate": "academic-credentials",
-                    "test": {
-                        "action": "equal",
-                        "value": "academic-credentials"
-                    }
+                    "params": {
+                        "action": "elementView",
+                        "element": "resourceNameInCardsByTemplate",
+                        "elementTemplate": "academic-credentials"
+                    },
+                    "tests": [
+                        {
+                            "action": "equal",
+                            "value": "academic-credentials"
+                        }
+                    ]
                 }
             ]
         },
         {
-            "testCaseId": 9,
+            "testCaseId": 7,
             "name" : "Add Resource To Colleague in Production Environment",
             "steps": [
                 {
@@ -686,30 +682,36 @@
                         "element": "findElementIdByTemplate",
                         "elementTemplate": "card_dialog_add_button"
                     }
-                }
-            ],
-            "validation": [
-                {
-                    "name": "Validate Resource Present In List",
-                    "action": "elementView",
-                    "type": "hub-admin-ui",
-                    "element": "resourceNameInCardsByTemplate",
-                    "elementTemplate": "academic-credentials",
-                    "test": {
-                        "action": "equal",
-                        "value": "academic-credentials"
-                    }
                 },
                 {
-                    "name": "Validate Resource Present In List",
-                    "action": "elementView",
+                    "id": 14,
                     "type": "hub-admin-ui",
-                    "element": "resourceNameInCardsByTemplate",
-                    "elementTemplate": "courses",
-                    "test": {
-                        "action": "equal",
-                        "value": "courses"
-                    }
+                    "params": {
+                        "action": "elementView",
+                        "element": "resourceNameInCardsByTemplate",
+                        "elementTemplate": "academic-credentials"
+                    },
+                    "tests": [
+                        {
+                            "action": "equal",
+                            "value": "academic-credentials"
+                        }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementView",
+                        "element": "resourceNameInCardsByTemplate",
+                        "elementTemplate": "courses"
+                    },
+                    "tests": [
+                        {
+                            "action": "equal",
+                            "value": "courses"
+                        }
+                    ]
                 }
             ]
         }

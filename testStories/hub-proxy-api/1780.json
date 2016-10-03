@@ -19,12 +19,13 @@
                   }
                }
             }
-          },       
+          },
           {
             "id": 2,
             "type": "hub-proxy-api",
             "params": {
-              "action": "post"
+              "action": "post",
+              "urlpath":""
              },
             "tests":[
               {
@@ -44,7 +45,8 @@
             "id": 1,
             "type": "hub-proxy-api",
             "params": {
-              "action": "getMany"
+              "action": "getMany",
+              "resource":"subjects"
              },
             "tests":[
               {
@@ -69,7 +71,8 @@
             "id": 1,
             "type": "hub-proxy-api",
             "params": {
-              "action": "put"
+              "action": "put",
+              "contentType":"application/vnd.hedtech.applications.v2+json"
              },
             "tests":[
               {
@@ -97,7 +100,7 @@
         ]
       },
       {
-        "testCaseId": "PRX-TC04",
+        "testCaseId":"PRX-TC04",
         "name" : "Make Proxy DELETE Call",
         "steps": [
           {
@@ -117,7 +120,7 @@
       },
       {
         "testCaseId": "PRX-TC05",
-        "name" : "Make Proxy GET Call",
+        "name" : "Make Proxy GET Call After Delete",
         "steps": [
           {
             "id": 1,
@@ -129,6 +132,154 @@
               {
                 "action": "equal",
                 "value": 404,
+                "location":"statusCode"
+              },
+              {
+                "action": "include",
+                "value": "error",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+       {
+        "testCaseId": "PRX-TC06,PRX-TC09",
+        "name" : "Make Proxy GET call for Resource with no Authoritative Resource Owner,Make Proxy GET call without Credentials",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getMany",
+               "resource":"proxyAutomation"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 417,
+                "location":"statusCode"
+              },
+               {
+                "action": "include",
+                "value": "error",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC07",
+        "name" : "Make Proxy POST call with Extended URL Path",
+        "steps": [
+         {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "post",
+              "urlpath":"/api/subjects/1cbfa479-ad94-4b38-8e6e-24ec367078b3/apple"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 400
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC08",
+        "name" : "Make Proxy GET Call with Expired Token",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "getManyWithExpiredToken",
+              "resource":"subjects"
+              },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 401,
+                "location":"statusCode"
+              },
+              {
+                "action": "include",
+                "value": "error",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC10",
+        "name" : "Make Proxy PUT call with missing Content-Type in Header",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "put",
+              "contentType":""
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 415,
+                "location":"statusCode"
+              },
+              {
+                "action": "include",
+                "value": "Unsupported Media Type",
+                "location":"body"
+              },
+              {
+                "action": "include",
+                "value": "payload must represent an object",
+                "location":"body"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "testCaseId": "PRX-TC11",
+        "name" : "Make Proxy POST call with missing Authorization in Header",
+        "steps": [
+         {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "postwithNoAuthorization"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 401
+              }
+            ]
+          }
+        ]
+      },
+       {
+        "testCaseId": "PRX-TC12",
+        "name" : "Make Proxy PUT call with Incorrect Content-Type in Header",
+        "steps": [
+          {
+            "id": 1,
+            "type": "hub-proxy-api",
+            "params": {
+              "action": "put",
+              "contentType":"text/plain"
+             },
+            "tests":[
+              {
+                "action": "equal",
+                "value": 415,
                 "location":"statusCode"
               },
               {

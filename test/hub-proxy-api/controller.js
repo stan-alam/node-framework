@@ -8,7 +8,7 @@ var accesstoken;
 var id;
 //Controller for hub-proxy-api
 let controller = function(driver, options, callback){
-     if(options.action == 'getEPAccessToken'){
+    if(options.action == 'getEPAccessToken'){
          authFunctions.getAccessToken(options.APIKey, function(error,Token){
          	if(error)
          		callback(driver,null,error);
@@ -18,7 +18,7 @@ let controller = function(driver, options, callback){
 	                  callback(driver,null,error);
 	              else{
 	         		epatoken=token;
-	         		callback(driver,token);
+	         		callback(driver,{ 'text': token });
 	         	   }
 	         	});
            }
@@ -49,41 +49,52 @@ let controller = function(driver, options, callback){
                 callback(driver,null,error);
             else{
                 accesstoken=Token;
-                callback(driver,Token);
+                callback(driver,{ 'text': Token });
             }
            });
       }else if(options.action=='post'){
          console.log("calling post");
-         proxyFunctions.post(accesstoken,function(statusCode){
+         proxyFunctions.post(accesstoken,options.urlpath,function(statusCode){
                callback(driver, {"text":statusCode});
          });
-
       }else if(options.action=='getMany'){
           console.log("calling getMany");
-          proxyFunctions.getMany(accesstoken,function(result){
-              id=JSON.parse(result.body)[0].id;
-              callback(driver, {"text":result});
+          proxyFunctions.getMany(accesstoken,options.resource,function(result){
+		  console.error('=====================================');
+		  console.error(result);
+            if(options.resource=='subjects')
+               id=JSON.parse(result.body)[0].id;
+             callback(driver, {"text":result});
           });
-     }
-     else if(options.action=='put')
-     {
+     }else if(options.action=='put'){
          console.log("calling put");
-         proxyFunctions.put(accesstoken,id,function(result){
+         proxyFunctions.put(accesstoken,id,options.contentType,function(result){
                callback(driver, {"text":result});
          });
      }
-     else if(options.action='deleteResource'){
+    else if(options.action =='deleteResource'){
          console.log("calling deleteResource");
          proxyFunctions.deleteResource(accesstoken,id,function(statusCode){
                callback(driver, {"text":statusCode});
          });
-    }else if(options.action=='getOne'){
+    }else if(options.action =='getOne'){
           console.log("calling getOne");
           proxyFunctions.getOne(accesstoken,id,function(result){
               callback(driver, {"text":result});
           });
+     }else if(options.action =='getManyWithExpiredToken'){
+          console.log("calling getMany with expired token");
+          authFunctions.expireToken(accesstoken, function(error, jwt){
+              proxyFunctions.getMany(jwt,options.resource,function(result){
+                callback(driver, {"text":result});
+              });
+          });
+      }else if(options.action=='postwithNoAuthorization'){
+         console.log("calling postwithNoAuthorization");
+         proxyFunctions.postwithNoAuthorization(function(statusCode){
+               callback(driver, {"text":statusCode});
+         });
      }
-
       else
         callback(driver, null, { "msg":"No hub-proxy-api Controller found for: "+options.action });
 }

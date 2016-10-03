@@ -1,14 +1,21 @@
 {
-    "id" : "11",
+    "id" : "1",
     "name" : "Adding Application using UI",
     "testCases" : [
       {
         "testCaseId": 1,
         "name" : "Verify Adding Applications",
         "steps": [
-          {
+        {
             "id": 1,
-            "method": "deleteApplications",
+            "type": "hub-admin-ui",
+            "params": {
+                "action": "urllocation",
+                "location": "/#/dashboard"
+            }
+        },
+        {
+            "id": 2,
             "type": "hub-configuration-api",
             "params": {
               "action": "deleteApplications",
@@ -16,47 +23,46 @@
                 "Application1"
               ]
             }
-          },
-          {
-            "id": 2,
-            "method": "addApplicationMan",
+        },
+        {
+            "id": 3,
             "type": "hub-admin-ui",
             "params": {
                 "action": "click",
                 "element": "manWizardAppCreate"
             }
-          },
-          {
-            "id": 3,
-            "method": "enterApplicationName",
+        },
+        {
+            "id": 4,
             "type": "hub-admin-ui",
             "params": {
               "action": "sendkeys",
               "element": "inputForApp",
               "elementValue": "Application1"
             }
-          },
-          {
-            "id": 4,
-            "method": "saveApplicationName",
+        },
+        {
+            "id": 5,
             "type": "hub-admin-ui",
             "params": {
               "action": "click",
               "element": "saveButtonForApplicationAdd"
             }
-          }
-        ],
-        "validation": [
-          {
-            "name": "Verify Application Name",
-            "action": "elementView",
+        },
+        {
+            "id": 6,
             "type": "hub-admin-ui",
-            "element": "breadCrumbsOne",
-            "test": {
-              "action": "include",
-              "value": "Application1"
-            }
-          }
+            "params": {
+              "action": "elementView",
+              "element": "breadCrumbsOne"
+            },
+            "tests":[
+                {
+                    "action": "include",
+                    "value": "Application1"
+                }
+            ]
+        }
         ]
       }
     ]
