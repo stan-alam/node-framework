@@ -391,7 +391,7 @@
             }
          }]
       }, {
-         "testCaseId": 1,
+         "testCaseId": 20,
          "name": "Verify Adding Applications",
          "steps": [{
             "id": 1,
@@ -438,7 +438,7 @@
 
          ]
       }, {
-         "testCaseId": 5,
+         "testCaseId": 21,
          "name": "Push Messages into Hub",
          "steps": [{
             "id": 1,
@@ -457,7 +457,7 @@
       },
 
       {
-         "testCaseId": 12,
+         "testCaseId": 22,
          "name": "Consume Messages from Hub and validate",
          "steps": [{
             "id": 1,
@@ -496,7 +496,7 @@
             }
          }]
       }, {
-         "testCaseId": 8,
+         "testCaseId": 23,
          "name": "Set flag to True",
          "steps": [{
             "id": 1,
