@@ -1,448 +1,514 @@
 {
-  "id": "1828",
-  "name": "Adding Application using UI",
-  "testCases": [{
-      "testCaseId": 1,
-      "name": "Verify Adding Applications",
-      "steps": [{
-        "id": 1,
-        "method": "deleteApplications",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "deleteApplications",
-          "applications": ["applicationPub", "applicationSub"]
-        }
+   "id": "1828",
+   "name": "Adding Application using UI",
+   "testCases": [{
+         "testCaseId": 1,
+         "name": "Verify Adding Applications",
+         "steps": [{
+            "id": 1,
+            "method": "deleteApplications",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "deleteApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 2,
+            "method": "addApplications",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "createApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 3,
+            "method": "appPublisher",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addResource",
+               "application": "applicationPub",
+               "resources": "subjects"
+            }
+         }, {
+            "id": 4,
+            "method": "addSubscriber",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addSubscription",
+               "application": "applicationSub",
+               "subscriptions": "subjects"
+            }
+         }],
+         "validation": [
+
+         ]
       }, {
-        "id": 2,
-        "method": "addApplications",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "createApplications",
-          "applications": ["applicationPub", "applicationSub"]
-        }
+         "testCaseId": 5,
+         "name": "Push Messages into Hub",
+         "steps": [{
+            "id": 1,
+            "method": "sendChangeNotifications",
+            "type": "hub-publish-api",
+            "params": {
+               "action": "sendChangeNotifications",
+               "messageCount": 50,
+               "application": "applicationPub",
+               "resource": "subjects"
+            }
+         }],
+         "validation": [
+
+         ]
       }, {
-        "id": 3,
-        "method": "appPublisher",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "addResource",
-          "application": "applicationPub",
-          "resources": "subjects"
-        }
+         "testCaseId": 6,
+         "name": "Consume Messages from Hub",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "setPermissionsStatusCode",
+            "type": "hub-admin-api",
+            "setPermissions": "enabled",
+            "test": {
+               "action": "equal",
+               "value": "200"
+            }
+         }, {
+            "name": "assert status message",
+            "action": "setPermissionsStatusText",
+            "type": "hub-admin-api",
+            "setPermissions": "enabled",
+            "test": {
+               "action": "include",
+               "value": "permissions have been updated"
+            }
+         }]
       }, {
-        "id": 4,
-        "method": "addSubscriber",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "addSubscription",
-          "application": "applicationSub",
-          "subscriptions": "subjects"
-        }
-      }],
-      "validation": []
-    }, {
-      "testCaseId": 5,
-      "name": "Push Messages into Hub",
-      "steps": [{
-        "id": 1,
-        "method": "sendChangeNotifications",
-        "type": "hub-publish-api",
-        "params": {
-          "action": "sendChangeNotifications",
-          "messageCount": 50,
-          "application": "applicationPub",
-          "resource": "subjects"
-        }
-      }],
-      "validation": []
-    }, {
-      "testCaseId": 6,
-      "name": "Consume Messages from Hub",
-      "steps": [{
-        "id": 1,
-        "method": "consumeChangeNotifications",
-        "type": "hub-message-queue-service",
-        "params": {
-          "action": "consumeChangeNotifications",
-          "messageCounts": [10, 10, 0, 0, 0],
-          "application": "applicationSub"
-        }
-      }],
-      "validation": [{
-        "name": "assert status code of 200",
-        "action": "setPermissionsStatusCode",
-        "type": "hub-admin-api",
-        "setPermissions": "disabled",
-        "test": {
-          "action": "equal",
-          "value": "200"
-        }
+         "testCaseId": 7,
+         "name": "Consume Messages from Hub and validate",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "application": "applicationSub",
+               "value": "200"
+            }
+         }, {
+            "name": "assert empty array from consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "isEmtpy": false,
+               "application": " applicationSub",
+               "value": "[]"
+            }
+         }]
       }, {
-        "name": "assert status message",
-        "action": "setPermissionsStatusText",
-        "type": "hub-admin-api",
-        "setPermissions": "disabled",
-        "test": {
-          "action": "include",
-          "value": "permissions have been updated"
-        }
-      }]
-
-    },
-
-    {
-      "testCaseId": 7,
-      "name": "Consume Messages from Hub and validate",
-      "steps": [{
-        "id": 1,
-        "method": "consumeChangeNotifications",
-        "type": "hub-message-queue-service",
-        "params": {
-          "action": "consumeChangeNotifications",
-          "messageCounts": [10, 10, 0, 0, 0],
-          "application": "applicationSub"
-        }
-      }],
-      "validation": [{
-        "name": "assert status code of 200",
-        "action": "consumeAllOneStatusCode",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "application": "applicationSub",
-          "value": "200"
-        }
+         "testCaseId": 8,
+         "name": "Set flag to True",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "setPermissionsStatusCode",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "test": {
+               "action": "equal",
+               "value": "200"
+            }
+         }, {
+            "name": "assert status message",
+            "action": "setPermissionsStatusText",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "test": {
+               "action": "include",
+               "value": "permissions have been updated"
+            }
+         }]
       }, {
-        "name": "assert empty array from consumeAll",
-        "action": "consumeAllOneStatusText",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "isEmtpy": true,
-          "application": " applicationSub",
-          "value": ""
-        }
-      }]
+         "testCaseId": 9,
+         "name": "Push Messages into Hub with flag set to True",
+         "steps": [{
+            "id": 1,
+            "method": "sendChangeNotifications",
+            "type": "hub-publish-api",
+            "params": {
+               "action": "sendChangeNotifications",
+               "messageCount": 55,
+               "application": "applicationPub",
+               "resource": "subjects"
+            }
+         }],
+         "validation": [
 
-    },
-
-    {
-      "testCaseId": 8,
-      "name": "Set flag to True",
-      "steps": [{
-        "id": 1,
-        "method": "consumeChangeNotifications",
-        "type": "hub-message-queue-service",
-        "params": {
-          "action": "consumeChangeNotifications",
-          "messageCounts": [10, 10, 0, 0, 0],
-          "application": "applicationSub"
-        }
-      }],
-      "validation": [{
-        "name": "assert status code of 200",
-        "action": "setPermissionsStatusCode",
-        "type": "hub-admin-api",
-        "setPermissions": "enable",
-        "test": {
-          "action": "equal",
-          "value": "200"
-        }
+         ]
       }, {
-        "name": "assert status message",
-        "action": "setPermissionsStatusText",
-        "type": "hub-admin-api",
-        "setPermissions": "enable",
-        "test": {
-          "action": "include",
-          "value": "permissions have been updated"
-        }
-      }]
-
-    }, {
-      "testCaseId": 9,
-      "name": "Push Messages into Hub with flag set to True",
-      "steps": [{
-        "id": 1,
-        "method": "sendChangeNotifications",
-        "type": "hub-publish-api",
-        "params": {
-          "action": "sendChangeNotifications",
-          "messageCount": 55,
-          "application": "applicationPub",
-          "resource": "subjects"
-        }
-      }],
-      "validation": []
-    }, {
-      "testCaseId": 10,
-      "name": "Consume Messages from Hub and validate",
-      "steps": [{
-        "id": 1,
-        "method": "consumeChangeNotifications",
-        "type": "hub-message-queue-service",
-        "params": {
-          "action": "consumeChangeNotifications",
-          "messageCounts": [0, 0, 0, 0, 0],
-          "application": "applicationSub"
-        }
-      }],
-      "validation": [{
-        "name": "assert status code of 200",
-        "action": "consumeAllOneStatusCode",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "application": "applicationSub",
-          "value": "200"
-        }
+         "testCaseId": 10,
+         "name": "Consume Messages from Hub and validate",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "application": "applicationSub",
+               "value": "200"
+            }
+         }, {
+            "name": "assert array is not empty on consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "isEmtpy": false,
+               "application": " applicationSub",
+               "value": "[]"
+            }
+         }]
       }, {
-        "name": "assert array is not empty on consumeAll",
-        "action": "consumeAllOneStatusText",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "isEmtpy": false,
-          "application": " applicationSub",
-          "value": ""
-        }
-      }]
-
-
-    },
-
-    {
-      "testCaseId": 11,
-      "id": 2,
-      "name": "test",
-      "steps": [{
-        "method": "addApplications",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "createApplications",
-          "applications": ["applicationStanPub0", "applicationDarrickSub0"]
-        }
-
-      }]
-
-
-
-    },
-
-    {
-      "testCaseId": 12,
-      "name": "Consume Messages from Hub and validate",
-      "steps": [{
-        "id": 1,
-        "method": "consumeChangeNotifications",
-        "type": "hub-message-queue-service",
-        "params": {
-          "action": "consumeChangeNotifications",
-          "messageCounts": [10, 10, 0, 0, 0],
-          "application": "applicationSub"
-        }
-      }],
-      "validation": [{
-        "name": "assert status code of 200",
-        "action": "consumeAllOneStatusCode",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "applicationStanPub0": "applicationDarrickSub0",
-          "value": "200"
-        }
+         "testCaseId": 11,
+         "id": 2,
+         "name": "test",
+         "steps": [{
+            "method": "addApplications",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "createApplications",
+               "applications": [
+                  "applicationStanPub0",
+                  "applicationDarrickSub0"
+               ]
+            }
+         }]
       }, {
-        "name": "assert empty array from consumeAll",
-        "action": "consumeAllOneStatusText",
-        "type": "hub-message-queue-service",
-        "test": {
-          "action": "equal",
-          "isEmtpy": true,
-          "application": " applicationDarrickSub0",
-          "value": ""
-        }
-      }]
-
-    },
-
-    {
-      "testCaseId": 13,
-      "name": "CNA-TC08 - Invalid endpoint Admins",
-      "steps": [{
-        "id": 1,
-        "method": "invalidEndPoint",
-        "type": "hub-admin-api",
-        "params": {
-          "action": "setInvalidEndPoint",
-          "endPoint": "/admins/privileges/"
-
-        },
-
-        "validation": [{
-          "name": "assert status code of 400",
-          "action": "setInvalidEndPoint",
-          "type": "hub-admin-api",
-          "test": {
-            "action": "equal",
-            "endPoint": "/admins/privileges/",
-            "value": "400"
-          }
-
-        }]
-
-      }]
-
-
-    },
-
-    {
-      "testCaseId": 14,
-      "name": "CNA-TC09 - Invalid endpoint privileges/spelled wrong",
-      "steps": [{
-        "id": 1,
-        "type": "hub-admin-api",
-        "params": {
-          "action": "setInvalidEndPoint",
-          "endPoint": "/admin/privilOges/"
-        },
-        "tests": [{
-          "action": "equal",
-          "value": "404"
-        }]
-      }]
-    },
-
-
-    {
-      "testCaseId": 15,
-      "name": "CNA-TC10 - omit tenant id in endpoint",
-      "steps": [{
-        "id": 1,
-        "type": "hub-admin-api",
-        "params": {
-          "action": "noTenantIDEndPoint",
-          "endPoint": "/admin/privileges/"
-        },
-        "tests": [{
-          "action": "equal",
-          "value": "417"
-        }]
-      }]
-    },
-
-
-    {
-      "testCaseId": 16,
-      "name": "CNA-TC11 - misspelled payload",
-      "steps": [{
-        "id": 1,
-        "type": "hub-admin-api",
-        "params": {
-          "action": "sendPermissionsInvalidPayload",
-          "endPoint": "/admin/privileges/"
-        },
-        "tests": [{
-          "action": "equal",
-          "value": "417"
-        }]
-      }]
-    },
-
-    {
-      "testCaseId": 18,
-      "name": "CNA-TC12 - no payload",
-      "steps": [{
-        "id": 1,
-        "type": "hub-admin-api",
-        "params": {
-          "action": "sendPermissionsNoPayload",
-          "endPoint": "/admin/privileges/"
-        },
-        "tests": [{
-          "action": "equal",
-          "value": "417"
-        }]
-      }]
-    },
-
-    {
-      "testCaseId": 19,
-      "name": "Configure Tenant for Production Environment",
-      "steps": [{
-        "id": 1,
-        "type": "hub-admin-ui",
-        "params": {
-          "action": "click",
-          "element": "linkSettings"
-        }
+         "testCaseId": 12,
+         "name": "Consume Messages from Hub and validate",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "applicationStanPub0": "applicationDarrickSub0",
+               "value": "200"
+            }
+         }, {
+            "name": "assert empty array from consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "isEmtpy": false,
+               "application": " applicationDarrickSub0",
+               "value": "[]"
+            }
+         }]
       }, {
-        "id": 2,
-        "type": "hub-admin-ui",
-        "params": {
-          "action": "click",
-          "element": "linkSelectProd"
-        }
-      }]
-
-    },
-
-
-    {
-      "testCaseId": 1,
-      "name": "Verify Adding Applications",
-      "steps": [{
-        "id": 1,
-        "method": "deleteApplications",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "deleteApplications",
-          "applications": ["applicationPub", "applicationSub"]
-        }
+         "testCaseId": 13,
+         "name": "CNA-TC08 - Invalid endpoint Admins",
+         "steps": [{
+            "id": 1,
+            "method": "invalidEndPoint",
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setInvalidEndPoint",
+               "endPoint": "/admins/privileges/"
+            },
+            "validation": [{
+               "name": "assert status code of 400",
+               "action": "setInvalidEndPoint",
+               "type": "hub-admin-api",
+               "test": {
+                  "action": "equal",
+                  "endPoint": "/admins/privileges/",
+                  "value": "400"
+               }
+            }]
+         }]
       }, {
-        "id": 2,
-        "method": "addApplications",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "createApplications",
-          "applications": ["applicationPub", "applicationSub"]
-        }
+         "testCaseId": 14,
+         "name": "CNA-TC09 - Invalid endpoint privileges/spelled wrong",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setInvalidEndPoint",
+               "endPoint": "/admin/privilOges/"
+            },
+            "tests": [{
+               "action": "equal",
+               "value": "404"
+            }]
+         }]
       }, {
-        "id": 3,
-        "method": "appPublisher",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "addResource",
-          "application": "applicationPub",
-          "resources": "subjects"
-        }
+         "testCaseId": 15,
+         "name": "CNA-TC10 - omit tenant id in endpoint",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "noTenantIDEndPoint",
+               "endPoint": "/admin/privileges/"
+            },
+            "tests": [{
+               "action": "equal",
+               "value": "417"
+            }]
+         }]
       }, {
-        "id": 4,
-        "method": "addSubscriber",
-        "type": "hub-configuration-api",
-        "params": {
-          "action": "addSubscription",
-          "application": "applicationSub",
-          "subscriptions": "subjects"
-        }
-      }],
-      "validation": []
-    }, {
-      "testCaseId": 5,
-      "name": "Push Messages into Hub",
-      "steps": [{
-        "id": 1,
-        "method": "sendChangeNotifications",
-        "type": "hub-publish-api",
-        "params": {
-          "action": "sendChangeNotifications",
-          "messageCount": 50,
-          "application": "applicationPub",
-          "resource": "subjects"
-        }
-      }],
-      "validation": []
-    }
+         "testCaseId": 16,
+         "name": "CNA-TC11 - misspelled payload",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "sendPermissionsInvalidPayload",
+               "endPoint": "/admin/privileges/"
+            },
+            "tests": [{
+               "action": "equal",
+               "value": "417"
+            }]
+         }]
+      }, {
+         "testCaseId": 18,
+         "name": "CNA-TC12 - no payload",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "sendPermissionsNoPayload",
+               "endPoint": "/admin/privileges/"
+            },
+            "tests": [{
+               "action": "equal",
+               "value": "417"
+            }]
+         }]
+      }, {
+         "testCaseId": 19,
+         "name": "Configure Tenant for Production Environment",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-ui",
+            "params": {
+               "action": "click",
+               "element": "linkSettings"
+            }
+         }, {
+            "id": 2,
+            "type": "hub-admin-ui",
+            "params": {
+               "action": "click",
+               "element": "linkSelectProd"
+            }
+         }]
+      }, {
+         "testCaseId": 1,
+         "name": "Verify Adding Applications",
+         "steps": [{
+            "id": 1,
+            "method": "deleteApplications",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "deleteApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 2,
+            "method": "addApplications",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "createApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 3,
+            "method": "appPublisher",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addResource",
+               "application": "applicationPub",
+               "resources": "subjects"
+            }
+         }, {
+            "id": 4,
+            "method": "addSubscriber",
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addSubscription",
+               "application": "applicationSub",
+               "subscriptions": "subjects"
+            }
+         }],
+         "validation": [
 
+         ]
+      }, {
+         "testCaseId": 5,
+         "name": "Push Messages into Hub",
+         "steps": [{
+            "id": 1,
+            "method": "sendChangeNotifications",
+            "type": "hub-publish-api",
+            "params": {
+               "action": "sendChangeNotifications",
+               "messageCount": 50,
+               "application": "applicationPub",
+               "resource": "subjects"
+            }
+         }],
+         "validation": [
 
-  ]
+         ]
+      },
+
+      {
+         "testCaseId": 12,
+         "name": "Consume Messages from Hub and validate",
+         "steps": [{
+            "id": 1,
+            "method": "consumeChangeNotifications",
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeChangeNotifications",
+               "messageCounts": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            }
+         }],
+         "validation": [{
+            "name": "assert status code of 200",
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "test": {
+               "action": "equal",
+               "applicationPub": "applicationSub",
+               "value": "200"
+            }
+         }, {
+            "name": "assert from consumeAll Test",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "test": {
+               "application": " applicationSub",
+               "action": "include",
+               "value": "Test"
+
+            }
+         }]
+      }, {
+
+         "testCaseId": 3200,
+         "name": "Test",
+         "steps": [{
+            "action": "setPermissionsStatusText",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "test": {
+               "action": "include",
+               "value": "permissions have been updated"
+            }
+         }]
+
+      }
+   ]
 }

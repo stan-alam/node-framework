@@ -86,8 +86,8 @@ let controller = function(driver, options, callback) {
                            console.log("This is the error" + error.body);
                             callback(driver, { 'text' : error.body }, error)
                         } else {
-                           console.log("This is the body" + result.body);
-                            callback(driver, { 'text': result.body }, error)
+                           console.log("This is the body FROM CONSUME ALL RETURN" + JSON.stringify(result.body));
+                            callback(driver, { 'text': JSON.stringify(result.body) }, error)
                        }
                   })
              });
