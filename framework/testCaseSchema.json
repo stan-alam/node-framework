@@ -1,0 +1,84 @@
+{
+  "title": "Test Case Framework Schema Validator",
+  "description": "Test Case schema validator for running test cases in Ellucian Ethos Integration",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "testCases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "testCaseId": {
+            "type": ["integer", "string"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "tests": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "action": {
+                        "type": "string"
+                      },
+                      "value": {
+                      }
+                    },
+                    "required": [
+                      "action"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "type"
+              ]
+            }
+          }
+        },
+        "required": [
+          "testCaseId",
+          "name",
+          "steps"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "testCases"
+  ],
+  "additionalProperties": false
+}

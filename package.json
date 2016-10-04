@@ -1,6 +1,6 @@
 {
   "name": "hub-node-test",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": " Testing Framework in Node",
   "main": "app.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "format-json": "^1.0.3",
     "fs-extra": "^0.30.0",
     "hedtech-logging": "^0.7.0",
+    "jsonschema": "^1.1.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
     "mocha": "^3.0.2",
