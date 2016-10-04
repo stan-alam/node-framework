@@ -13,3 +13,4 @@ build
 out.png
 develop.json
 screenshots/*
+framework/environments.json
