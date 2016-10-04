@@ -7,7 +7,9 @@ const
     formatJson = require('format-json'),
     async = require('async'),
     assert = require("chai").assert,
+    validator = require('jsonschema').Validator,
     envVars = require('./framework/environments'),
+    schema = require('./framework/testCaseSchema.json'),
     availableAsserts = require('./framework/validation'),
     uiFunctions = require('./lib/uiFunctions.js'),
     preSetupLib = require('./lib/presetup.js'),
@@ -141,122 +143,130 @@ let runTestFramework = function(microservice){
     }
 
     let testCase = '';
+    let v = new validator();
     async.each(testCasefiles, function(testCase){
         let test = require('./testStories/'+microservice+'/' + testCase);
-        var i = 0;
+        //Validate test case with Schema before running
+        let passValidation = v.validate(test, schema);
+        if(passValidation.valid === true){
+            var i = 0;
 
-        var sharedData = {};
-        for (var testCaseLoop of test.testCases) {
-            //Console out testCase Information
-            it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
-                this.timeout(80000000);
-                let runTest = test.testCases[i]; //Will need to loop through
-                let runSteps = function(stepindex) {
-                    if(!runTest || (runTest.steps.length == 0)){
-                       done();
-                    } else if('validation' in runTest){
-                        console.log('Validation is in wrong location Move to new location in steps');
-                        console.error("Step: "+stepindex);
-                        assert.equal(true, false, 'Error on Step: '+ stepindex);
-                        done();
-                    }else{
-                       // Sort Steps By ID
-                        runTest.steps.sort(function(a, b) {
-                          if (a.id > b.id)
-                             return 1;
-                          return a.id === b.id ? 0 : -1;
-                        });
+            var sharedData = {};
+            for (var testCaseLoop of test.testCases) {
+                //Console out testCase Information
+                it('(EIH-'+test.id+') - Test Case: ' + testCaseLoop.name, function(done) {
+                    this.timeout(80000000);
+                    let runTest = test.testCases[i]; //Will need to loop through
+                    let runSteps = function(stepindex) {
+                        if(!runTest || (runTest.steps.length == 0)){
+                           done();
+                        } else if('validation' in runTest){
+                            console.log('Validation is in wrong location Move to new location in steps');
+                            console.error("Step: "+stepindex);
+                            assert.equal(true, false, 'Error on Step: '+ stepindex);
+                            done();
+                        }else{
+                           // Sort Steps By ID
+                            runTest.steps.sort(function(a, b) {
+                              if (a.id > b.id)
+                                 return 1;
+                              return a.id === b.id ? 0 : -1;
+                            });
 
-                        //Load Step Data
-                        let step = runTest.steps[stepindex];
+                            //Load Step Data
+                            let step = runTest.steps[stepindex];
 
-                        //Load Controller of step type
-                        let path = './test/' + step.type + '/controller.js';
-                        let stepController = require(path);
+                            //Load Controller of step type
+                            let path = './test/' + step.type + '/controller.js';
+                            let stepController = require(path);
 
-                        //Append All previous step results for shared data
-                        step.params.shared = sharedData;
+                            //Append All previous step results for shared data
+                            step.params.shared = sharedData;
 
-                        //Append preSetup data to be used with shared data flag as Step: preSetup
-                        step.params.shared.preSetup = preSetup;
-                        adminFunctions.sharedDataCheck(step.params, function(options){
-                            if(runExtraLogs){
-                                console.log('Steps to Preform:');
-                                console.log(formatJson.diffy(options));
-                            }
-                            stepController.controller(driver, options, function(driver, sharedResult, error) {
-                                function writeScreenshot(data, name) {
-                                  name = name || 'default.png';
-                                  fs.writeFileSync('screenshots/'+microservice+'/' + name, data, 'base64');
-                                };
-
-                                driver.takeScreenshot().then(function(data) {
-                                  writeScreenshot(data, 'testCaseID_'+test.id+'-Step_'+stepindex+'.png');
-                                });
-
-                                //Stop Step and display error that came back from controller
-                                if(error){
-                                    console.error("Step: "+stepindex);
-                                    console.error("Options: "+ JSON.stringify(step));
-                                    console.error("Error Message: "+ JSON.stringify(error));
-                                    console.trace("Stack Trace");
-                                    assert.equal(true, false, 'Error on Step: '+ stepindex);
-                                    done();
+                            //Append preSetup data to be used with shared data flag as Step: preSetup
+                            step.params.shared.preSetup = preSetup;
+                            adminFunctions.sharedDataCheck(step.params, function(options){
+                                if(runExtraLogs){
+                                    console.log('Steps to Preform:');
+                                    console.log(formatJson.diffy(options));
                                 }
+                                stepController.controller(driver, options, function(driver, sharedResult, error) {
+                                    function writeScreenshot(data, name) {
+                                      name = name || 'default.png';
+                                      fs.writeFileSync('screenshots/'+microservice+'/' + name, data, 'base64');
+                                    };
 
-                                //Added result from controller to global Shared Data for Next loop append
-                                if(sharedResult)
-                                    sharedData['step'+stepindex] = sharedResult;
+                                    driver.takeScreenshot().then(function(data) {
+                                      writeScreenshot(data, 'testCaseID_'+test.id+'-Step_'+stepindex+'.png');
+                                    });
 
-                                //Check if Test is a validation also
-                                if((step.tests) && (step.tests[0])){
-
-                                    //StepTests - driver, web driver - index test location in array
-                                    let runStepTest = function(driver, index){
-
-                                        //Pass Step information to Step Index
-                                        runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
-
-                                           //Run all validations in a loop
-                                           if(end){
-                                              //Assertion check comeback with end all tests and step
-                                              done();
-                                            }else if(step.tests[(index+1)]){
-                                                //Run Next Test incrementing index
-                                                runStepTest(driver, (index+1));
-                                            }else{
-                                                //Check for Next step and if so Run next step in json
-                                                if (runTest.steps[stepindex + 1])
-                                                    runSteps((stepindex + 1));
-                                                else{
-                                                    //No More Steps in JSON file so increment testcase counter
-                                                    //Call done for mocha to run next testcase
-                                                    i = i + 1;
-                                                    done();
-												}
-                                            }
-                                        });
+                                    //Stop Step and display error that came back from controller
+                                    if(error){
+                                        console.error("Step: "+stepindex);
+                                        console.error("Options: "+ JSON.stringify(step));
+                                        console.error("Error Message: "+ JSON.stringify(error));
+                                        console.trace("Stack Trace");
+                                        assert.equal(true, false, 'Error on Step: '+ stepindex);
+                                        done();
                                     }
 
-                                    //Run step Tests
-                                    runStepTest(driver, 0);
-                                }else{
-                                    //Step has no Test so Go to next step in list
-                                    if (runTest.steps[stepindex + 1]) 
-                                        runSteps((stepindex + 1));
-                                    else {
-                                        // End of steps run next testcase
-                                        i = i + 1;
-                                        done();
-									}
-                                }
+                                    //Added result from controller to global Shared Data for Next loop append
+                                    if(sharedResult)
+                                        sharedData['step'+stepindex] = sharedResult;
+
+                                    //Check if Test is a validation also
+                                    if((step.tests) && (step.tests[0])){
+
+                                        //StepTests - driver, web driver - index test location in array
+                                        let runStepTest = function(driver, index){
+
+                                            //Pass Step information to Step Index
+                                            runAssertions(driver, { 'test': step.tests[index] }, sharedResult, function(end){
+
+                                               //Run all validations in a loop
+                                               if(end){
+                                                  //Assertion check comeback with end all tests and step
+                                                  done();
+                                                }else if(step.tests[(index+1)]){
+                                                    //Run Next Test incrementing index
+                                                    runStepTest(driver, (index+1));
+                                                }else{
+                                                    //Check for Next step and if so Run next step in json
+                                                    if (runTest.steps[stepindex + 1])
+                                                        runSteps((stepindex + 1));
+                                                    else{
+                                                        //No More Steps in JSON file so increment testcase counter
+                                                        //Call done for mocha to run next testcase
+                                                        i = i + 1;
+                                                        done();
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                        //Run step Tests
+                                        runStepTest(driver, 0);
+                                    }else{
+                                        //Step has no Test so Go to next step in list
+                                        if (runTest.steps[stepindex + 1])
+                                            runSteps((stepindex + 1));
+                                        else {
+                                            // End of steps run next testcase
+                                            i = i + 1;
+                                            done();
+                                        }
+                                    }
+                                });
                             });
-                        });
+                        }
                     }
-                }
-                //Start Running steps
-                runSteps(0);
-            });
+                    //Start Running steps
+                    runSteps(0);
+                });
+            }
+        }else{
+            console.error("Test JSON Validation Error: "+ passValidation.valid)
+            console.error(JSON.stringify(passValidation));
         }
     });
 }
