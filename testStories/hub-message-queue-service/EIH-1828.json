@@ -1,54 +1,73 @@
 {
     "id": "1828",
-    "name": "Adding Application using UI",
+    "name": "CNA-TC01-CNA-TC02",
     "testCases": [{
-        "testCaseId": 1,
-        "name": "Verify Adding Applications",
-        "steps": [{
-            "id": 1,
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "deleteApplications",
-                "applications": ["applicationPub", "applicationSub"]
-            }
-        }, {
-            "id": 2,
-            "method": "addApplications",
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "createApplications",
-                "applications": ["applicationPub", "applicationSub"]
-            }
-        }, {
-            "id": 3,
-            "method": "appPublisher",
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "addResource",
-                "application": "applicationPub",
-                "resources": "subjects"
-            }
-        }, {
-            "id": 4,
-            "method": "addSubscriber",
-            "type": "hub-configuration-api",
-            "params": {
-                "action": "addSubscription",
-                "application": "applicationSub",
-                "subscriptions": "subjects"
-            }
-        }, {
+            "testCaseId": 1,
+            "name": "Verify Adding Applications",
+            "steps": [{
+                "id": 1,
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "deleteApplications",
+                    "applications": ["applicationPub", "applicationSub"]
+                }
+            }, {
+                "id": 2,
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "createApplications",
+                    "applications": ["applicationPub", "applicationSub"]
+                }
+            }, {
+                "id": 3,
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "addResource",
+                    "application": "applicationPub",
+                    "resources": "subjects"
+                }
+            }, {
+                "id": 4,
+                "type": "hub-configuration-api",
+                "params": {
+                    "action": "addSubscription",
+                    "application": "applicationSub",
+                    "subscriptions": "subjects"
+                }
+            }, {
 
-            "id": 5,
-            "method": "sendChangeNotifications",
-            "type": "hub-publish-api",
-            "params": {
-                "action": "sendChangeNotifications",
-                "messageCount": 50,
-                "application": "applicationPub",
-                "resource": "subjects"
-            }
-        }]
+                "id": 5,
+                "type": "hub-admin-api",
+                "params": {
+                    "action": "setPermissionsStatusText",
+                    "type": "hub-admin-api",
+                    "setPermissions": "enable"
+                },
+                "tests": [{
+                    "action": "include",
+                    "value": "permissions have been updated"
+                }]
 
-    }]
+            }]
+        },
+
+        {
+            "testCaseId": 3,
+            "name": "Push Messages into Hub",
+            "steps": [{
+                "id": 1,
+                "type": "hub-publish-api",
+                "params": {
+                    "action": "sendChangeNotifications",
+                    "messageCount": 50,
+                    "application": "applicationPub",
+                    "resource": "subjects"
+                },
+
+                "tests": []
+
+
+            }]
+        }
+    ]
 }
