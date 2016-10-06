@@ -118,27 +118,27 @@
                     "application": "applicationSub"
                 }
             }],
-            "validation": [{
-                "name": "assert status code of 200",
-                "action": "consumeAllOneStatusCode",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "application": "applicationSub",
-                    "value": "200"
-                }
-            }, {
-                "name": "assert empty array from consumeAll",
-                "action": "consumeAllOneStatusText",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "isEmtpy": false,
-                    "application": " applicationSub",
-                    "value": "[]"
-                }
-            }]
+
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "application": "applicationSub",
+                "value": "200"
+            }
         }, {
+            "name": "assert empty array from consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "isEmtpy": false,
+                "application": " applicationSub",
+                "value": "[]"
+            }
+        },
+
+        {
             "testCaseId": 8,
             "name": "Set flag to True",
             "steps": [{
@@ -157,26 +157,26 @@
                     "application": "applicationSub"
                 }
             }],
-            "validation": [{
-                "name": "assert status code of 200",
-                "action": "setPermissionsStatusCode",
-                "type": "hub-admin-api",
-                "setPermissions": "enable",
-                "tests": {
-                    "action": "equal",
-                    "value": "200"
-                }
-            }, {
-                "name": "assert status message",
-                "action": "setPermissionsStatusText",
-                "type": "hub-admin-api",
-                "setPermissions": "enable",
-                "tests": {
-                    "action": "include",
-                    "value": "permissions have been updated"
-                }
-            }]
+
+            "action": "setPermissionsStatusCode",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "tests": {
+                "action": "equal",
+                "value": "200"
+            }
         }, {
+            "name": "assert status message",
+            "action": "setPermissionsStatusText",
+            "type": "hub-admin-api",
+            "setPermissions": "enable",
+            "tests": {
+                "action": "include",
+                "value": "permissions have been updated"
+            }
+        },
+
+        {
             "testCaseId": 9,
             "name": "Push Messages into Hub with flag set to True",
             "steps": [{
@@ -210,27 +210,29 @@
                     "application": "applicationSub"
                 }
             }],
-            "validation": [{
-                "name": "assert status code of 200",
-                "action": "consumeAllOneStatusCode",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "application": "applicationSub",
-                    "value": "200"
-                }
-            }, {
-                "name": "assert array is not empty on consumeAll",
-                "action": "consumeAllOneStatusText",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "isEmtpy": false,
-                    "application": " applicationSub",
-                    "value": "[]"
-                }
-            }]
+
+
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "application": "applicationSub",
+                "value": "200"
+            }
         }, {
+            "name": "assert array is not empty on consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "isEmtpy": false,
+                "application": " applicationSub",
+                "value": "[]"
+            }
+        },
+
+
+        {
             "testCaseId": 11,
             "id": 2,
             "name": "tests",
@@ -264,26 +266,26 @@
                     "application": "applicationSub"
                 }
             }],
-            "validation": [{
-                "name": "assert status code of 200",
-                "action": "consumeAllOneStatusCode",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "applicationStanPub0": "applicationDarrickSub0",
-                    "value": "200"
-                }
-            }, {
-                "name": "assert empty array from consumeAll",
-                "action": "consumeAllOneStatusText",
-                "type": "hub-message-queue-service",
-                "tests": {
-                    "action": "equal",
-                    "isEmtpy": false,
-                    "application": " applicationDarrickSub0",
-                    "value": "[]"
-                }
-            }]
+
+            "action": "consumeAllOneStatusCode",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "applicationStanPub0": "applicationDarrickSub0",
+                "value": "200"
+            }
+        }, {
+            "name": "assert empty array from consumeAll",
+            "action": "consumeAllOneStatusText",
+            "type": "hub-message-queue-service",
+            "tests": {
+                "action": "equal",
+                "isEmtpy": false,
+                "application": " applicationDarrickSub0",
+                "value": "[]"
+            }
+
+
         }, {
             "testCaseId": 13,
             "name": "CNA-TC08 - Invalid endpoint Admins",
@@ -295,17 +297,16 @@
                     "action": "setInvalidEndPoint",
                     "endPoint": "/admins/privileges/"
                 },
-                "validation": [{
-                    "name": "assert status code of 400",
-                    "action": "setInvalidEndPoint",
-                    "type": "hub-admin-api",
-                    "tests": {
-                        "action": "equal",
-                        "endPoint": "/admins/privileges/",
-                        "value": "400"
-                    }
-                }]
+
+                "action": "setInvalidEndPoint",
+
+                "tests": {
+                    "action": "equal",
+                    "endPoint": "/admins/privileges/",
+                    "value": "400"
+                }
             }]
+
         }, {
             "testCaseId": 14,
             "name": "CNA-TC09 - Invalid endpoint privileges/spelled wrong",
