@@ -1,300 +1,404 @@
 {
-   "id":"1828",
-   "name":"CNA-TC01-CNA-TC02",
-   "testCases":[
-      {
-         "testCaseId":1,
-         "name":"Verify Adding Applications",
-         "steps":[
-            {
-               "id":1,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"deleteApplications",
-                  "applications":[
-                     "applicationPub",
-                     "applicationSub"
-                  ]
-               }
-            },
-            {
-               "id":2,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"createApplications",
-                  "applications":[
-                     "applicationPub",
-                     "applicationSub"
-                  ]
-               }
-            },
-            {
-               "id":3,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"addResource",
-                  "application":"applicationPub",
-                  "resources":"subjects"
-               }
-            },
-            {
-               "id":4,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"addSubscription",
-                  "application":"applicationSub",
-                  "subscriptions":"subjects"
-               }
-            },
-            {
-               "id":5,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"disable"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
+   "id": "1828",
+   "name": "CNA-TC01-CNA-TC02",
+   "testCases": [{
+         "testCaseId": 1,
+         "name": "Verify Adding Applications",
+         "steps": [{
+            "id": 1,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "deleteApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
                ]
             }
+         }, {
+            "id": 2,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "createApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 3,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addResource",
+               "application": "applicationPub",
+               "resources": "subjects"
+            }
+         }, {
+            "id": 4,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addSubscription",
+               "application": "applicationSub",
+               "subscriptions": "subjects"
+            }
+         }, {
+            "id": 5,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "disable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }]
+      }, {
+         "testCaseId": 2,
+         "name": "CNA-TC03",
+         "steps": [{
+            "id": 1,
+            "type": "hub-publish-api",
+            "params": {
+               "action": "sendChangeNotifications",
+               "messageCount": 50,
+               "application": "applicationPub",
+               "resource": "subjects"
+            }
+         }, {
+            "id": 2,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "disable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }, {
+            "id": 3,
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeAllOneStatusText",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            },
+            "tests": [{
+               "action": "equal",
+               "isEmtpy": true,
+               "application": " applicationSub",
+               "value": "[]"
+            }]
+         }]
+      }, {
+         "testCaseId": 3,
+         "name": "CNA-TC04-CNA-TC05",
+         "steps": [{
+            "id": 3,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusCode",
+               "type": "hub-admin-api",
+               "setPermissions": "enable",
+               "test": {
+                  "action": "equal",
+                  "value": "200"
+               }
+            }
+         }, {
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "enabled"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }, {
+            "id": 2,
+            "type": "hub-publish-api",
+            "params": {
+               "action": "sendChangeNotifications",
+               "messageCount": 50,
+               "application": "applicationPub",
+               "resource": "subjects"
+            }
+         }, {
+            "id": 3,
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeAllOneStatusText",
+               "messageCounts": [
+                  10,
+                  10,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSub"
+            },
+            "tests": [{
+               "action": "include",
+               "isEmtpy": false,
+               "application": " applicationSub",
+               "value": "[]"
+            }]
+         }]
+      }, {
+         "testCaseId": 4,
+         "name": "CNA-TC06",
+         "steps": [{
+            "id": 1,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "deleteApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 2,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "createApplications",
+               "applications": [
+                  "applicationPub",
+                  "applicationSub"
+               ]
+            }
+         }, {
+            "id": 3,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addResource",
+               "application": "applicationPub",
+               "resources": "subjects"
+            }
+         }, {
+            "id": 4,
+            "type": "hub-configuration-api",
+            "params": {
+               "action": "addSubscription",
+               "application": "applicationSub",
+               "subscriptions": "subjects"
+            }
+         }, {
+            "id": 5,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "disable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }]
+      }, {
+         "testCaseId": 5,
+         "name": "CNA-TC07",
+         "steps": [{
+            "id": 1,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "enable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }, {
+            "id": 2,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "enable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }, {
+            "id": 3,
+            "type": "hub-admin-api",
+            "params": {
+               "action": "setPermissionsStatusText",
+               "type": "hub-admin-api",
+               "setPermissions": "enable"
+            },
+            "tests": [{
+               "action": "include",
+               "value": "permissions have been updated"
+            }]
+         }]
+      },
+
+
+      {
+         "testCaseId": 6,
+         "name": "CNA-TC08",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enable"
+               },
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
+            },
+
+            {
+
+               "id": 2,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setInvalidEndPoint",
+                  "endPoint": "/admins/privileges/"
+               },
+               "tests": [{
+                  "action": "equal",
+                  "value": "400"
+               }]
+            }
+
+
          ]
       },
+
+
       {
-         "testCaseId":2,
-         "name":"CNA-TC03",
-         "steps":[
-            {
-               "id":1,
-               "type":"hub-publish-api",
-               "params":{
-                  "action":"sendChangeNotifications",
-                  "messageCount":50,
-                  "application":"applicationPub",
-                  "resource":"subjects"
-               }
-            },
-            {
-               "id":2,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"disable"
+         "testCaseId": 7,
+         "name": "CNA-TC09",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enable"
                },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
             },
+
             {
-               "id":3,
-               "type":"hub-message-queue-service",
-               "params":{
-                  "action":"consumeAllOneStatusText",
-                  "messageCounts":[
-                     10,
-                     10,
-                     0,
-                     0,
-                     0
-                  ],
-                  "application":"applicationSub"
+
+               "id": 2,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setInvalidEndPoint",
+                  "endPoint": "/admin/privilOges/"
                },
-               "tests":[
-                  {
-                     "action":"equal",
-                     "isEmtpy":true,
-                     "application":" applicationSub",
-                     "value":"[]"
-                  }
-               ]
+               "tests": [{
+                  "action": "equal",
+                  "value": "404"
+               }]
             }
+
+
          ]
       },
+
+
+
       {
-         "testCaseId":3,
-         "name":"CNA-TC04-CNA-TC05",
-         "steps":[
-            {
-               "id":3,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusCode",
-                  "type":"hub-admin-api",
-                  "setPermissions":"enable",
-                  "test":{
-                     "action":"equal",
-                     "value":"200"
-                  }
-               }
-            },
-            {
-               "id":1,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"enabled"
+         "testCaseId": 8,
+         "name": "CNA-TC10",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enable"
                },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
             },
+
             {
-               "id":2,
-               "type":"hub-publish-api",
-               "params":{
-                  "action":"sendChangeNotifications",
-                  "messageCount":50,
-                  "application":"applicationPub",
-                  "resource":"subjects"
-               }
-            },
-            {
-               "id":3,
-               "type":"hub-message-queue-service",
-               "params":{
-                  "action":"consumeAllOneStatusText",
-                  "messageCounts":[
-                     10,
-                     10,
-                     0,
-                     0,
-                     0
-                  ],
-                  "application":"applicationSub"
+
+               "id": 2,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "noTenantIDEndPoint",
+                  "endPoint": "/admin/privileges/"
                },
-               "tests":[
-                  {
-                     "action":"include",
-                     "isEmtpy":false,
-                     "application":" applicationSub",
-                     "value":"[]"
-                  }
-               ]
+               "tests": [{
+                  "action": "equal",
+                  "value": "417"
+               }]
             }
-         ]
-      },
-      {
-         "testCaseId":4,
-         "name":"CNA-TC06",
-         "steps":[
-            {
-               "id":1,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"deleteApplications",
-                  "applications":[
-                     "applicationPub",
-                     "applicationSub"
-                  ]
-               }
-            },
-            {
-               "id":2,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"createApplications",
-                  "applications":[
-                     "applicationPub",
-                     "applicationSub"
-                  ]
-               }
-            },
-            {
-               "id":3,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"addResource",
-                  "application":"applicationPub",
-                  "resources":"subjects"
-               }
-            },
-            {
-               "id":4,
-               "type":"hub-configuration-api",
-               "params":{
-                  "action":"addSubscription",
-                  "application":"applicationSub",
-                  "subscriptions":"subjects"
-               }
-            },
-            {
-               "id":5,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"disable"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
-            }
-         ]
-      },
-      {
-         "testCaseId":5,
-         "name":"CNA-TC07",
-         "steps":[
-            {
-               "id":1,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"enable"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
-            },
-            {
-               "id":2,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"enable"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
-            },
-            {
-               "id":3,
-               "type":"hub-admin-api",
-               "params":{
-                  "action":"setPermissionsStatusText",
-                  "type":"hub-admin-api",
-                  "setPermissions":"enable"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "value":"permissions have been updated"
-                  }
-               ]
-            }
+
+
          ]
       }
+
+
+      {
+         "testCaseId": 9,
+         "name": "CNA-TC11",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enable"
+               },
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
+            },
+
+            {
+
+               "id": 2,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "sendPermissionsInvalidPayload",
+                  "endPoint": "/admin/privileges/"
+               },
+               "tests": [{
+                  "action": "equal",
+                  "value": "417"
+               }]
+            }
+
+
+         ]
+      }
+
+
+
+
+
+
    ]
+
 }
