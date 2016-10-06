@@ -44,10 +44,8 @@
                "application": "applicationSub",
                "subscriptions": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 5,
          "name": "Push Messages into Hub",
@@ -61,10 +59,8 @@
                "application": "applicationPub",
                "resource": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 6,
          "name": "Consume Messages from Hub",
@@ -84,25 +80,25 @@
                "application": "applicationSub"
             }
          }],
-         "validation": [{
-            "name": "assert status code of 200",
-            "action": "setPermissionsStatusCode",
-            "type": "hub-admin-api",
-            "setPermissions": "enabled",
-            "test": {
-               "action": "equal",
-               "value": "200"
-            }
-         }, {
-            "name": "assert status message",
-            "action": "setPermissionsStatusText",
-            "type": "hub-admin-api",
-            "setPermissions": "enabled",
-            "test": {
-               "action": "include",
-               "value": "permissions have been updated"
-            }
-         }]
+
+
+         "action": "setPermissionsStatusCode",
+         "type": "hub-admin-api",
+         "setPermissions": "enabled",
+         "test": {
+            "action": "equal",
+            "value": "200"
+         }
+      }, {
+         "name": "assert status message",
+         "action": "setPermissionsStatusText",
+         "type": "hub-admin-api",
+         "setPermissions": "enabled",
+         "test": {
+            "action": "include",
+            "value": "permissions have been updated"
+         }
+
       }, {
          "testCaseId": 7,
          "name": "Consume Messages from Hub and validate",
@@ -193,10 +189,8 @@
                "application": "applicationPub",
                "resource": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 10,
          "name": "Consume Messages from Hub and validate",
@@ -433,10 +427,8 @@
                "application": "applicationSub",
                "subscriptions": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 21,
          "name": "Push Messages into Hub",
