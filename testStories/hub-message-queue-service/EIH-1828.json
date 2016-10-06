@@ -44,10 +44,8 @@
                "application": "applicationSub",
                "subscriptions": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 5,
          "name": "Push Messages into Hub",
@@ -61,10 +59,8 @@
                "application": "applicationPub",
                "resource": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 6,
          "name": "Consume Messages from Hub",
