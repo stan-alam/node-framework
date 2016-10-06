@@ -52,22 +52,32 @@
         },
 
         {
-            "testCaseId": 3,
-            "name": "Push Messages into Hub",
+            "testCaseId": 2,
+            "name": "CNA-TC03",
             "steps": [{
-                "id": 1,
-                "type": "hub-publish-api",
-                "params": {
-                    "action": "sendChangeNotifications",
-                    "messageCount": 50,
-                    "application": "applicationPub",
-                    "resource": "subjects"
+                    "id": 1,
+                    "type": "hub-publish-api",
+                    "params": {
+                        "action": "sendChangeNotifications",
+                        "messageCount": 50,
+                        "application": "applicationPub",
+                        "resource": "subjects"
+                    }
                 },
 
-                "tests": []
+                {
+                    "id": 2,
+                    "type": "hub-message-queue-service",
+                    "params": {
+                        "action": "consumeChangeNotifications",
+                        "messageCounts": [10, 10, 0, 0, 0],
+                        "application": "applicationSub"
+                    }
 
 
-            }]
+
+                }
+            ]
         }
     ]
 }
