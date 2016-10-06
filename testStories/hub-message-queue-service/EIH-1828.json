@@ -41,7 +41,7 @@
                 "params": {
                     "action": "setPermissionsStatusText",
                     "type": "hub-admin-api",
-                    "setPermissions": "enable"
+                    "setPermissions": "disable"
                 },
                 "tests": [{
                     "action": "include",
@@ -66,18 +66,84 @@
                 },
 
                 {
+
+                    "id": 5,
+                    "type": "hub-admin-api",
+                    "params": {
+                        "action": "setPermissionsStatusText",
+                        "type": "hub-admin-api",
+                        "setPermissions": "disable"
+                    },
+                    "tests": [{
+                        "action": "include",
+                        "value": "permissions have been updated"
+                    }]
+
+                },
+
+
+                {
                     "id": 2,
                     "type": "hub-message-queue-service",
                     "params": {
-                        "action": "consumeChangeNotifications",
+                        "action": "consumeAllOneStatusText",
                         "messageCounts": [10, 10, 0, 0, 0],
                         "application": "applicationSub"
-                    }
+                    },
 
-
+                    "tests": [{
+                        "action": "equal",
+                        "isEmtpy": true,
+                        "application": " applicationSub",
+                        "value": "[]"
+                    }]
 
                 }
             ]
+        }, {
+            "testCaseId": 3,
+            "name": "CNA-TC04",
+            "steps": [{
+                "id": 1,
+                "type": "hub-admin-api",
+                "params": {
+                    "action": "setPermissionsStatusText",
+                    "type": "hub-admin-api",
+                    "setPermissions": "enabled"
+                },
+                "tests": [{
+                    "action": "include",
+                    "value": "permissions have been updated"
+                }]
+            }, {
+                "id": 2,
+                "type": "hub-publish-api",
+                "params": {
+                    "action": "sendChangeNotifications",
+                    "messageCount": 50,
+                    "application": "applicationPub",
+                    "resource": "subjects"
+
+                }
+
+            }, {
+                "id": 3,
+                "type": "hub-message-queue-service",
+                "params": {
+                    "action": "consumeAllOneStatusText",
+                    "messageCounts": [10, 10, 0, 0, 0],
+                    "application": "applicationSub"
+                },
+
+                "tests": [{
+                    "action": "include",
+                    "isEmtpy": false,
+                    "application": " applicationSub",
+                    "value": "[]"
+                }]
+
+            }]
         }
+
     ]
 }
