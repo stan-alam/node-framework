@@ -189,10 +189,8 @@
                "application": "applicationPub",
                "resource": "subjects"
             }
-         }],
-         "validation": [
+         }]
 
-         ]
       }, {
          "testCaseId": 10,
          "name": "Consume Messages from Hub and validate",
