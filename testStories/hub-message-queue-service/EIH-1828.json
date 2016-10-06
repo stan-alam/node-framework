@@ -356,7 +356,7 @@
 
 
          ]
-      }
+      },
 
 
       {
@@ -392,13 +392,104 @@
 
 
          ]
-      }
+      },
 
 
+      {
+         "testCaseId": 10,
+         "name": "CNA-TC12",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enable"
+               },
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
+            },
+
+            {
+
+               "id": 2,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "sendPermissionsNoPayload",
+                  "endPoint": "/admin/privileges/"
+               },
+               "tests": [{
+                  "action": "equal",
+                  "value": "417"
+               }]
+            }
 
 
+         ]
+      },
 
 
-   ]
+      {
+         "testCaseId": 11,
+         "name": "CNA-TC13",
+         "steps": [{
+               "id": 1,
+               "type": "hub-admin-ui",
+               "params": {
+                  "action": "click",
+                  "element": "linkSettings"
+               }
+            }, {
+               "id": 2,
+               "type": "hub-admin-ui",
+               "params": {
+                  "action": "click",
+                  "element": "linkSelectProd"
+               }
+
+            }, {
+               "id": 3,
+               "type": "hub-configuration-api",
+               "params": {
+                  "action": "deleteApplications",
+                  "applications": [
+                     "applicationPub",
+                     "applicationSub"
+                  ]
+               }
+            }, {
+               "id": 4,
+               "type": "hub-configuration-api",
+               "params": {
+                  "action": "createApplications",
+                  "applications": [
+                     "applicationPub",
+                     "applicationSub"
+                  ]
+               }
+            }, {
+               "id": 4,
+               "type": "hub-configuration-api",
+               "params": {
+                  "action": "addResource",
+                  "application": "applicationPub",
+                  "resources": "subjects"
+               }
+            }, {
+               "id": 5,
+               "type": "hub-configuration-api",
+               "params": {
+                  "action": "addSubscription",
+                  "application": "applicationSub",
+                  "subscriptions": "subjects"
+               }
+
+            }
+
+      ]
+
+   }]
 
 }
