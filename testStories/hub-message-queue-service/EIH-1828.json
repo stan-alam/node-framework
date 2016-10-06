@@ -13,7 +13,6 @@
             }
         }, {
             "id": 2,
-            "method": "addApplications",
             "type": "hub-configuration-api",
             "params": {
                 "action": "createApplications",
@@ -21,7 +20,6 @@
             }
         }, {
             "id": 3,
-            "method": "appPublisher",
             "type": "hub-configuration-api",
             "params": {
                 "action": "addResource",
@@ -30,7 +28,6 @@
             }
         }, {
             "id": 4,
-            "method": "addSubscriber",
             "type": "hub-configuration-api",
             "params": {
                 "action": "addSubscription",
@@ -40,14 +37,16 @@
         }, {
 
             "id": 5,
-            "method": "sendChangeNotifications",
-            "type": "hub-publish-api",
+            "type": "hub-admin-api",
             "params": {
-                "action": "sendChangeNotifications",
-                "messageCount": 50,
-                "application": "applicationPub",
-                "resource": "subjects"
-            }
+                "action": "setPermissionsStatusText",
+                "type": "hub-admin-api",
+                "setPermissions": "enable"
+            },
+            "tests": [{
+                "action": "include",
+                "value": "permissions have been updated"
+            }]
         }]
 
     }]
