@@ -80,8 +80,8 @@
                "application": "applicationSub"
             },
             "tests": [{
-               "action": "include",
-               "isEmtpy": "false",
+               "action": "equal",
+               "isEmtpy": true,
                "application": " applicationSub",
                "value": "[]"
             }]
@@ -138,9 +138,9 @@
             },
             "tests": [{
                "action": "equal",
-               "isEmtpy": true,
+               "isEmtpy": false,
                "application": " applicationSub",
-               "value": "[]"
+               "value": " "
             }]
          }]
       }, {
