@@ -546,7 +546,7 @@
                "type":"hub-publish-api",
                "params":{
                   "action":"sendChangeNotifications",
-                  "messageCount":1500,
+                  "messageCount":20000,
                   "application":"applicationPubProd",
                   "resource":"subjects"
                }
@@ -557,8 +557,8 @@
                "params":{
                   "action":"consumeAllOneStatusCode",
                   "messageCounts":[
-                     10,
-                     10,
+                     1000,
+                     1000,
                      0,
                      0,
                      0
@@ -579,8 +579,8 @@
                "params":{
                   "action":"consumeAllOneStatusText",
                   "messageCounts":[
-                     100,
-                     100,
+                     10000,
+                     10000,
                      0,
                      0,
                      0
@@ -590,7 +590,7 @@
                "tests":[
                   {
                      "action":"include",
-                     "value":"Production"
+                     "value":"Test"
                   }
                ]
             }
