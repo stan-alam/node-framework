@@ -65,7 +65,7 @@
                "application": "applicationPub",
                "resource": "subjects"
             }
-         },  {
+         }, {
             "id": 3,
             "type": "hub-message-queue-service",
             "params": {
@@ -80,10 +80,10 @@
                "application": "applicationSub"
             },
             "tests": [{
-               "action": "equal",
+               "action": "include",
                "isEmtpy": "false",
                "application": " applicationSub",
-               "value": "[]"
+               "value": "[ ]"
             }]
          }]
       }, {
@@ -107,7 +107,7 @@
             "params": {
                "action": "setPermissionsStatusText",
                "type": "hub-admin-api",
-               "setPermissions": "enabled"
+               "setPermissions": "enable"
             },
             "tests": [{
                "action": "include",
@@ -137,8 +137,8 @@
                "application": "applicationSub"
             },
             "tests": [{
-               "action": "include",
-               "isEmtpy": false,
+               "action": "equal",
+               "isEmtpy": true,
                "application": " applicationSub",
                "value": "[]"
             }]
@@ -458,7 +458,7 @@
                   ]
                }
             }, {
-               "id": 4,
+               "id": 5,
                "type": "hub-configuration-api",
                "params": {
                   "action": "addResource",
@@ -466,7 +466,7 @@
                   "resources": "subjects"
                }
             }, {
-               "id": 5,
+               "id": 6,
                "type": "hub-configuration-api",
                "params": {
                   "action": "addSubscription",
@@ -474,10 +474,74 @@
                   "subscriptions": "subjects"
                }
 
+            },
+
+            {
+               "id": 7,
+               "type": "hub-admin-api",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-admin-api",
+                  "setPermissions": "enabled"
+               },
+               "tests": [{
+                  "action": "include",
+                  "value": "permissions have been updated"
+               }]
+            }, {
+               "id": 8,
+               "type": "hub-publish-api",
+               "params": {
+                  "action": "sendChangeNotifications",
+                  "messageCount": 50,
+                  "application": "applicationPub",
+                  "resource": "subjects"
+               }
+            },
+
+
+            {
+               "id": 9,
+               "type": "hub-message-queue-service",
+               "params": {
+                  "action": "consumeChangeNotifications",
+                  "messageCounts": [
+                     10,
+                     10,
+                     0,
+                     0,
+                     0
+                  ],
+                  "application": "applicationSub"
+               },
+               "tests": [{
+                  "action": "equal",
+                  "application": " applicationSub",
+                  "value": "200"
+               }]
+            },
+
+
+            {
+               "id": 10,
+               "type": "consumeAllOneStatusText",
+               "params": {
+                  "action": "setPermissionsStatusText",
+                  "type": "hub-message-queue-service",
+                  "setPermissions": "enable"
+               },
+               "tests": [{
+               "application": " applicationSub",
+               "action": "include",
+               "value": "Production"
+
+               }]
             }
 
-      ]
 
-   }]
+         ]
+
+      }
+   ]
 
 }
