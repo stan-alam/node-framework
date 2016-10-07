@@ -83,7 +83,7 @@
                "action": "include",
                "isEmtpy": "false",
                "application": " applicationSub",
-               "value": "[ ]"
+               "value": "[]"
             }]
          }]
       }, {
