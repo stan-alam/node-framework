@@ -80,8 +80,8 @@
                "application": "applicationSub"
             },
             "tests": [{
-               "action": "equal",
-               "isEmtpy": true,
+               "action": "include",
+               "isEmtpy": false,
                "application": " applicationSub",
                "value": "[]"
             }]
@@ -443,8 +443,8 @@
                "params": {
                   "action": "deleteApplications",
                   "applications": [
-                     "applicationPub",
-                     "applicationSub"
+                     "applicationPubProd",
+                     "applicationSubProd"
                   ]
                }
             }, {
@@ -453,8 +453,8 @@
                "params": {
                   "action": "createApplications",
                   "applications": [
-                     "applicationPub",
-                     "applicationSub"
+                     "applicationPubProd",
+                     "applicationSubProd"
                   ]
                }
             }, {
@@ -462,7 +462,7 @@
                "type": "hub-configuration-api",
                "params": {
                   "action": "addResource",
-                  "application": "applicationPub",
+                  "application": "applicationPubProd",
                   "resources": "subjects"
                }
             }, {
@@ -470,7 +470,7 @@
                "type": "hub-configuration-api",
                "params": {
                   "action": "addSubscription",
-                  "application": "applicationSub",
+                  "application": "applicationSubProd",
                   "subscriptions": "subjects"
                }
 
@@ -482,7 +482,7 @@
                "params": {
                   "action": "setPermissionsStatusText",
                   "type": "hub-admin-api",
-                  "setPermissions": "enabled"
+                  "setPermissions": "enable"
                },
                "tests": [{
                   "action": "include",
@@ -493,8 +493,8 @@
                "type": "hub-publish-api",
                "params": {
                   "action": "sendChangeNotifications",
-                  "messageCount": 50,
-                  "application": "applicationPub",
+                  "messageCount": 1500,
+                  "application": "applicationPubProd",
                   "resource": "subjects"
                }
             },
@@ -504,7 +504,7 @@
                "id": 9,
                "type": "hub-message-queue-service",
                "params": {
-                  "action": "consumeChangeNotifications",
+                  "action": "consumeAllOneStatusCode",
                   "messageCounts": [
                      10,
                      10,
@@ -512,31 +512,35 @@
                      0,
                      0
                   ],
-                  "application": "applicationSub"
+                  "application": "applicationSubProd"
                },
                "tests": [{
                   "action": "equal",
-                  "application": " applicationSub",
+                  "application": " applicationSubProd",
                   "value": "200"
                }]
             },
 
 
             {
-               "id": 10,
-               "type": "consumeAllOneStatusText",
-               "params": {
-                  "action": "setPermissionsStatusText",
-                  "type": "hub-message-queue-service",
-                  "setPermissions": "enable"
-               },
-               "tests": [{
-               "application": " applicationSub",
+            "id": 3,
+            "type": "hub-message-queue-service",
+            "params": {
+               "action": "consumeAllOneStatusText",
+               "messageCounts": [
+                  100,
+                  100,
+                  0,
+                  0,
+                  0
+               ],
+               "application": "applicationSubProd"
+            },
+            "tests": [{
                "action": "include",
                "value": "Production"
-
-               }]
-            }
+            }]
+         }
 
 
          ]
