@@ -68,6 +68,22 @@
          "name":"CNA-TC03",
          "steps":[
             {
+               "id":5,
+               "type":"hub-admin-api",
+               "params":{
+                  "action":"setPermissionsStatusText",
+                  "type":"hub-admin-api",
+                  "setPermissions":"disable"
+               },
+               "tests":[
+                  {
+                     "action":"include",
+                     "value":"permissions have been updated"
+                  }
+               ]
+            },
+
+            {
                "id":1,
                "type":"hub-publish-api",
                "params":{
@@ -81,7 +97,24 @@
                "id":3,
                "type":"hub-message-queue-service",
                "params":{
-                  "action":"consumeAllOneStatusText",
+                  "action":"clearConsumeAll",
+                  "messageCounts":[
+                     0,
+                     0,
+                     0,
+                     0,
+                     0
+                  ],
+                  "application":"applicationSub"
+               }
+
+            },
+
+            {
+               "id":4,
+               "type":"hub-message-queue-service",
+               "params":{
+                  "action":"consumeAllEmptyArray",
                   "messageCounts":[
                      10,
                      10,
@@ -93,13 +126,14 @@
                },
                "tests":[
                   {
-                     "action":"include",
+                     "action":"isArray",
                      "isEmtpy":false,
                      "application":" applicationSub",
                      "value":"[]"
                   }
                ]
             }
+
          ]
       },
       {
@@ -148,7 +182,7 @@
                "id":3,
                "type":"hub-message-queue-service",
                "params":{
-                  "action":"consumeAllOneStatusText",
+                  "action":"consumeAllEmptyArray",
                   "messageCounts":[
                      10,
                      10,
@@ -160,10 +194,10 @@
                },
                "tests":[
                   {
-                     "action":"include",
+                     "action":"isArray",
                      "isEmtpy":false,
                      "application":" applicationSub",
-                     "value":" "
+                     "value": "[]"
                   }
                ]
             }
