@@ -97,7 +97,7 @@
                "id":3,
                "type":"hub-message-queue-service",
                "params":{
-                  "action":"consumeAllOneStatusText",
+                  "action":"clearConsumeAll",
                   "messageCounts":[
                      0,
                      0,
@@ -108,7 +108,32 @@
                   "application":"applicationSub"
                }
 
+            },
+
+            {
+               "id":4,
+               "type":"hub-message-queue-service",
+               "params":{
+                  "action":"consumeAllEmptyArray",
+                  "messageCounts":[
+                     10,
+                     10,
+                     0,
+                     0,
+                     0
+                  ],
+                  "application":"applicationSub"
+               },
+               "tests":[
+                  {
+                     "action":"isArray",
+                     "isEmtpy":false,
+                     "application":" applicationSub",
+                     "value":"[]"
+                  }
+               ]
             }
+
          ]
       },
       {
@@ -157,7 +182,7 @@
                "id":3,
                "type":"hub-message-queue-service",
                "params":{
-                  "action":"consumeAllOneStatusText",
+                  "action":"consumeAllEmptyArray",
                   "messageCounts":[
                      10,
                      10,
@@ -169,10 +194,10 @@
                },
                "tests":[
                   {
-                     "action":"include",
+                     "action":"isArray",
                      "isEmtpy":false,
                      "application":" applicationSub",
-                     "value":" "
+                     "value": "[]"
                   }
                ]
             }

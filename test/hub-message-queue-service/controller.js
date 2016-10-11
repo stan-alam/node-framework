@@ -21,6 +21,8 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             } else {
                 endpoint = 'callConsume';
             }
+            console.log(" this the end point" + endpoint);
+            console.log("this is the emptyConsumeAll"+ emptyConsumeAll);
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
                 if ((emptyConsumeAll) &&
@@ -108,8 +110,8 @@ let controller = function(driver, options, callback) {
             configFunctions.getConfiguration(Token, function(error, config) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
-                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
-                          mqsLoopConsume(accessToken, options, 0, 0, [], true, true, function(result) {
+                        authFunctions.getEPAtoken(conf.apiKey, function(error, epaToken) {
+                          mqsLoopConsume(epaToken, options, 0, 0, [], true, true, function(result) {
                                 callback(driver, { 'text': result });
                             });
                         });
@@ -123,9 +125,10 @@ let controller = function(driver, options, callback) {
             configFunctions.getConfiguration(Token, function(error, config) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
-                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
-                          mqsLoopConsume(accessToken, options, 0, 0, [], true, false, function(result) {
-                                callback(driver, { 'text': result.body.length });
+                        authFunctions.getEPAtoken(conf.apiKey, function(error, epaToken) {
+                          mqsLoopConsume(epaToken, options, 0, 0, [], true, false, function(result) {
+
+                                callback(driver, { 'text': result });
                             });
                         });
                     }

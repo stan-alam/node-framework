@@ -1,0 +1,52 @@
+{
+	"id": "1781",
+	"name": "Admin UI: Pagination",
+	"testCases": [{
+		"testCaseId": 1,
+		"name": "PAG-CONF-1-Configure the UI to have the following Applications: 12 Applications",
+		"steps": [{
+			"id": 1,
+			"type": "hub-configuration-api",
+			"params": {
+				"action": "deleteApplications",
+				"applications": ["App1", "App2", "App3", "App4", "App5", "App6", "App7", "App8", "App9", "App10", "App11", "App12"]
+			}
+		}, {
+			"id": 2,
+			"type": "hub-configuration-api",
+			"params": {
+				"action": "createApplications",
+				"applications": ["App1", "App2", "App3", "App4", "App5", "App6", "App7", "App8", "App9", "App10", "App11", "App12"]
+			}
+		}, {
+			"id": 3,
+			"type": "hub-configuration-api",
+			"params": {
+				"action": "addResource",
+				"application": "App1",
+				"resources": "subjects"
+			}
+		}, {
+			"id": 4,
+			"type": "hub-configuration-api",
+			"params": {
+				"action": "addSubscription",
+				"application": "App2",
+				"subscriptions": "subjects"
+			}
+		}]
+	}, {
+		"testCaseId": 3,
+		"name": "Push Messages into Hub",
+		"steps": [{
+			"id": 1,
+			"type": "hub-publish-api",
+			"params": {
+				"action": "sendChangeNotifications",
+				"messageCount": 50,
+				"application": "App1",
+				"resource": "subjects"
+			}
+		}]
+	}]
+}
