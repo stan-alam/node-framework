@@ -7,7 +7,7 @@ const _ = require('lodash'),
     mqsFunctions = require('../../lib/mqsFunctions.js'),
     uiFunctions = require('../../lib/uiFunctions.js');
 
-let mqsLoopConsume = function(accessToken, options, index, lastid, results, consumeall, loopCallback) {
+let mqsLoopConsume = function(accessToken, options, index, lastid, results, consumeall, emptyConsumeAll, loopCallback) {
     let endpoint = '';
     if (index == options.messageCounts.length) {
         loopCallback(results)
@@ -23,10 +23,19 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             }
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
-                if(mqsResults.body[mqsResults.body.length - 1]){
-                    mqsLoopConsume(accessToken, options, (index + 1), (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, loopCallback)
-                }else{
-                    mqsLoopConsume(accessToken, options, (index + 1), lastid, results, consumeall, loopCallback)
+                if ((emptyConsumeAll) &&
+                   (mqsResults.body.length != 0)) {
+
+                          mqsLoopConsume(accessToken, options, 0, (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
+                } else if (emptyConsumeAll){
+
+                     mqsLoopConsume(accessToken, options, options.messageCounts.length, (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
+
+
+              } else if(mqsResults.body[mqsResults.body.length - 1]){
+                    mqsLoopConsume(accessToken, options, (index + 1), (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
+              } else {
+                    mqsLoopConsume(accessToken, options, (index + 1), lastid, results, consumeall, emptyConsumeAll, loopCallback)
                 };
             });
         } else {
@@ -56,7 +65,7 @@ let controller = function(driver, options, callback) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
-                            mqsLoopConsume(accessToken, options, 0, 0, [], true, function(result) {
+                            mqsLoopConsume(accessToken, options, 0, 0, [], true, false, function(result) {
                                 callback(driver, { 'text': result });
                             });
                         });
@@ -93,6 +102,35 @@ let controller = function(driver, options, callback) {
              });
 
         });
+
+
+            } else if (options.action == 'clearConsumeAll') {
+            configFunctions.getConfiguration(Token, function(error, config) {
+                _.each(config, function(conf) {
+                    if (conf.name == options.application) {
+                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
+                          mqsLoopConsume(accessToken, options, 0, 0, [], true, true, function(result) {
+                                callback(driver, { 'text': result });
+                            });
+                        });
+                    }
+                });
+            });
+
+
+
+            } else if (options.action == 'consumeAllEmptyArray') {
+            configFunctions.getConfiguration(Token, function(error, config) {
+                _.each(config, function(conf) {
+                    if (conf.name == options.application) {
+                        authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
+                          mqsLoopConsume(accessToken, options, 0, 0, [], true, false, function(result) {
+                                callback(driver, { 'text': result.body.length });
+                            });
+                        });
+                    }
+                });
+            });
 
 
 

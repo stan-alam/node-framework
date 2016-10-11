@@ -68,6 +68,22 @@
          "name":"CNA-TC03",
          "steps":[
             {
+               "id":5,
+               "type":"hub-admin-api",
+               "params":{
+                  "action":"setPermissionsStatusText",
+                  "type":"hub-admin-api",
+                  "setPermissions":"disable"
+               },
+               "tests":[
+                  {
+                     "action":"include",
+                     "value":"permissions have been updated"
+                  }
+               ]
+            },
+
+            {
                "id":1,
                "type":"hub-publish-api",
                "params":{
@@ -83,22 +99,15 @@
                "params":{
                   "action":"consumeAllOneStatusText",
                   "messageCounts":[
-                     10,
-                     10,
+                     0,
+                     0,
                      0,
                      0,
                      0
                   ],
                   "application":"applicationSub"
-               },
-               "tests":[
-                  {
-                     "action":"include",
-                     "isEmtpy":false,
-                     "application":" applicationSub",
-                     "value":"[]"
-                  }
-               ]
+               }
+
             }
          ]
       },
