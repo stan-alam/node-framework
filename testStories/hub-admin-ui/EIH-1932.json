@@ -106,7 +106,17 @@
                   "elementTemplate":"wizard_save_button",
                   "key":"ENTER"
                }
+            },
+
+            {
+               "id":12,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
             }
+
          ]
       }
    ]
