@@ -116,6 +116,65 @@
         },
         {
             "testCaseId": 3,
+            "name" : "Configure Tenant for Prod Environment (RES-CONF-3)",
+            "steps": [
+                {
+                    "id": 1,
+                    "type": "hub-configuration-api",
+                    "params": {
+                        "action": "deleteApplications",
+                        "applications": ["AuthApp","SubApp"]
+                    }
+                },
+                {
+                    "id": 2,
+                    "type": "hub-configuration-api",
+                    "params": {
+                        "action": "createApplications",
+                        "applications": ["AuthApp","SubApp"]
+                    }
+                },
+                {
+                    "id": 3,
+                    "type": "hub-configuration-api",
+                    "params": {
+                        "action": "addResource",
+                        "application": "AuthApp",
+                        "resources": ["rooms"]
+                    }
+                },
+                {
+                    "id": 4,
+                    "type": "hub-configuration-api",
+                    "params": {
+                        "action": "addSubscription",
+                        "application": "SubApp",
+                        "subscriptions": ["rooms"]
+                    }
+                },
+                {
+                    "id": 5,
+                    "type": "hub-configuration-api",
+                    "params": {
+                        "action": "addCredentials",
+                        "application": "SubApp",
+                        "credentials": [
+                            {"username": "testUsername", "password": "testPassword", "applicationName": "AuthApp"}
+                        ]
+                    }
+                },
+                {
+                    "id": 6,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "urllocation",
+                        "location": "/#/dashboard"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId": 4,
             "name" : "Add Resource Owned By Another Authoritative Application",
             "steps": [
                 {
@@ -233,23 +292,23 @@
                         "elementTemplate": "Search"
                     }
                 },
-				{
-					"id": 14,
-					"type": "hub-admin-ui",
-					"params": {
-						"action": "elementGetAttribute",
-						"attributeValue": "class",
-						"element": "findTdByTrContainsTemplate",
-						"elementTemplate": "academic-credentials"
-					},
-					"tests": [
-						{
-							"action": "include",
-							"value": "disabled",
-							"caseSensitive": "false"
-						}
-					]
-				},
+             {
+                 "id": 14,
+                 "type": "hub-admin-ui",
+                 "params": {
+                     "action": "elementGetAttribute",
+                     "attributeValue": "class",
+                     "element": "findTdByTrContainsTemplate",
+                     "elementTemplate": "academic-credentials"
+                 },
+                 "tests": [
+                     {
+                         "action": "include",
+                         "value": "disabled",
+                         "caseSensitive": "false"
+                     }
+                 ]
+             },
                 {
                     "id": 15,
                     "type": "hub-admin-ui",
@@ -288,36 +347,36 @@
                         "elementValue": "\b"
                     }
                 },
-				{
-					"id": 19,
-					"type": "hub-admin-ui",
-					"params": {
-						"action": "elementView",
-						"element": "findElementTextByTemplate",
-						"elementTemplate": "Resource is already in use"
-					},
-					"tests": [
-						{
-							"action": "equal",
-							"value": "Resource is already in use"
-						}
-					]
-				},
-				{
-					"id": 20,
-					"type": "hub-admin-ui",
-					"params": {
-						"action": "elementGetAttribute",
-						"attributeValue": "disabled",
-						"element": "findElementIdByTemplate",
-						"elementTemplate": "card_dialog_add_button"
-					},
-					"tests": [{
-						"action": "equal",
-						"value": "true",
-						"caseSensitive": "false"
-					}]
-				},
+             {
+                 "id": 19,
+                 "type": "hub-admin-ui",
+                 "params": {
+                     "action": "elementView",
+                     "element": "findElementTextByTemplate",
+                     "elementTemplate": "Resource is already in use"
+                 },
+                 "tests": [
+                     {
+                         "action": "equal",
+                         "value": "Resource is already in use"
+                     }
+                 ]
+             },
+             {
+                 "id": 20,
+                 "type": "hub-admin-ui",
+                 "params": {
+                     "action": "elementGetAttribute",
+                     "attributeValue": "disabled",
+                     "element": "findElementIdByTemplate",
+                     "elementTemplate": "card_dialog_add_button"
+                 },
+                 "tests": [{
+                     "action": "equal",
+                     "value": "true",
+                     "caseSensitive": "false"
+                 }]
+             },
                 {
                     "id": 21,
                     "type": "hub-admin-ui",
@@ -344,7 +403,7 @@
             ]
         },
         {
-            "testCaseId": 6,
+            "testCaseId": 5,
             "name" : "Add Resource Owned By Same Authoritative Application",
             "steps": [
                 {
@@ -565,7 +624,7 @@
             ]
         },
         {
-            "testCaseId": 7,
+            "testCaseId": 6,
             "name" : "Add Resource To Colleague in Production Environment",
             "steps": [
                 {
@@ -710,6 +769,146 @@
                             "value": "courses"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "testCaseId": 7,
+            "name" : "Add Base URI Override in Production Environment (RES-TC04)",
+            "steps": [
+                {
+                    "id": 1,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "urllocation",
+                        "location": "/#/dashboard"
+                    }
+                },
+                {
+                    "id": 2,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linkSettings"
+                    }
+                },
+                {
+                    "id": 3,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linkSelectProd"
+                    }
+                },
+                {
+                    "id": 4,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linksViewApplication"
+                    }
+                },
+                {
+                    "id": 5,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "dropdownPerPage",
+                        "allowFail": true
+                    }
+                },
+                {
+                    "id": 6,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "dropdownPerPageLast",
+                        "allowFail": true
+                    }
+                },
+                {
+                    "id": 7,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findAnchorByTemplate",
+                        "elementTemplate": "AuthApp"
+                    }
+                },
+                {
+                    "id": 8,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "resources_tab"
+                    }
+                },
+                {
+                    "id": 9,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "inline_navigation_resources_input"
+                    }
+                },
+                {
+                    "id": 10,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "card_edit_button",
+                        "hoverElement":"findElementByClassEqualsTemplate",
+                        "hoverElementTemplate":"card"
+
+                    }
+                },
+                {
+                    "id": 11,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "edit_uriOverride"
+                    }
+                },
+                {
+                    "id": 12,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "sendkeys",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "input_uriOverride",
+                        "elementValue": "http://hub-authoritative-source-example.2020ar.com:443/ihub1/api"
+                    }
+                },
+                {
+                    "id": 13,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "save_uriOverride"
+                    }
+                },
+                {
+                    "id": 14,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "findElementIdByTemplate",
+                        "elementTemplate": "back-button"
+                    }
+                },
+                {
+                    "id": 15,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "click",
+                        "element": "linksHome"
+                    }
                 }
             ]
         }
