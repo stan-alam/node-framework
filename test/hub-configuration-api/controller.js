@@ -41,6 +41,23 @@ let controller = function(driver, options, callback){
                         }
                     })
                 });
+            }else if(options.action == 'addCredentials'){
+                configFunctions.getConfiguration(Token, function(error, configuration){
+                    if(error){
+                        callback(driver, null, error)
+                    }
+                    _.each(configuration, function(app){
+                        if(app.name == options.application){
+                            _.each(options.credentials,function(cred){
+                                let appForCred = _.find(configuration, {'name' : cred.applicationName});
+                                cred['application'] = {'id': appForCred.id};
+                            });
+                            configFunctions.addCredentials(Token, app, options.credentials, function(error, applications){
+                                callback(driver, applications.body, error);
+                            });
+                        }
+                    })
+                });
             }else if(options.action == 'deleteApplications'){
                  configFunctions.getConfiguration(Token, function(error, configuration){
                     let callbackDone = false;
