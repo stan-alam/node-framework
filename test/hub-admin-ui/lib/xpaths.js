@@ -43,6 +43,7 @@ module.exports.xpaths = {
     inputRequiredLinkId:  ".//*[@id='addApplication_link']",
     inputUriOverride: "//*[@id='input_uriOverride']",
     inputUsername: "//*[@id='input_username']",
+    inputQAPIuri: "//*[@id='input_baseQapiUri']",
     linkBackToCredentials: "//*[@id='back-button']",
     linkCredentialsTab: "//*[@id='credentials_tab']",
     linkPrivilegedApp: "//*[@id='dashboard-aggregates']/div[3]/section/div/h4/a",
