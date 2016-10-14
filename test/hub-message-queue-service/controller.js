@@ -21,19 +21,13 @@ let mqsLoopConsume = function(accessToken, options, index, lastid, results, cons
             } else {
                 endpoint = 'callConsume';
             }
-            console.log(" this the end point" + endpoint);
-            console.log("this is the emptyConsumeAll"+ emptyConsumeAll);
             mqsFunctions[endpoint](accessToken, lastid, function(error, mqsResults) {
                 results.push(mqsResults);
                 if ((emptyConsumeAll) &&
                    (mqsResults.body.length != 0)) {
-
                           mqsLoopConsume(accessToken, options, 0, (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
                 } else if (emptyConsumeAll){
-
                      mqsLoopConsume(accessToken, options, options.messageCounts.length, (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
-
-
               } else if(mqsResults.body[mqsResults.body.length - 1]){
                     mqsLoopConsume(accessToken, options, (index + 1), (mqsResults.body[mqsResults.body.length - 1].id), results, consumeall, emptyConsumeAll, loopCallback)
               } else {
@@ -55,7 +49,7 @@ let controller = function(driver, options, callback) {
                 _.each(config, function(conf) {
                     if (conf.name == options.application) {
                         authFunctions.getAccessToken(conf.apiKey, function(error, accessToken) {
-                          mqsLoopConsume(accessToken, options, 0, 0, [], false, function(result) {
+                          mqsLoopConsume(accessToken, options, 0, 0, [], false, false, function(result) {
                                 callback(driver, { 'text': result });
                             });
                         });
@@ -97,7 +91,6 @@ let controller = function(driver, options, callback) {
                            console.log("This is the error" + error.body);
                             callback(driver, { 'text' : error.body }, error)
                         } else {
-                           console.log("This is the body FROM CONSUME ALL RETURN" + JSON.stringify(result.body));
                             callback(driver, { 'text': JSON.stringify(result.body) }, error)
                        }
                   })
@@ -127,7 +120,6 @@ let controller = function(driver, options, callback) {
                     if (conf.name == options.application) {
                         authFunctions.getEPAtoken(conf.apiKey, function(error, epaToken) {
                           mqsLoopConsume(epaToken, options, 0, 0, [], true, false, function(result) {
-
                                 callback(driver, { 'text': result });
                             });
                         });
