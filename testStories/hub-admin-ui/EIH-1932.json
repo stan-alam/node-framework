@@ -160,7 +160,7 @@
          "name":"QUO-TC01",
          "steps":[
             {
-               "id":1,
+               "id":14,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -168,7 +168,7 @@
                }
             },
             {
-               "id":2,
+               "id":15,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -183,7 +183,7 @@
                ]
             },
             {
-               "id":3,
+               "id":16,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -192,7 +192,7 @@
                }
             },
             {
-               "id":4,
+               "id":17,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -210,7 +210,7 @@
          ]
       },
       {
-         "testCaseId":4,
+         "testCaseId":3,
          "name":"QUO-TC03",
          "steps":[
             {
@@ -237,7 +237,7 @@
                ]
             },
             {
-               "id":3,
+               "id":16,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -246,7 +246,7 @@
                }
             },
             {
-               "id":4,
+               "id":17,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -262,7 +262,7 @@
                ]
             },
             {
-               "id":5,
+               "id":18,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -289,6 +289,60 @@
                   "elementTemplate":"save_baseUri"
                }
             }
+         ]
+      }, {
+         "testCaseId":4,
+         "name":"QUO-TC04",
+         "steps":[
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Banner"
+                  }
+               ]
+            },
+            {
+               "id":16,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":17,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               },
+               "tests":[
+                  {
+                  "action":"equal",
+                  "element":"findElementTextByTemplate",
+                  "elementTemplate":"http://hub-authoritative-source-example.2020ar.com:443/vu/api"
+                  }
+               ]
+            }
+
          ]
       }
    ]
