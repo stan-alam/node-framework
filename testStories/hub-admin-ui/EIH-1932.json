@@ -207,7 +207,88 @@
                   }
                ]
             }
-
+         ]
+      },
+      {
+         "testCaseId":4,
+         "name":"QUO-TC03",
+         "steps":[
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Banner"
+                  }
+               ]
+            },
+            {
+               "id":16,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":17,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Base QAPI URI"
+                  }
+               ]
+            },
+            {
+               "id":18,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementTextByTemplate",
+                  "elementTemplate":"Base URI *"
+               }
+            },
+            {
+               "id":19,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"sendkeys",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"input_baseUri",
+                  "elementValue":"http://hub-authoritative-source-example.2020ar.com:443/nic/api"
+               }
+            },
+            {
+               "id":20,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"save_baseUri"
+               }
+            }
          ]
       }
    ]
