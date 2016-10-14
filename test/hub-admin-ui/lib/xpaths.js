@@ -13,6 +13,7 @@ module.exports.xpaths = {
     buttonEditDesc: "//button[@id='edit_description']",
     buttonEditPassword: "//*[@id='edit_password']",
     buttonEditUsername: "//*[@id='edit_username']",
+    buttonEditQapi: "//button[@id='edit_baseQapiUri']",
     buttonSaveDesc: "//button[@id='save_description']",
     buttonSavePassword: "//*[@id='save_password']",
     buttonSaveUsername: "//*[@id='save_username']",
