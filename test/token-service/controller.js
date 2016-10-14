@@ -19,8 +19,8 @@ let controller = function(driver, options, callback){
                     });
                 });
             }else if(options.action == 'getAccessTokenBadEndpoint'){
-                errorFunctions.sendMessageBadEndpoint(options.apikey, '/auths', {}, function(error, result){
-                    callback(driver, { 'text': result }, error);
+                errorFunctions.sendMessageBadEndpoint(options.apikey, '/auths', function(error, result){
+                    callback(driver, { 'text': error });
                 });
             }else if(options.action == 'getAccessTokenBadMethod'){
                 authFunctions.getAccessTokenBadMethod(options.apikey, function(error){
