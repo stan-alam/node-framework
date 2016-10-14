@@ -774,7 +774,7 @@
         },
         {
             "testCaseId": 7,
-            "name" : "Add Base URI Override in Production Environment (RES-TC04)",
+            "name" : "Add Base URI Override in Production Environment (RES-TC04) UPDATE WHEN EIH-1575 BUG IS FIXED",
             "steps": [
                 {
                     "id": 1,
