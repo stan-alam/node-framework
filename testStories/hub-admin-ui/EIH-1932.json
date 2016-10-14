@@ -107,7 +107,6 @@
                   "key":"ENTER"
                }
             },
-
             {
                "id":12,
                "type":"hub-admin-ui",
@@ -115,6 +114,98 @@
                   "action":"click",
                   "element":"linksHome"
                }
+            },
+            {
+               "id":13,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Banner"
+                  }
+               ]
+            },
+            {
+               "id":14,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":15,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Elevate"
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "testCaseId":2,
+         "name":"QUO-TC01",
+         "steps":[
+            {
+               "id":14,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":15,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Banner"
+                  }
+               ]
+            },
+            {
+               "id":16,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":17,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Base QAPI URI"
+                  }
+               ]
             }
 
          ]
