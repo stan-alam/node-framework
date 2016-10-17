@@ -352,6 +352,88 @@
                ]
             }
          ]
+      },
+      {
+         "testCaseId":5,
+         "name":"QUO-TC04",
+         "steps":[
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "element":"findAnchorByTemplate",
+                     "elementTemplate":"Banner"
+                  }
+               ]
+            },
+            {
+               "id":3,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":4,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               }
+            },
+            {
+               "id":5,
+               "method":"click resources link",
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"inline_navigation_resources_input"
+               }
+            },
+            {
+               "id":6,
+               "method":"click add button",
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"array_toolbar_add_button"
+               }
+            },
+            {
+               "id":7,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"elementView",
+                  "element":"findElementTextByTemplate",
+                  "elementTemplate":"QAPI URI Override"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "value":"QAPI URI Override"
+                  }
+               ]
+            }
+         ]
       }
    ]
 }
