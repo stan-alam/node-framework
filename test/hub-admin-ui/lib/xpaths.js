@@ -80,5 +80,6 @@ module.exports.xpaths = {
     noRecordsFound: '//*[contains(@class, "alert-td-fullspan")]',
     clearSearch: '//*[contains(@class, "secondary float-left")]',
     dropdownPerPage: '//*[@id="perPage"]',
-    dropdownPerPageLast: '//*[@id="perPage"]/option[last()]'
+    dropdownPerPageLast: '//*[@id="perPage"]/option[last()]',
+    textFieldDisabled: '//div[@id="panel"]/div/fieldset/form/div/section/div/cp-not-editable/ng-switch/div/span/cp-value-or-empty'
 }
