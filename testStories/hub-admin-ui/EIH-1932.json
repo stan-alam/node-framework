@@ -277,7 +277,7 @@
                   "action":"sendkeys",
                   "element":"findElementIdByTemplate",
                   "elementTemplate":"input_baseUri",
-                  "elementValue":"http://hub-authoritative-source-example.2020ar.com:443/nic/api"
+                  "elementValue":"http://hub-authoritative-source-example.2020ar.com:443/vu/api"
                }
             },
             {

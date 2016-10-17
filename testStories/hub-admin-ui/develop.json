@@ -277,7 +277,7 @@
                   "action":"sendkeys",
                   "element":"findElementIdByTemplate",
                   "elementTemplate":"input_baseUri",
-                  "elementValue":"http://hub-authoritative-source-example.2020ar.com:443/nic/api"
+                  "elementValue":"http://hub-authoritative-source-example.2020ar.com:443/vu/api"
                }
             },
             {
@@ -333,14 +333,41 @@
                   "action":"click",
                   "element":"findElementIdByTemplate",
                   "elementTemplate":"resources_tab"
-               },
-               "tests":[
-                  {
-                  "action":"equal",
+               }
+
+            },
+
+
+             {
+               "id":18,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementTextByTemplate",
+                  "elementTemplate":"Base URI *"
+               }
+            },
+
+
+
+             {
+               "id":19,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"elementView",
                   "element":"findElementTextByTemplate",
                   "elementTemplate":"http://hub-authoritative-source-example.2020ar.com:443/vu/api"
+               },
+
+               "tests":[
+                  {
+                     "action":"equal",
+                     "elementValue": "http://hub-authoritative-source-example.2020ar.com:443/vu/api"
+
                   }
                ]
+
+
             }
 
          ]
