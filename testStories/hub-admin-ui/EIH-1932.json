@@ -160,7 +160,7 @@
          "name":"QUO-TC01",
          "steps":[
             {
-               "id":14,
+               "id":1,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -168,7 +168,7 @@
                }
             },
             {
-               "id":15,
+               "id":2,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -183,7 +183,7 @@
                ]
             },
             {
-               "id":16,
+               "id":3,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -192,7 +192,7 @@
                }
             },
             {
-               "id":17,
+               "id":4,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -222,7 +222,7 @@
                }
             },
             {
-               "id":1,
+               "id":2,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -237,7 +237,7 @@
                ]
             },
             {
-               "id":2,
+               "id":3,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -246,7 +246,7 @@
                }
             },
             {
-               "id":3,
+               "id":4,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -262,7 +262,7 @@
                ]
             },
             {
-               "id":4,
+               "id":5,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -271,7 +271,7 @@
                }
             },
             {
-               "id":5,
+               "id":6,
                "type":"hub-admin-ui",
                "params":{
                   "action":"sendkeys",
@@ -281,7 +281,7 @@
                }
             },
             {
-               "id":6,
+               "id":7,
                "type":"hub-admin-ui",
                "params":{
                   "action":"click",
@@ -355,7 +355,7 @@
       },
       {
          "testCaseId":5,
-         "name":"QUO-TC04",
+         "name":"QUO-TC05",
          "steps":[
             {
                "id":1,
@@ -434,6 +434,238 @@
                ]
             }
          ]
+      },
+      {
+         "testCaseId":6,
+         "name":"QUO-TC06",
+         "steps":[
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findId",
+                  "elementTemplate":"card_dialog_cancel_button"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":3,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               }
+            },
+            {
+               "id":3,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":4,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               }
+            },
+            {
+               "id":5,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"inline_navigation_resources_input"
+               }
+            },
+            {
+               "id":6,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"array_toolbar_add_button"
+               }
+            },
+            {
+               "id":7,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findButtonDataHintByTemplate",
+                  "elementTemplate":"Search"
+               }
+            },
+            {
+               "id":8,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findTdByTrContainsTemplate",
+                  "elementTemplate":"academic-credentials"
+               }
+            },
+            {
+               "id":9,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"card_dialog_add_button"
+               }
+            },
+            {
+               "id":10,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"elementView",
+                  "element":"resourceNameInCardsByTemplate",
+                  "elementTemplate":"academic-credentials"
+               },
+               "tests":[
+                  {
+                     "action":"equal",
+                     "value":"academic-credentials"
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "testCaseId":7,
+         "name":"QUO-TC07",
+         "steps":[
+
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               }
+            },
+            {
+               "id":3,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":4,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               }
+            },
+
+            {
+               "id":5,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"inline_navigation_resources_input"
+               }
+            },
+
+            {
+               "id":6,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"resourceNameInCardsByTemplate",
+                  "elementTemplate":"academic-credentials"
+               }
+            }
+         ]
+      },
+
+      {
+         "testCaseId":8,
+         "name":"QUO-TC08",
+         "steps":[
+            {
+               "id":1,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksHome"
+               }
+            },
+            {
+               "id":2,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"linksViewApplication"
+               }
+            },
+            {
+               "id":3,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findAnchorByTemplate",
+                  "elementTemplate":"Banner"
+               }
+            },
+            {
+               "id":4,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"resources_tab"
+               }
+            },
+
+            {
+               "id":5,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"findElementIdByTemplate",
+                  "elementTemplate":"inline_navigation_resources_input"
+               }
+            },
+
+            {
+               "id":6,
+               "type":"hub-admin-ui",
+               "params":{
+                  "action":"click",
+                  "element":"resourceNameInCardsByTemplate",
+                  "elementTemplate":"academic-credentials"
+               }
+            }
+         ]
       }
+
    ]
 }
