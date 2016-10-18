@@ -17,8 +17,8 @@
   },
   "url": "https://test-integrationhub-integrate.10004.elluciancloud.com",
   "credentials": {
-    "username": "mbmormann",
+    "username": "kmatuch",
     "password": "Demo99!?"
   },
-  "browsers": ["chromedriver"]
+  "browsers": ["firefox"]
 }
