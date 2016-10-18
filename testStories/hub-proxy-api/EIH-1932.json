@@ -71,8 +71,7 @@
                   ]
                }
             },
-
-             {
+            {
                "id":6,
                "type":"hub-configuration-api",
                "params":{
@@ -82,9 +81,22 @@
                      "rooms"
                   ]
                }
+            },
+            {
+               "id":7,
+               "type":"hub-configuration-api",
+               "params":{
+                  "action":"addCredentials",
+                  "application":"ElevateSub1932",
+                  "credentials":[
+                     {
+                        "username":"testUsername",
+                        "password":"testPassword",
+                        "applicationName":"BannerPub1932"
+                     }
+                  ]
+               }
             }
-
-
          ]
       }
    ]
