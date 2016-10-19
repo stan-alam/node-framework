@@ -1,0 +1,805 @@
+
+{
+    "id":"1300",
+    "name":"Admin UI: Credentials",
+    "testCases":[
+        {
+            "testCaseId":1,
+            "name":"Configure Pub and Sub applications and resources",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-configuration-api",
+                    "params":{
+                        "action":"deleteApplications",
+                        "applications":[
+                            "Banner",
+                            "Colleague",
+                            "Elevate",
+                            "Pilot"
+                        ]
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-configuration-api",
+                    "params":{
+                        "action":"createApplications",
+                        "applications":[
+                            "Banner",
+                            "Colleague",
+                            "Elevate",
+                            "Pilot"
+                        ]
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-configuration-api",
+                    "params":{
+                        "action":"addResource",
+                        "application":"Banner",
+                        "resources":"subjects"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-configuration-api",
+                    "params":{
+                        "action":"addResource",
+                        "application":"Colleague",
+                        "resources":"courses"
+                    }
+                },
+                {
+                    "id":5,
+                    "type":"hub-configuration-api",
+                    "params":{
+                        "action":"addSubscription",
+                        "application":"Elevate",
+                        "subscriptions":[
+                            "subjects"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":2,
+            "name":"View Credentials Tab Order",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id": 4,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "arrayValue",
+                        "element": "applicationTabsText"
+                    },
+
+                    "tests":[
+                        {
+                            "action":"deepEqual",
+                            "value":[
+                                "",
+                                "Overview",
+                                "Credentials",
+                                "",
+                                "Resources",
+                                "",
+                                "Subscriptions",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":3,
+            "name":"Credentials Required Fields",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkCredentialsTab"
+                    }
+
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementIdByTemplate",
+                        "elementTemplate": "array_toolbar_add_button"
+                    }
+
+                },
+                {
+                    "id": 6,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementView",
+                        "element": "findElementTextByTemplate",
+                        "elementTemplate": "Application *"
+                    },
+
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"Application *"
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementView",
+                        "element": "findElementTextByTemplate",
+                        "elementTemplate": "Username *"
+                    },
+
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"Username *"
+                        }
+                    ]
+                },
+                 {
+                    "id": 8,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementView",
+                        "element": "findElementTextByTemplate",
+                        "elementTemplate": "Password *"
+                    },
+
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"Password *"
+                        }
+                    ]
+                },
+                {
+                    "id":9,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Cancel"
+                    }
+                },
+                {
+                    "id":10,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":4,
+            "name":"Elevate Add Credentials for Banner",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkCredentialsTab"
+                    }
+
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementIdByTemplate",
+                        "elementTemplate": "array_toolbar_add_button"
+                    }
+
+                },
+                {
+                    "id":6,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"searchDialog"
+                    }
+                },
+                {
+                    "id":7,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Banner"
+                    }
+
+                },
+                {
+                    "id":8,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputUsername",
+                        "elementValue":"username"
+                    }
+
+                },
+                {
+                    "id":9,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputPassword",
+                        "elementValue":"password"
+                    }
+                },
+                {
+                    "id":10,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"add"
+                    }
+                },
+                {
+                    "id": 11,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "arrayValue",
+                        "element": "authoritativeApplicationsCredentialsList"
+                    },
+                    "tests":[
+                        {
+                            "action":"includeMembers",
+                            "value":[
+                                "Banner"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id":12,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":5,
+            "name":"Elevate Add Credentials for Colleague",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkCredentialsTab"
+                    }
+
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementIdByTemplate",
+                        "elementTemplate": "array_toolbar_add_button"
+                    }
+
+                },
+                {
+                    "id":6,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"searchDialog"
+                    }
+                },
+                {
+                    "id":7,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Colleague"
+                    }
+
+                },
+                {
+                    "id":8,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputUsername",
+                        "elementValue":"username2"
+                    }
+
+                },
+                {
+                    "id":9,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputPassword",
+                        "elementValue":"password2"
+                    }
+                },
+                {
+                    "id":10,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"add"
+                    }
+                },
+                {
+                    "id":11,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"elementView",
+                        "element":"credentialsUsernameTemplate",
+                        "elementTemplate":"Colleague"
+                    },
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"username2"
+                        }
+                    ]
+                },
+                {
+                    "id":12,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"elementView",
+                        "element":"credentialsPasswordTemplate",
+                        "elementTemplate":"Colleague"
+                    },
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"*********"
+                        }
+                    ]
+                },
+                 {
+                    "id": 13,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "arrayValue",
+                        "element": "authoritativeApplicationsCredentialsList"
+                    },
+                    "tests":[
+                        {
+                            "action":"includeMembers",
+                            "value":[
+                                "Banner",
+                                "Colleague"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id":14,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":6,
+            "name":"Elevate Edit Credentials for Colleague",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkCredentialsTab"
+                    }
+
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonEditAuthoritativeApplicationTemplate",
+                        "elementTemplate":"Colleague",
+                        "hoverElement":"cardAuthoritativeApplicationTemplate",
+                        "hoverElementTemplate":"Colleague"
+                    }
+                },
+                {
+                    "id":6,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonEditUsername"
+                    }
+                },
+                {
+                    "id":7,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"clear",
+                        "element":"inputUsername"
+                    }
+                },
+                {
+                    "id":8,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputUsername",
+                        "elementValue":"test"
+                    }
+                },
+                {
+                    "id":9,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonSaveUsername"
+                    }
+                },
+                {
+                    "id":10,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonEditPassword"
+                    }
+                },
+                {
+                    "id":11,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"clear",
+                        "element":"inputPassword"
+                    }
+                },
+                {
+                    "id":12,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"sendkeys",
+                        "element":"inputPassword",
+                        "elementValue":"testpassword"
+                    }
+                },
+                {
+                    "id":13,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonSavePassword"
+                    }
+                },
+                {
+                    "id":14,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkBackToCredentials"
+                    }
+                },
+                {
+                    "id":15,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"elementView",
+                        "element":"credentialsUsernameTemplate",
+                        "elementTemplate":"Colleague"
+                    },
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"test"
+                        }
+                    ]
+                },
+                {
+                    "id":16,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"elementView",
+                        "element":"credentialsPasswordTemplate",
+                        "elementTemplate":"Colleague"
+                    },
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"************"
+                        }
+                    ]
+                },
+                {
+                    "id":17,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        },
+        {
+            "testCaseId":7,
+            "name":"Elevate Delete Credentials for Colleague",
+            "steps":[
+                {
+                    "id":1,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"urllocation",
+                        "location":"/#/dashboard"
+                    }
+                },
+                {
+                    "id":2,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksViewApplication"
+
+                    }
+                },
+                {
+                    "id":3,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"findElementTextByTemplate",
+                        "elementTemplate": "Elevate"
+                    }
+                },
+                {
+                    "id":4,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linkCredentialsTab"
+                    }
+
+                },
+                {
+                    "id":5,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonDeleteAuthoritativeApplicationTemplate",
+                        "elementTemplate":"Colleague",
+                        "hoverElement":"cardAuthoritativeApplicationTemplate",
+                        "hoverElementTemplate":"Colleague"
+                    }
+                },
+                {
+                    "id": 6,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "elementView",
+                        "element": "findElementTextByTemplate",
+                        "elementTemplate": "Are you sure you want to delete the following: Colleague"
+                    },
+
+                    "tests":[
+                        {
+                            "action":"equal",
+                            "value":"Are you sure you want to delete the following: Colleague"
+                        }
+                    ]
+                },
+                {
+                    "id":7,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"credentialsDeleteCancel"
+                    }
+                },
+                {
+                    "id":8,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"buttonDeleteAuthoritativeApplicationTemplate",
+                        "elementTemplate":"Colleague",
+                        "hoverElement":"cardAuthoritativeApplicationTemplate",
+                        "hoverElementTemplate":"Colleague"
+                    }
+                },
+                {
+                    "id":9,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"credentialsDeleteConfirm"
+                    }
+                },
+                 {
+                    "id": 10,
+                    "type": "hub-admin-ui",
+                    "params": {
+                        "action": "arrayValue",
+                        "element": "authoritativeApplicationsCredentialsList"
+                    },
+                    "tests":[
+                        {
+                            "action":"notInclude",
+                            "value":[
+                                "Colleague"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id":11,
+                    "type":"hub-admin-ui",
+                    "params":{
+                        "action":"click",
+                        "element":"linksHome"
+                    }
+                }
+            ]
+        }
+   	]
+}
+
+
+
