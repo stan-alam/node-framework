@@ -6,11 +6,7 @@
   "scripts": {
     "start": "node --harmony app.js",
     "docs": " ./node_modules/.bin/yuidoc2md lib/*.js test/**/*.js > usage.MD"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git@git.ellucian.com:7999/ps/hub-node-test.git"
-  },
+  },  
   "keywords": [
     "api",
     "ui",
